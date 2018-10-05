@@ -80,29 +80,32 @@ public class Fenetre {
 	 */
 	public void majPosition(Personnage j) {
 		if (keyListener.getUp(j.getNum())) {
-			if ((j.getY() - j.getVit())< 0) {
-				j.setY(0);
-				} else {
-				j.setY(j.getY()-j.getVit());
-				}
-		} else 	if (keyListener.getDown(j.getNum())) {
-			if ((j.getY() + j.getVit())> panel_.getHeight()-panel_.HAUT_PERSO) {
-				j.setY(panel_.getHeight() -panel_.HAUT_PERSO);
-				} else {
-					j.setY(j.getY()+j.getVit());
-				}
-		} else 	if (keyListener.getLeft(j.getNum())) {
-			if ((j.getX() - j.getVit())< 0) {
-				j.setX(0);
-				} else {
-				j.setX(j.getX()-j.getVit());
-				}
-		} else 	if (keyListener.getRight(j.getNum())) {
-			if ((j.getX() + j.getVit())> window_.getWidth()-panel_.LARG_PERSO) {
-				j.setX(window_.getWidth()-panel_.LARG_PERSO);
-				} else {
-				j.setX(j.getX()+j.getVit());
-				}
+		    if ((j.getY() - j.getVit())< 0) {
+			j.setY(0);
+		    } else {
+			j.setY(j.getY()-j.getVit());
+		    }
+		}
+		if (keyListener.getDown(j.getNum())) {
+		    if ((j.getY() + j.getVit())> panel_.getHeight()-panel_.HAUT_PERSO) {
+			j.setY(panel_.getHeight() -panel_.HAUT_PERSO);
+		    } else {
+			j.setY(j.getY()+j.getVit());
+		    }
+		}
+		if (keyListener.getLeft(j.getNum())) {
+		    if ((j.getX() - j.getVit())< 0) {
+			j.setX(0);
+		    } else {
+			j.setX(j.getX()-j.getVit());
+		    }
+		}
+		if (keyListener.getRight(j.getNum())) {
+		    if ((j.getX() + j.getVit())> window_.getWidth()-panel_.LARG_PERSO) {
+			j.setX(window_.getWidth()-panel_.LARG_PERSO);
+		    } else {
+			j.setX(j.getX()+j.getVit());
+		    }
 		}
 	
 	}
