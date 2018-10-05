@@ -10,6 +10,11 @@ import javax.swing.JPanel;
 public class PanelJoueur extends JPanel{
 	private Fenetre win_;
 	
+	//joueur 1
+	private Personnage j1_;
+	
+	//joueur 2
+	private Personnage j2_;
 	
 	static public int HAUT_PERSO = 30;
 	static public int LARG_PERSO = 30;
@@ -23,8 +28,11 @@ public class PanelJoueur extends JPanel{
 	private int y2_;
 	
 	
-	public PanelJoueur(Fenetre win) {
+	public PanelJoueur(Fenetre win, Personnage j1, Personnage j2) {
 		win_=win;
+		j1_=j1;
+		j2_=j2;
+		
 		x1_ = 0;
 		y1_ = 0;
 		x2_ = 120;
@@ -36,29 +44,11 @@ public class PanelJoueur extends JPanel{
 	//Calque
 	g.fillRect(0, 0, this.getSize().width, this.getSize().height);
 	
-	//Experience avec les strings
-	/*g.setColor(new Color(152, 32, win_.getJamal()));
-	if (win_.getJamal() <127) {
-		g.setFont(new Font("Arial", 1, 20));
-	} else {
-		g.setFont(new Font("Calibri", 1, 20));
-	}
-	g.drawString("Maure", 10, 10);*/
-	
-	//Test du mouse listener
-	/*
-	int x = (int) win_.getX();
-	int y = (int) win_.getY();
-	System.out.println("valeur de x"+x);
-	System.out.println("valeur de y"+y);
-	g.drawImage(new ImageIcon("Nualia.jpeg").getImage(), x, y, largeurCarte_, hauteurCarte_, null);*/
-		
-	System.out.println(this.getSize());
 	//Test du key listener
-	x1_ = (int) win_.getX1();
-	y1_ = (int) win_.getY1();	
-	x2_ = (int) win_.getX2();
-	y2_ = (int) win_.getY2();
+	x1_ = (int) j1_.getX();
+	y1_ = (int) j1_.getY();	
+	x2_ = (int) j2_.getX();
+	y2_ = (int) j2_.getY();
 	
 	g.drawImage(new ImageIcon("steve.jpeg").getImage(), x1_, y1_, LARG_PERSO, HAUT_PERSO, null);
 	g.drawImage(new ImageIcon("herobrine.png").getImage(), x2_, y2_, LARG_PERSO, HAUT_PERSO, null);

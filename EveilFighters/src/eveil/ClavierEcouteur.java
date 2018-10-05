@@ -62,14 +62,16 @@ public class ClavierEcouteur implements KeyListener {
 		
 	}
 
-	public boolean getUp1() { return up1_;}
-	public boolean getDown1() { return down1_;}
-	public boolean getLeft1() { return left1_;}
-	public boolean getRight1() { return right1_;}
+	//ces guetteurs renvoient le up en fonction du num du joueur
+	public boolean getUp(int p) {
+	if (p==1) {return up1_;} else { return up2_;}}
+	public boolean getDown(int p) { 
+	if (p==1) {return down1_;} else { return down2_;}}
+	public boolean getLeft(int p) { 
+	if (p==1) {return left1_;} else { return left2_;}}
+	public boolean getRight(int p) {
+	if (p==1) {return right1_;} else { return right2_;}}
 	
-	public boolean getUp2() { return up2_;}
-	public boolean getDown2() { return down2_;}
-	public boolean getLeft2() { return left2_;}
-	public boolean getRight2() { return right2_;}
+
 	
 }

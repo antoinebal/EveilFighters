@@ -13,6 +13,12 @@ public class Fenetre {
 	private double x2_;
 	private double y2_;
 	
+	//joueur 1
+	private Personnage j1_;
+	
+	//joueur 2
+	private Personnage j2_;
+	
 	//vitesse
 	static private int vitesseJoueurs_ = 3;
 	
@@ -22,9 +28,17 @@ public class Fenetre {
 	private JFrame window_;
 
 	
-	public Fenetre() {
-	window_ = new JFrame("Choix personnage");
-	panel_ = new PanelJoueur(this);
+	public Fenetre(Personnage j1, Personnage j2) {
+	
+		//j1 et j2 init
+		j1_ = j1;
+		j2_ = j2;
+		j1_.setPos(0, 0);
+		j2_.setPos(500, 500);
+		
+		window_ = new JFrame("Choix personnage");
+		panel_ = new PanelJoueur(this, j1_, j2_);
+
 
 	
 	//Pour le mouseListener
@@ -52,7 +66,7 @@ public class Fenetre {
 	//config listeners
 	window_.addMouseListener(mouseListener);
 	window_.addKeyListener(keyListener);
-	System.out.println(window_.getWidth());
+	
 	play();
 	}
 	
@@ -68,10 +82,12 @@ public class Fenetre {
 			
 			//checker collision
 			//notif partie jeu (ou dans le keyListener)
-			majPosition();
+			majPosition(j1_);
+			majPosition(j2_);
 			panel_.repaint();
 			}
 			
+		
 			
 		}
 		
@@ -83,46 +99,44 @@ public class Fenetre {
 	public double getX2() { return x2_;}
 	public double getY2() { return y2_;}
 	
-	/* met à jour la position des deux joueurs en fonction des infos
+	/* met à jour la position du joueur en arg en fonction des infos
 	 * du key listener
 	 */
-	public void majPosition() {
-		System.out.println(window_.getSize());
-		if (keyListener.getUp1()) {
-			System.out.println("up1");
-			if ((y1_ - vitesseJoueurs_)< 0) {y1_ = 0;}
-			else {y1_-=vitesseJoueurs_;}
-		} else 	if (keyListener.getDown1()) {
-			if ((y1_ + vitesseJoueurs_)> panel_.getHeight()-panel_.HAUT_PERSO) {y1_ = panel_.getHeight() -panel_.HAUT_PERSO;}
-			else {y1_+=vitesseJoueurs_;}
-		} else 	if (keyListener.getLeft1()) {
-			if ((x1_ - vitesseJoueurs_)< 0) {x1_=0;}
-			else {x1_-=vitesseJoueurs_;}
-		} else 	if (keyListener.getRight1()) {
-			if ((x1_ + vitesseJoueurs_)> window_.getWidth()-panel_.LARG_PERSO) {x1_ = window_.getWidth()-panel_.LARG_PERSO;}
-			else {x1_+=vitesseJoueurs_;}
-		}
-		
-		if (keyListener.getUp2()) {
-			if ((y2_ - vitesseJoueurs_)< 0) {y2_ = 0;}
-			else {y2_-=vitesseJoueurs_;}
-		} else 	if (keyListener.getDown2()) {
-			if ((y2_ + vitesseJoueurs_)> panel_.getHeight()-panel_.HAUT_PERSO) {y2_ = panel_.getHeight()-panel_.HAUT_PERSO;}
-			else {y2_+=vitesseJoueurs_;}
-		} else 	if (keyListener.getLeft2()) {
-			if ((x2_ - vitesseJoueurs_)< 0) {x2_=0;}
-			else {x2_-=vitesseJoueurs_;}
-		} else 	if (keyListener.getRight2()) {
-			if ((x2_ + vitesseJoueurs_)> window_.getWidth()-panel_.LARG_PERSO) {x2_ = window_.getWidth()-panel_.LARG_PERSO;}
-			else {x2_+=vitesseJoueurs_;}
+	public void majPosition(Personnage j) {
+		if (keyListener.getUp(j.getNum())) {
+			if ((j.getY() - j.getVit())< 0) {
+				j.setY(0);
+				} else {
+				j.setY(j.getY()-j.getVit());
+				}
+		} else 	if (keyListener.getDown(j.getNum())) {
+			if ((j.getY() + j.getVit())> panel_.getHeight()-panel_.HAUT_PERSO) {
+				j.setY(panel_.getHeight() -panel_.HAUT_PERSO);
+				} else {
+					j.setY(j.getY()+j.getVit());
+				}
+		} else 	if (keyListener.getLeft(j.getNum())) {
+			if ((j.getX() - j.getVit())< 0) {
+				j.setX(0);
+				} else {
+				j.setX(j.getX()-j.getVit());
+				}
+		} else 	if (keyListener.getRight(j.getNum())) {
+			if ((j.getX() + j.getVit())> window_.getWidth()-panel_.LARG_PERSO) {
+				j.setX(window_.getWidth()-panel_.LARG_PERSO);
+				} else {
+				j.setX(j.getX()+j.getVit());
+				}
 		}
 	
 	}
 	
 	
 	public static void main(String[] args) {
+		Personnage j1 = new Personnage(1, 0, 0, 0, "Steve");
+		Personnage j2 = new Personnage(2, 0, 0, 0, "Herobrine");
 		
-		Fenetre fenetre = new Fenetre();
+		Fenetre fenetre = new Fenetre(j1, j2);
 		
 	}
 }
