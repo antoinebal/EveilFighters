@@ -45,10 +45,10 @@ public class PanelJoueur extends JPanel{
 	g.fillRect(0, 0, this.getSize().width, this.getSize().height);
 	
 	//Test du key listener
-	x1_ = (int) j1_.getX();
-	y1_ = (int) j1_.getY();	
-	x2_ = (int) j2_.getX();
-	y2_ = (int) j2_.getY();
+	x1_ = j1_.getX();
+	y1_ = j1_.getY();	
+	x2_ = j2_.getX();
+	y2_ = j2_.getY();
 	
 	g.drawImage(new ImageIcon("steve.jpeg").getImage(), x1_, y1_, LARG_PERSO, HAUT_PERSO, null);
 	g.drawImage(new ImageIcon("herobrine.png").getImage(), x2_, y2_, LARG_PERSO, HAUT_PERSO, null);

@@ -5,22 +5,12 @@ import javax.swing.JFrame;
 public class Fenetre {
 	private PanelJoueur panel_;
 
-	//coordonnées joueur 1
-	private double x1_;
-	private double y1_;
-	
-	//coordonnées joueur 2
-	private double x2_;
-	private double y2_;
-	
+
 	//joueur 1
 	private Personnage j1_;
 	
 	//joueur 2
 	private Personnage j2_;
-	
-	//vitesse
-	static private int vitesseJoueurs_ = 3;
 	
 	private SourisEcouteur mouseListener;
 	private ClavierEcouteur keyListener;
@@ -39,13 +29,6 @@ public class Fenetre {
 		window_ = new JFrame("Choix personnage");
 		panel_ = new PanelJoueur(this, j1_, j2_);
 
-
-	
-	//Pour le mouseListener
-	x1_ = 0;
-	y1_ = 0;
-	x2_ = 120;
-	y2_ = 120;
 	
 	mouseListener = new SourisEcouteur();
 	keyListener = new ClavierEcouteur();
@@ -91,13 +74,6 @@ public class Fenetre {
 			
 		}
 		
-	
-	
-	public double getX1() { return x1_;}
-	public double getY1() { return y1_;}
-	
-	public double getX2() { return x2_;}
-	public double getY2() { return y2_;}
 	
 	/* met à jour la position du joueur en arg en fonction des infos
 	 * du key listener
