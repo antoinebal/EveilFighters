@@ -57,7 +57,7 @@ public class Fenetre {
 		while (true) {
 			
 			try {
-				Thread.sleep(5);
+				Thread.sleep(10);
 			} catch (InterruptedException e) {
 				
 				System.out.println("Problème dans le sleep");
@@ -65,8 +65,8 @@ public class Fenetre {
 			
 			//checker collision
 			//notif partie jeu (ou dans le keyListener)
-			majPosition(j1_);
-			majPosition(j2_);
+			majPosition(j1_, j2_);
+			majPosition(j2_, j1_);
 			panel_.repaint();
 			}
 			
@@ -78,17 +78,21 @@ public class Fenetre {
 	/* met à jour la position du joueur en arg en fonction des infos
 	 * du key listener
 	 */
-	public void majPosition(Personnage j) {
+	public void majPosition(Personnage j, Personnage jFixe) {
 		if (keyListener.getUp(j.getNum())) {
 		    if ((j.getY() - j.getVit())< 0) {
 			j.setY(0);
+		    } else if (checkCollision('u', j, jFixe)) {
+		    j.setY(jFixe.getY()+jFixe.getTaille());
 		    } else {
 			j.setY(j.getY()-j.getVit());
 		    }
 		}
 		if (keyListener.getDown(j.getNum())) {
-		    if ((j.getY() + j.getVit())> panel_.getHeight()-panel_.HAUT_PERSO) {
-			j.setY(panel_.getHeight() -panel_.HAUT_PERSO);
+		    if ((j.getY() + j.getVit())> panel_.getHeight()-j.getTaille()) {
+			j.setY(panel_.getHeight() -j.getTaille());
+		    } else if (checkCollision('d', j, jFixe)) {
+		    j.setY(jFixe.getY()-j.getTaille());
 		    } else {
 			j.setY(j.getY()+j.getVit());
 		    }
@@ -96,13 +100,17 @@ public class Fenetre {
 		if (keyListener.getLeft(j.getNum())) {
 		    if ((j.getX() - j.getVit())< 0) {
 			j.setX(0);
+		    } else if (checkCollision('l',j, jFixe)) {
+		    j.setX(jFixe.getX()+jFixe.getLarg());
 		    } else {
 			j.setX(j.getX()-j.getVit());
 		    }
 		}
 		if (keyListener.getRight(j.getNum())) {
-		    if ((j.getX() + j.getVit())> window_.getWidth()-panel_.LARG_PERSO) {
-			j.setX(window_.getWidth()-panel_.LARG_PERSO);
+		    if ((j.getX() + j.getVit())> window_.getWidth()-j.getLarg()) {
+			j.setX(window_.getWidth()-j.getLarg());
+		    } else if (checkCollision('r', j, jFixe)) {
+		    	j.setX(jFixe.getX()-j.getLarg());
 		    } else {
 			j.setX(j.getX()+j.getVit());
 		    }
@@ -110,6 +118,34 @@ public class Fenetre {
 	
 	}
 	
+	/* params : dir pour la direction dans laquelle il faut checker les collisions
+	 * jM est le personnage mobile, jF le fixe
+	 * Renvoie vrai s'il y a collision : c'est à la fonction appelante
+	 * de rectifier la position des personnages*/
+	boolean checkCollision(char dir, Personnage jM, Personnage jF) {
+		if (dir == 'l') {
+			if ((jM.getX()-jM.getVit() < jF.getX()+jF.getLarg())
+				&&(jM.getX()-jM.getVit() > jF.getX())
+				&&(jM.getY() < jF.getY()+jF.getTaille())
+				&&(jM.getY()+jM.getTaille() > jF.getY())) {return true;} else {return false;}}
+		if (dir == 'r') {
+			if ((jM.getX()+jM.getLarg()+jM.getVit() < jF.getX()+jF.getLarg())
+				&&(jM.getX()+jM.getLarg()+jM.getVit() > jF.getX())
+				&&(jM.getY() < jF.getY()+jF.getTaille())
+				&&(jM.getY()+jM.getTaille() > jF.getY())) {return true;} else {return false;}}
+		if (dir == 'u') {
+			if ((jM.getY()-jM.getVit() < jF.getY()+jF.getTaille())
+				&&(jM.getY()+jM.getVit() > jF.getY())
+				&&(jM.getX() < jF.getX()+jF.getLarg())
+				&&(jM.getX()+jM.getLarg() > jF.getX())) {return true;} else {return false;}}
+		if (dir == 'd') {
+			if ((jM.getY()+jM.getTaille()+jM.getVit() < jF.getY()+jF.getTaille())
+				&&(jM.getY()+jM.getTaille()+jM.getVit() > jF.getY())
+				&&(jM.getX() < jF.getX()+jF.getLarg())
+				&&(jM.getX()+jM.getLarg() > jF.getX())) {return true;} else {return false;}}
+			
+	return false;
+	}
 	
 	public static void main(String[] args) {
 		Personnage j1 = new Personnage(1, 0, 0, 0, "Steve");

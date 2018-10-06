@@ -24,6 +24,10 @@ public class Personnage {
 	//vitesse de déplacement
 	protected int vitessePerso_;
 	
+	//taille du perso
+	protected int taille_;
+	protected int largeur_;
+	
 	protected String nom_;
 	
 	//constructeur par défaut
@@ -31,13 +35,15 @@ public class Personnage {
 		x_=0;
 		y_=0;
 		
-		vitessePerso_=3;
+		vitessePerso_=2;
 		
 		pvs_ = 0;
 		force_ = 0;
 		porteeCC_ = 0;
 		nom_ = "Drassius";
 		
+		taille_ = 50;
+		largeur_ = 50;
 	}
 	
 	
@@ -53,6 +59,9 @@ public class Personnage {
 		force_ = force;
 		porteeCC_ = porteeCC;
 		nom_ = nom;
+		
+		taille_ = 50;
+		largeur_ = 50;
 	}
 	
 	public void setX(int x) { x_=x;}
@@ -64,4 +73,7 @@ public class Personnage {
 	public int getVit() {return vitessePerso_; }
 	
 	public int getNum() {return num_;}
+	
+	public int getTaille() {return taille_;}
+	public int getLarg() {return largeur_;}
 }

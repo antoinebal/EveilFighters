@@ -15,9 +15,7 @@ public class PanelJoueur extends JPanel{
 	
 	//joueur 2
 	private Personnage j2_;
-	
-	static public int HAUT_PERSO = 30;
-	static public int LARG_PERSO = 30;
+
 	
 	//co du j1
 	private int x1_;
@@ -44,14 +42,14 @@ public class PanelJoueur extends JPanel{
 	//Calque
 	g.fillRect(0, 0, this.getSize().width, this.getSize().height);
 	
-	//Test du key listener
+	
 	x1_ = j1_.getX();
 	y1_ = j1_.getY();	
 	x2_ = j2_.getX();
 	y2_ = j2_.getY();
 	
-	g.drawImage(new ImageIcon("steve.jpeg").getImage(), x1_, y1_, LARG_PERSO, HAUT_PERSO, null);
-	g.drawImage(new ImageIcon("herobrine.png").getImage(), x2_, y2_, LARG_PERSO, HAUT_PERSO, null);
+	g.drawImage(new ImageIcon("steve.jpeg").getImage(), x1_, y1_, j1_.getLarg(), j1_.getTaille(), null);
+	g.drawImage(new ImageIcon("herobrine.png").getImage(), x2_, y2_, j2_.getLarg(), j2_.getTaille(), null);
 	
 	}
 	
