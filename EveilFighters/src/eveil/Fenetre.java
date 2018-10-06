@@ -88,7 +88,7 @@ public class Fenetre {
 			j.setY(j.getY()-j.getVit());
 		    }
 		}
-		if (keyListener.getDown(j.getNum())) {
+		else if (keyListener.getDown(j.getNum())) {
 		    if ((j.getY() + j.getVit())> panel_.getHeight()-j.getTaille()) {
 			j.setY(panel_.getHeight() -j.getTaille());
 		    } else if (checkCollision('d', j, jFixe)) {
@@ -97,7 +97,7 @@ public class Fenetre {
 			j.setY(j.getY()+j.getVit());
 		    }
 		}
-		if (keyListener.getLeft(j.getNum())) {
+		else if (keyListener.getLeft(j.getNum())) {
 		    if ((j.getX() - j.getVit())< 0) {
 			j.setX(0);
 		    } else if (checkCollision('l',j, jFixe)) {
@@ -106,7 +106,7 @@ public class Fenetre {
 			j.setX(j.getX()-j.getVit());
 		    }
 		}
-		if (keyListener.getRight(j.getNum())) {
+		else if (keyListener.getRight(j.getNum())) {
 		    if ((j.getX() + j.getVit())> window_.getWidth()-j.getLarg()) {
 			j.setX(window_.getWidth()-j.getLarg());
 		    } else if (checkCollision('r', j, jFixe)) {
@@ -148,8 +148,8 @@ public class Fenetre {
 	}
 	
 	public static void main(String[] args) {
-		Personnage j1 = new Personnage(1, 0, 0, 0, "Steve");
-		Personnage j2 = new Personnage(2, 0, 0, 0, "Herobrine");
+		Personnage j1 = new Personnage(1, 0, 0, 0, "inspecteur");
+		Personnage j2 = new Personnage(2, 0, 0, 0, "inspecteur");
 		
 		Fenetre fenetre = new Fenetre(j1, j2);
 		

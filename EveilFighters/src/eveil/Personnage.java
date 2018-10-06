@@ -30,6 +30,16 @@ public class Personnage {
 	
 	protected String nom_;
 	
+	protected String image_;
+	
+	/*cet attribut permet l'animation de la marche
+	 * il est incrémenté à chaque appel de setX et setY*/ 
+	protected int animWalk_;
+	
+	/*mémoire pour savoir dans quelle direction le personnage est
+	 * en train de se déplacer. Peut être égal à 'u', 'd', 'l', et 'r' */
+	protected char orientation_;
+	
 	//constructeur par défaut
 	public Personnage() {
 		x_=0;
@@ -44,6 +54,10 @@ public class Personnage {
 		
 		taille_ = 50;
 		largeur_ = 50;
+		
+		orientation_ = 'd';
+		image_ = nom_+"_down_1";
+		animWalk_ = 0;
 	}
 	
 	
@@ -62,11 +76,57 @@ public class Personnage {
 		
 		taille_ = 50;
 		largeur_ = 50;
+		
+		orientation_ = 'd';
+		image_ = nom_+"_down_1.png";
 	}
 	
-	public void setX(int x) { x_=x;}
-	public void setY(int y) { y_=y;}
+	public void setX(int x) { 
+		/*si l'orientation n'est pas u et que l'on a monté,
+		 * on change l'orientation
+		 */
+		if ((orientation_ != 'l')&&(x < x_)) {
+			orientation_ = 'l';
+		}
+		
+		/*si l'orientation n'est pas d et que l'on a descendu,
+		 * on change l'orientation
+		 */
+		if ((orientation_ != 'r')&&(x > x_)) {
+			orientation_ = 'r';
+		}
+		
+		animWalk_ = (animWalk_+15) % 120;
+		x_=x;
+		}
+	public void setY(int y) { 
+		
+		/*si l'orientation n'est pas u et que l'on a monté,
+		 * on change l'orientation
+		 */
+		if ((orientation_ != 'u')&&(y < y_)) {
+			orientation_ = 'u';
+		}
+		
+		/*si l'orientation n'est pas d et que l'on a descendu,
+		 * on change l'orientation
+		 */
+		if ((orientation_ != 'd')&&(y > y_)) {
+			orientation_ = 'd';
+		}
+		
+		animWalk_ = (animWalk_+2) % 120;
+		y_=y;
+		}
 	public void setPos(int x, int y) { x_=x; y_=y;}
+	
+	public int handleAnimWalk() {
+		if (animWalk_ < 30 ) {return 1;}
+		if (animWalk_ < 60 ) {return 2;}
+		if (animWalk_ < 90 ) {return 3;}
+		if (animWalk_ < 120 ) {return 4;}
+		return -1;
+	}
 	
 	public int getX() {return x_;}
 	public int getY() {return y_;}
@@ -76,4 +136,20 @@ public class Personnage {
 	
 	public int getTaille() {return taille_;}
 	public int getLarg() {return largeur_;}
+	
+	public String getImage() {
+		/*if (orientation_ == 'u') {
+			return nom_+"_up_"+Integer.toString(handleAnimWalk());
+		}*/
+		//if (orientation_ == 'd') {
+			return nom_+"_down_"+Integer.toString(handleAnimWalk())+".png";
+		//}
+		/*if (orientation_ == 'l') {
+			return nom_+"_left_"+Integer.toString(handleAnimWalk());
+		}
+		if (orientation_ == 'u') {
+			return nom_+"_right_"+Integer.toString(handleAnimWalk());
+		}*/
+		//return "erreur";
+	}
 }
