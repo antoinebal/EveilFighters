@@ -17,6 +17,8 @@ public class ClavierEcouteur implements KeyListener {
 	private boolean left2_;
 	private boolean right2_;
 	
+
+	
 	public ClavierEcouteur() {
 		up1_ = false;
 		down1_ = false;
@@ -27,19 +29,22 @@ public class ClavierEcouteur implements KeyListener {
 		down2_ = false;
 		left2_ = false;
 		right2_ = false;
+		
+		//j1_ = j1;
+		//j2_ = j2;
 	}
 	
 	@Override
 	public void keyPressed(KeyEvent arg0) {
-		if (arg0.getKeyCode()==38) { up1_ = true;} 
+		if (arg0.getKeyCode()==38) { up1_ = true;}
 		if (arg0.getKeyCode()==40) { down1_ = true;}
 		if (arg0.getKeyCode()==37) { left1_ = true;}
 		if (arg0.getKeyCode()==39) { right1_ = true;}
 		
-		if (arg0.getKeyCode()==90) { up2_ = true;} //z
-		if (arg0.getKeyCode()==83) { down2_ = true;} //s
-		if (arg0.getKeyCode()==81) { left2_ = true;} //q
-		if (arg0.getKeyCode()==68) { right2_ = true;} //d
+		if (arg0.getKeyCode()==90) { up2_ = true;}
+		if (arg0.getKeyCode()==83) { down2_ = true;}
+		if (arg0.getKeyCode()==81) { left2_ = true;}
+		if (arg0.getKeyCode()==68) { right2_ = true;}
 	}
 
 	@Override

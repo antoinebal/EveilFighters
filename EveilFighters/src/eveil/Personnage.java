@@ -104,26 +104,29 @@ public class Personnage {
 		/*si l'orientation n'est pas u et que l'on a monté,
 		 * on change l'orientation
 		 */
-		if ((orientation_ != 'u')&&(y < y_)) {
+		if ((y < y_)) {
 			orientation_ = 'u';
 		}
 		
 		/*si l'orientation n'est pas d et que l'on a descendu,
 		 * on change l'orientation
 		 */
-		if ((orientation_ != 'd')&&(y > y_)) {
+		if ((y > y_)) {
 			orientation_ = 'd';
 		}
 		
-		animWalk_ = (animWalk_+2) % 120;
+		animWalk_ = (animWalk_+1) % 120;
 		y_=y;
 		}
 	public void setPos(int x, int y) { x_=x; y_=y;}
 	
+	//dir = 'u' 'd' 'l' 'r'
+	public void setOrientation(char dir) { orientation_ = dir;}
+	
 	public int handleAnimWalk() {
 		if (animWalk_ < 30 ) {return 1;}
 		if (animWalk_ < 60 ) {return 2;}
-		if (animWalk_ < 90 ) {return 3;}
+		if (animWalk_ < 90 ) {return 1;}
 		if (animWalk_ < 120 ) {return 4;}
 		return -1;
 	}
@@ -138,18 +141,18 @@ public class Personnage {
 	public int getLarg() {return largeur_;}
 	
 	public String getImage() {
-		/*if (orientation_ == 'u') {
-			return nom_+"_up_"+Integer.toString(handleAnimWalk());
-		}*/
-		//if (orientation_ == 'd') {
-			return nom_+"_down_"+Integer.toString(handleAnimWalk())+".png";
-		//}
-		/*if (orientation_ == 'l') {
-			return nom_+"_left_"+Integer.toString(handleAnimWalk());
-		}
 		if (orientation_ == 'u') {
-			return nom_+"_right_"+Integer.toString(handleAnimWalk());
-		}*/
-		//return "erreur";
+			return nom_+"_up_"+Integer.toString(handleAnimWalk())+".png";
+		}
+		if (orientation_ == 'd') {
+			return nom_+"_down_"+Integer.toString(handleAnimWalk())+".png";
+		}
+		if (orientation_ == 'l') {
+			return nom_+"_left_"+Integer.toString(handleAnimWalk())+".png";
+		}
+		if (orientation_ == 'r') {
+			return nom_+"_right_"+Integer.toString(handleAnimWalk())+".png";
+		}
+		return "erreur";
 	}
 }

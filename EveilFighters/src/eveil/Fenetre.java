@@ -82,8 +82,10 @@ public class Fenetre {
 		if (keyListener.getUp(j.getNum())) {
 		    if ((j.getY() - j.getVit())< 0) {
 			j.setY(0);
+			j.setOrientation('u');
 		    } else if (checkCollision('u', j, jFixe)) {
 		    j.setY(jFixe.getY()+jFixe.getTaille());
+		    j.setOrientation('u');
 		    } else {
 			j.setY(j.getY()-j.getVit());
 		    }
@@ -91,8 +93,10 @@ public class Fenetre {
 		else if (keyListener.getDown(j.getNum())) {
 		    if ((j.getY() + j.getVit())> panel_.getHeight()-j.getTaille()) {
 			j.setY(panel_.getHeight() -j.getTaille());
+			j.setOrientation('d');
 		    } else if (checkCollision('d', j, jFixe)) {
 		    j.setY(jFixe.getY()-j.getTaille());
+		    j.setOrientation('d');
 		    } else {
 			j.setY(j.getY()+j.getVit());
 		    }
@@ -100,8 +104,10 @@ public class Fenetre {
 		else if (keyListener.getLeft(j.getNum())) {
 		    if ((j.getX() - j.getVit())< 0) {
 			j.setX(0);
+			j.setOrientation('l');
 		    } else if (checkCollision('l',j, jFixe)) {
 		    j.setX(jFixe.getX()+jFixe.getLarg());
+		    j.setOrientation('l');
 		    } else {
 			j.setX(j.getX()-j.getVit());
 		    }
@@ -109,8 +115,10 @@ public class Fenetre {
 		else if (keyListener.getRight(j.getNum())) {
 		    if ((j.getX() + j.getVit())> window_.getWidth()-j.getLarg()) {
 			j.setX(window_.getWidth()-j.getLarg());
+			j.setOrientation('r');
 		    } else if (checkCollision('r', j, jFixe)) {
 		    	j.setX(jFixe.getX()-j.getLarg());
+		    	j.setOrientation('r');
 		    } else {
 			j.setX(j.getX()+j.getVit());
 		    }
