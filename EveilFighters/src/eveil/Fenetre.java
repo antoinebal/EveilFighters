@@ -36,7 +36,7 @@ public class Fenetre {
 
 	
 	mouseListener = new SourisEcouteur();
-	keyListener = new ClavierEcouteur();
+	keyListener = new ClavierEcouteur(j1_, j2_);
 	
 
 	
@@ -72,6 +72,9 @@ public class Fenetre {
 			majPosition(j1_, j2_);
 			majPosition(j2_, j1_);
 			gereCoups();
+			//System.out.println(j1_.getEtat());
+			
+			
 			//majPosition(liste itemsDyn)
 			panel_.repaint();
 			}

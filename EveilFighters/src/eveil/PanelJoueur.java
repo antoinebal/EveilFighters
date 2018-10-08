@@ -49,6 +49,9 @@ public class PanelJoueur extends JPanel{
 	x2_ = j2_.getX();
 	y2_ = j2_.getY();
 	
+	j1_.tic();
+	j2_.tic();
+	
 	g.drawImage(new ImageIcon(j1_.getImage()).getImage(), x1_, y1_, j1_.getLarg(), j1_.getTaille(), null);
 	g.drawImage(new ImageIcon(j2_.getImage()).getImage(), x2_, y2_, j2_.getLarg(), j2_.getTaille(), null);
 	

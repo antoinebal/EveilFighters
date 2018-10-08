@@ -22,9 +22,12 @@ public class ClavierEcouteur implements KeyListener {
 	private boolean coup0_2_;
 	private boolean coup1_2_;
 	private boolean coup2_2_;
-
 	
-	public ClavierEcouteur() {
+	//pour changer l'état des joueurs
+	private Personnage j1_;
+	private Personnage j2_;
+	
+	public ClavierEcouteur(Personnage j1, Personnage j2) {
 		up1_ = false;
 		down1_ = false;
 		left1_ = false;
@@ -35,8 +38,8 @@ public class ClavierEcouteur implements KeyListener {
 		left2_ = false;
 		right2_ = false;
 		
-		//j1_ = j1;
-		//j2_ = j2;
+		j1_ = j1;
+		j2_ = j2;
 	}
 	
 	@Override
@@ -62,19 +65,21 @@ public class ClavierEcouteur implements KeyListener {
 
 	@Override
 	public void keyReleased(KeyEvent arg0) {
-		if (arg0.getKeyCode()==38) { up1_ = false;} //arrows
-		if (arg0.getKeyCode()==40) { down1_ = false;}
-		if (arg0.getKeyCode()==37) { left1_ = false;}
-		if (arg0.getKeyCode()==39) { right1_ = false;}
+		/*si le joueur était en état walking on le met en IDLE*/
+		if (arg0.getKeyCode()==38) { up1_ = false; if (j1_.getEtat()==1) {j1_.setEtat(0);}} //arrows
+		if (arg0.getKeyCode()==40) { down1_ = false;if (j1_.getEtat()==1) {j1_.setEtat(0);}}
+		if (arg0.getKeyCode()==37) { left1_ = false;if (j1_.getEtat()==1) {j1_.setEtat(0);}}
+		if (arg0.getKeyCode()==39) { right1_ = false;if (j1_.getEtat()==1) {j1_.setEtat(0);}}
 		
 		if (arg0.getKeyCode()==96) { coup0_1_ = false;} //0
 		if (arg0.getKeyCode()==97) { coup1_1_ = false;} //1
 		if (arg0.getKeyCode()==98) { coup2_1_ = false;} //2
 		
-		if (arg0.getKeyCode()==90) { up2_ = false;} //z
-		if (arg0.getKeyCode()==83) { down2_ = false;} //s
-		if (arg0.getKeyCode()==81) { left2_ = false;} //q
-		if (arg0.getKeyCode()==68) { right2_ = false;} //d
+		/*si le joueur était en état walking on le met en IDLE*/
+		if (arg0.getKeyCode()==90) { up2_ = false;if (j2_.getEtat()==1) {j2_.setEtat(0);}} //z
+		if (arg0.getKeyCode()==83) { down2_ = false;if (j2_.getEtat()==1) {j2_.setEtat(0);}} //s
+		if (arg0.getKeyCode()==81) { left2_ = false;if (j2_.getEtat()==1) {j2_.setEtat(0);}} //q
+		if (arg0.getKeyCode()==68) { right2_ = false;if (j2_.getEtat()==1) {j2_.setEtat(0);}} //d
 		
 		if (arg0.getKeyCode()==32) { coup0_2_ = false;} //space
 		if (arg0.getKeyCode()==86) { coup1_1_ = false;} //v

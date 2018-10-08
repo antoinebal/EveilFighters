@@ -2,6 +2,7 @@ package eveil;
 
 import java.lang.String;
 
+
 public class Personnage {
 
 	//1 ou 2
@@ -43,6 +44,15 @@ public class Personnage {
 	/*pointeur vers l'adversaire (pour lui donner des coups*/
 	protected Personnage adversaire_;
 	
+	/*compte le temps en fonction de l'avancée du programme*/
+	protected int compteurTic_;
+	
+	/*en marche, en train de frapper etc.
+	0 = idle, 1 = walking, 2 = hitting ... */
+	protected int etat_;
+	
+
+	
 	//constructeur par défaut
 	public Personnage() {
 		x_=0;
@@ -61,6 +71,10 @@ public class Personnage {
 		orientation_ = 'd';
 		image_ = nom_+"_down_1";
 		animWalk_ = 0;
+		
+		compteurTic_ = 0;
+		etat_ = 0; //idle
+
 	}
 	
 	
@@ -83,6 +97,9 @@ public class Personnage {
 		
 		orientation_ = 'd';
 		image_ = nom_+"_down_1.png";
+		
+		compteurTic_ = 0;
+		etat_ = 0; //idle
 	}
 	
 	//constructeur du j2
@@ -106,12 +123,22 @@ public class Personnage {
 		image_ = nom_+"_down_1.png";
 		
 		adversaire_ = adversaire;
+		
+		compteurTic_ = 0;
+		etat_ = 0; //idle
 	}
 	
 	/*pour finaliser la constrution du j1*/
 	public void setAdversaire(Personnage adversaire) {adversaire_ = adversaire;}
 	
+	
+	/* je passe l'était à 1 (walking) pour montrer que le
+	 * personnage bute contre le mur
+	 */
 	public void setX(int x) { 
+		//On ne fait rien si on est en train de frapper ou autre
+		if (etat_ <= 1) {
+		etat_=1;
 		/*si l'orientation n'est pas u et que l'on a monté,
 		 * on change l'orientation
 		 */
@@ -129,8 +156,14 @@ public class Personnage {
 		animWalk_ = (animWalk_+15) % 120;
 		x_=x;
 		}
+	}
+	/* je passe l'était à 1 (walking) pour montrer que le
+	 * personnage bute contre le mur
+	 */
 	public void setY(int y) { 
-		
+		//On ne fait rien si on est en train de frapper ou autre
+		if (etat_ <= 1) {
+		etat_ = 1;
 		/*si l'orientation n'est pas u et que l'on a monté,
 		 * on change l'orientation
 		 */
@@ -148,6 +181,7 @@ public class Personnage {
 		animWalk_ = (animWalk_+1) % 120;
 		y_=y;
 		}
+		}
 	public void setPos(int x, int y) { x_=x; y_=y;}
 	
 	//dir = 'u' 'd' 'l' 'r'
@@ -161,12 +195,21 @@ public class Personnage {
 		return -1;
 	}
 	
+	public int handleTic() {
+		if (compteurTic_ < 10 ) {return 0;}
+		if (compteurTic_ < 20 ) {return 1;}
+		if (compteurTic_ < 30 ) {return 2;}
+		if (compteurTic_ < 40 ) {return 3;}
+		return -1;
+	}
+	
 	public void coup0() {
 		/*ce coup dépendra des coordonnées de l'adversaire peut être, auquel cas
 		 * il faudrait que le perso est accès au joueur pour prendre ses cos
 		 */
 		//faire un grand if en fonction du nom
 		//appeler les fonctions recevoir coup si jamais l'autre joueur est touché
+		etat_ = 2;
 		System.out.println("Je donne un coup d'épée.");
 	}
 	
@@ -174,6 +217,7 @@ public class Personnage {
 		/*ce coup dépendra des coordonnées de l'adversaire peut être, auquel cas
 		 * il faudrait que le perso est accès au joueur pour prendre ses cos
 		 */
+		etat_ = 2;
 		System.out.println("Je lance une boule de feu.");
 	}
 	
@@ -181,9 +225,24 @@ public class Personnage {
 		/*ce coup dépendra des coordonnées de l'adversaire peut être, auquel cas
 		 * il faudrait que le perso est accès au joueur pour prendre ses cos
 		 */
+		etat_ = 2;
 		System.out.println("J'appelle mes sbires.");
 	}
+	
+	public void tic() {
+		if ((etat_!=0)&(etat_!=1)) {
+		if ((compteurTic_ >=40)) {
+		setEtat(0);
+		compteurTic_=0;
+		} else {
+		++compteurTic_;
+		}
+		}
+	}
 
+	public void setEtat(int etat) {
+		etat_ = etat;
+	}
 	
 	public int getX() {return x_;}
 	public int getY() {return y_;}
@@ -196,7 +255,29 @@ public class Personnage {
 	
 	public String getName() {return nom_;	}
 	
+	public int getEtat() {return etat_;}
+	public char getOrient() {return orientation_;}
+	
 	public String getImage() {
+		//si le personnage est à l'arrêt
+		if (etat_ == 0) {
+		if (orientation_ == 'u') {
+			return nom_+"_up_1.png";
+		}
+		if (orientation_ == 'd') {
+			return nom_+"_down_1.png";
+		}
+		if (orientation_ == 'l') {
+			return nom_+"_left_1.png";
+		}
+		if (orientation_ == 'r') {
+			return nom_+"_right_1.png";
+		}
+		}
+		
+		
+		//si le personnage est en train de marcher
+		if (etat_ == 1) {
 		if (orientation_ == 'u') {
 			return nom_+"_up_"+Integer.toString(handleAnimWalk())+".png";
 		}
@@ -209,6 +290,29 @@ public class Personnage {
 		if (orientation_ == 'r') {
 			return nom_+"_right_"+Integer.toString(handleAnimWalk())+".png";
 		}
+		}
+		//si les personnage est en train de frapper
+		//j'ai mis des up partout pour le TEST
+		if (etat_ == 2) {
+		if (orientation_ == 'u') {
+			return nom_+"_up_C0_"+Integer.toString(handleTic())+".png";
+			//return "steve.jpeg";
+		}
+		if (orientation_ == 'd') {
+			return nom_+"_up_C0_"+Integer.toString(handleTic())+".png";
+			//return "steve.jpeg";
+		}
+		if (orientation_ == 'l') {
+			return nom_+"_up_C0_"+Integer.toString(handleTic())+".png";
+			//return "steve.jpeg";
+		}
+		if (orientation_ == 'r') {
+			return nom_+"_up_C0_"+Integer.toString(handleTic())+".png";
+			//return "steve.jpeg";
+		}
+		}
+		
+	
 		return "erreur";
 	}
 }
