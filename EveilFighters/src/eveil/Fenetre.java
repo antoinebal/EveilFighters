@@ -1,6 +1,9 @@
 package eveil;
 
 import javax.swing.JFrame;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Iterator;
 
 public class Fenetre {
 	private PanelJoueur panel_;
@@ -16,6 +19,8 @@ public class Fenetre {
 	private ClavierEcouteur keyListener;
 	
 	private JFrame window_;
+	
+	//private list Item;
 
 	
 	public Fenetre(Personnage j1, Personnage j2) {
@@ -62,11 +67,12 @@ public class Fenetre {
 				
 				System.out.println("Problème dans le sleep");
 			}
-			
 			//checker collision
 			//notif partie jeu (ou dans le keyListener)
 			majPosition(j1_, j2_);
 			majPosition(j2_, j1_);
+			gereCoups();
+			//majPosition(liste itemsDyn)
 			panel_.repaint();
 			}
 			
@@ -123,6 +129,7 @@ public class Fenetre {
 			j.setX(j.getX()+j.getVit());
 		    }
 		}
+		//MAJ des positions des items
 	
 	}
 	
@@ -155,11 +162,29 @@ public class Fenetre {
 	return false;
 	}
 	
-	public static void main(String[] args) {
-		Personnage j1 = new Personnage(1, 0, 0, 0, "inspecteur");
-		Personnage j2 = new Personnage(2, 0, 0, 0, "inspecteur");
+	/* écoute le clavierEcouteur et appelle les fonctions coupX des personnages
+	 * si jamais ils ont donné un coup
+	 */
+	public void gereCoups() {
+		if (keyListener.getC0(j1_.getNum())) { j1_.coup0();}
+		if (keyListener.getC1(j1_.getNum())) { j1_.coup1();}
+		if (keyListener.getC2(j1_.getNum())) { j1_.coup2();}
 		
+		if (keyListener.getC0(j2_.getNum())) { j2_.coup0();}
+		if (keyListener.getC1(j2_.getNum())) { j2_.coup1();}
+		if (keyListener.getC2(j2_.getNum())) { j2_.coup0();}
+	}
+	
+	public static void main(String[] args) {
+		Personnage j1 = new Personnage(0, 0, 0, "inspecteur");
+		Personnage j2 = new Personnage(0, 0, 0, "inspecteur", j1);
+		j1.setAdversaire(j2);
 		Fenetre fenetre = new Fenetre(j1, j2);
+		/*List<Personnage> l = new ArrayList<Personnage>();
+		l.add(j1);
+		l.add(j2);
+		System.out.println(l.get(0).getName());*/
+		
 		
 	}
 }

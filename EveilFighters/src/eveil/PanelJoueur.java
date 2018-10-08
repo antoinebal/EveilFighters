@@ -40,6 +40,7 @@ public class PanelJoueur extends JPanel{
 	
 	public void paintComponent(Graphics g) {
 	//Calque
+	//remplacer par map peut être, qui est un Objet instancié à l'initialisation (qui contient une liste d'obstacles ou d'items)
 	g.fillRect(0, 0, this.getSize().width, this.getSize().height);
 	
 	

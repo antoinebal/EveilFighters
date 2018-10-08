@@ -40,6 +40,9 @@ public class Personnage {
 	 * en train de se déplacer. Peut être égal à 'u', 'd', 'l', et 'r' */
 	protected char orientation_;
 	
+	/*pointeur vers l'adversaire (pour lui donner des coups*/
+	protected Personnage adversaire_;
+	
 	//constructeur par défaut
 	public Personnage() {
 		x_=0;
@@ -61,14 +64,15 @@ public class Personnage {
 	}
 	
 	
+	//constructeur du j1
 	//dans le futur mettre un if en fonction du nom pour construire le perso
-	public Personnage(int num, int pvs, int force, int porteeCC, String nom) {
+	public Personnage(int pvs, int force, int porteeCC, String nom) {
 		x_=0;
 		y_=0;
 		
 		vitessePerso_=3;
 		
-		num_ = num;
+		num_ = 1;
 		pvs_ = pvs;
 		force_ = force;
 		porteeCC_ = porteeCC;
@@ -80,6 +84,32 @@ public class Personnage {
 		orientation_ = 'd';
 		image_ = nom_+"_down_1.png";
 	}
+	
+	//constructeur du j2
+	//dans le futur mettre un if en fonction du nom pour construire le perso
+	public Personnage(int pvs, int force, int porteeCC, String nom, Personnage adversaire) {
+		x_=0;
+		y_=0;
+		
+		vitessePerso_=3;
+		
+		num_ = 2;
+		pvs_ = pvs;
+		force_ = force;
+		porteeCC_ = porteeCC;
+		nom_ = nom;
+		
+		taille_ = 50;
+		largeur_ = 50;
+		
+		orientation_ = 'd';
+		image_ = nom_+"_down_1.png";
+		
+		adversaire_ = adversaire;
+	}
+	
+	/*pour finaliser la constrution du j1*/
+	public void setAdversaire(Personnage adversaire) {adversaire_ = adversaire;}
 	
 	public void setX(int x) { 
 		/*si l'orientation n'est pas u et que l'on a monté,
@@ -131,6 +161,30 @@ public class Personnage {
 		return -1;
 	}
 	
+	public void coup0() {
+		/*ce coup dépendra des coordonnées de l'adversaire peut être, auquel cas
+		 * il faudrait que le perso est accès au joueur pour prendre ses cos
+		 */
+		//faire un grand if en fonction du nom
+		//appeler les fonctions recevoir coup si jamais l'autre joueur est touché
+		System.out.println("Je donne un coup d'épée.");
+	}
+	
+	public void coup1() {
+		/*ce coup dépendra des coordonnées de l'adversaire peut être, auquel cas
+		 * il faudrait que le perso est accès au joueur pour prendre ses cos
+		 */
+		System.out.println("Je lance une boule de feu.");
+	}
+	
+	public void coup2() {
+		/*ce coup dépendra des coordonnées de l'adversaire peut être, auquel cas
+		 * il faudrait que le perso est accès au joueur pour prendre ses cos
+		 */
+		System.out.println("J'appelle mes sbires.");
+	}
+
+	
 	public int getX() {return x_;}
 	public int getY() {return y_;}
 	public int getVit() {return vitessePerso_; }
@@ -139,6 +193,8 @@ public class Personnage {
 	
 	public int getTaille() {return taille_;}
 	public int getLarg() {return largeur_;}
+	
+	public String getName() {return nom_;	}
 	
 	public String getImage() {
 		if (orientation_ == 'u') {
