@@ -25,6 +25,8 @@ public class PanelJoueur extends JPanel{
 	private int x2_;
 	private int y2_;
 	
+	private ImageIcon ii1_;
+	private ImageIcon ii2_;
 	
 	public PanelJoueur(Fenetre win, Personnage j1, Personnage j2) {
 		win_=win;
@@ -41,6 +43,7 @@ public class PanelJoueur extends JPanel{
 	public void paintComponent(Graphics g) {
 	//Calque
 	//remplacer par map peut être, qui est un Objet instancié à l'initialisation (qui contient une liste d'obstacles ou d'items)
+	g.setColor(Color.WHITE);
 	g.fillRect(0, 0, this.getSize().width, this.getSize().height);
 	
 	
@@ -52,8 +55,17 @@ public class PanelJoueur extends JPanel{
 	j1_.tic();
 	j2_.tic();
 	
-	g.drawImage(new ImageIcon(j1_.getImage()).getImage(), x1_, y1_, j1_.getLarg(), j1_.getTaille(), null);
-	g.drawImage(new ImageIcon(j2_.getImage()).getImage(), x2_, y2_, j2_.getLarg(), j2_.getTaille(), null);
+	ii1_ = new ImageIcon(j1_.getImage());
+	ii2_ = new ImageIcon(j2_.getImage());
+	
+	j1_.setTaille(ii1_.getImage().getHeight(null));
+	j1_.setLarg(ii1_.getImage().getWidth(null));
+	
+	j2_.setTaille(ii2_.getImage().getHeight(null));
+	j2_.setLarg(ii2_.getImage().getWidth(null));
+	
+	g.drawImage(ii1_.getImage(), x1_, y1_, j1_.getLarg(), j1_.getTaille(), null);
+	g.drawImage(ii2_.getImage(), x2_, y2_, j2_.getLarg(), j2_.getTaille(), null);
 	
 	}
 	

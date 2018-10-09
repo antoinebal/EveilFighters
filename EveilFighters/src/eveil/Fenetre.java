@@ -1,6 +1,9 @@
 package eveil;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+
+import java.awt.Image;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Iterator;
@@ -179,10 +182,14 @@ public class Fenetre {
 	}
 	
 	public static void main(String[] args) {
-		Personnage j1 = new Personnage(10, 1, 10, "inspecteur");
-		Personnage j2 = new Personnage(10, 1, 10, "inspecteur", j1);
+		Personnage j1 = new Personnage(10, 1, 10, "lucas");
+		Personnage j2 = new Personnage(10, 1, 10, "lucas", j1);
 		j1.setAdversaire(j2);
+		
+		
+		
 		Fenetre fenetre = new Fenetre(j1, j2);
+		
 		/*List<Personnage> l = new ArrayList<Personnage>();
 		l.add(j1);
 		l.add(j2);

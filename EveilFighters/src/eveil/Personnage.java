@@ -1,6 +1,8 @@
 package eveil;
 
 import java.lang.String;
+//import javax.swing.ImageIcon;
+
 
 
 public class Personnage {
@@ -51,6 +53,13 @@ public class Personnage {
 	0 = idle, 1 = walking, 2 = hitting, 3 = mort ... */
 	protected int etat_;
 	
+	//protected ImageIcon imageIcon_;
+	
+	/* facteur appelé dans setLarg et setTaille, eux mêmes appelés
+	 * par le PanelJoueur pour dire au personnage de prendre en compte
+	 * la taille de son image dans ses largeurs et tailles
+	 */
+	protected int facteurGrandeur_=4;
 
 	
 	//constructeur par défaut
@@ -65,15 +74,18 @@ public class Personnage {
 		porteeCC_ = 0;
 		nom_ = "Drassius";
 		
-		taille_ = 50;
-		largeur_ = 50;
+		taille_ = 40;
+		largeur_ = 35;
 		
 		orientation_ = 'd';
-		image_ = nom_+"_down_1";
+		
+		image_=nom_+"_down_1.png";
 		animWalk_ = 0;
 		
 		compteurTic_ = 0;
 		etat_ = 0; //idle
+		
+		//facteurGrandeur_ = 4;
 
 	}
 	
@@ -92,11 +104,12 @@ public class Personnage {
 		porteeCC_ = porteeCC;
 		nom_ = nom;
 		
-		taille_ = 50;
-		largeur_ = 50;
+		taille_ = 40;
+		largeur_ = 40;
 		
 		orientation_ = 'd';
-		image_ = nom_+"_down_1.png";
+		
+		image_=nom_+"_down_1.png";
 		
 		compteurTic_ = 0;
 		etat_ = 0; //idle
@@ -116,11 +129,12 @@ public class Personnage {
 		porteeCC_ = porteeCC;
 		nom_ = nom;
 		
-		taille_ = 50;
-		largeur_ = 50;
+		taille_ = 40;
+		largeur_ = 40;
 		
 		orientation_ = 'd';
-		image_ = nom_+"_down_1.png";
+		
+		image_=nom_+"_down_1.png";
 		
 		adversaire_ = adversaire;
 		
@@ -187,11 +201,14 @@ public class Personnage {
 	//dir = 'u' 'd' 'l' 'r'
 	public void setOrientation(char dir) { orientation_ = dir;}
 	
+	public void setTaille(int taille) {taille_ = taille*facteurGrandeur_;}
+	public void setLarg(int largeur) {largeur_ = largeur*facteurGrandeur_;}
+	
 	public int handleAnimWalk() {
 		if (animWalk_ < 30 ) {return 1;}
 		if (animWalk_ < 60 ) {return 2;}
 		if (animWalk_ < 90 ) {return 1;}
-		if (animWalk_ < 120 ) {return 4;}
+		if (animWalk_ < 120 ) {return 3;}
 		return -1;
 	}
 	
@@ -284,16 +301,17 @@ public class Personnage {
 		//si le personnage est à l'arrêt
 		if (etat_ == 0) {
 		if (orientation_ == 'u') {
-			return nom_+"_up_1.png";
+			image_ = nom_+"_up_1.png";
+			
 		}
 		if (orientation_ == 'd') {
-			return nom_+"_down_1.png";
+			image_ = nom_+"_down_1.png";
 		}
 		if (orientation_ == 'l') {
-			return nom_+"_left_1.png";
+			image_ = nom_+"_left_1.png";
 		}
 		if (orientation_ == 'r') {
-			return nom_+"_right_1.png";
+			image_ = nom_+"_right_1.png";
 		}
 		}
 		
@@ -301,44 +319,49 @@ public class Personnage {
 		//si le personnage est en train de marcher
 		if (etat_ == 1) {
 		if (orientation_ == 'u') {
-			return nom_+"_up_"+Integer.toString(handleAnimWalk())+".png";
+			image_ = nom_+"_up_"+Integer.toString(handleAnimWalk())+".png";
 		}
 		if (orientation_ == 'd') {
-			return nom_+"_down_"+Integer.toString(handleAnimWalk())+".png";
+			image_ = nom_+"_down_"+Integer.toString(handleAnimWalk())+".png";
 		}
 		if (orientation_ == 'l') {
-			return nom_+"_left_"+Integer.toString(handleAnimWalk())+".png";
+			image_ = nom_+"_left_"+Integer.toString(handleAnimWalk())+".png";
 		}
 		if (orientation_ == 'r') {
-			return nom_+"_right_"+Integer.toString(handleAnimWalk())+".png";
+			image_ = nom_+"_right_"+Integer.toString(handleAnimWalk())+".png";
 		}
 		}
 		//si les personnage est en train de frapper
 		//j'ai mis des up partout pour le TEST
 		if (etat_ == 2) {
 		if (orientation_ == 'u') {
-			return nom_+"_up_C0_"+Integer.toString(handleTic())+".png";
+			image_ = nom_+"_up_C0_"+Integer.toString(handleTic())+".png";
 			//return "steve.jpeg";
 		}
 		if (orientation_ == 'd') {
-			return nom_+"_up_C0_"+Integer.toString(handleTic())+".png";
+			image_ = nom_+"_down_C0_"+Integer.toString(handleTic())+".png";
 			//return "steve.jpeg";
 		}
 		if (orientation_ == 'l') {
-			return nom_+"_up_C0_"+Integer.toString(handleTic())+".png";
+			image_ = nom_+"_left_C0_"+Integer.toString(handleTic())+".png";
 			//return "steve.jpeg";
 		}
 		if (orientation_ == 'r') {
-			return nom_+"_up_C0_"+Integer.toString(handleTic())+".png";
+			image_ = nom_+"_right_C0_"+Integer.toString(handleTic())+".png";
 			//return "steve.jpeg";
 		}
 		}
 		
 		//si le personnage est mort
-		if (etat_ == 3) { return "steve.jpeg";}
+		if (etat_ == 3) { image_ = "steve.jpeg";}
 		
 	
-		return "erreur";
+		/*imageIcon_.setDescription(image);
+		System.out.println(imageIcon_.getDescription());
+		largeur_ = imageIcon_.getImage().getWidth(null);
+		taille_ = imageIcon_.getImage().getHeight(null);*/
+		
+		return image_;
 	}
 	
 	void decPvs(int degats) {
