@@ -48,7 +48,7 @@ public class Personnage {
 	protected int compteurTic_;
 	
 	/*en marche, en train de frapper etc.
-	0 = idle, 1 = walking, 2 = hitting ... */
+	0 = idle, 1 = walking, 2 = hitting, 3 = mort ... */
 	protected int etat_;
 	
 
@@ -211,7 +211,28 @@ public class Personnage {
 		//appeler les fonctions recevoir coup si jamais l'autre joueur est touché
 		etat_ = 2;
 		System.out.println("Je donne un coup d'épée.");
-	}
+		if (orientation_ == 'l') {
+			if ((getX()-porteeCC_ < adversaire_.getX()+adversaire_.getLarg())
+				&&(getX()-porteeCC_ > adversaire_.getX())
+				&&(getY() < adversaire_.getY()+adversaire_.getTaille())
+				&&(getY()+getTaille() > adversaire_.getY())) {adversaire_.decPvs(force_);} else {System.out.println("LOUPE");}}
+		if (orientation_ == 'r') {
+			if ((getX()+getLarg()+porteeCC_ < adversaire_.getX()+adversaire_.getLarg())
+				&&(getX()+getLarg()+porteeCC_ > adversaire_.getX())
+				&&(getY() < adversaire_.getY()+getTaille())
+				&&(getY()+getTaille() > adversaire_.getY())) {adversaire_.decPvs(force_);} else {System.out.println("LOUPE");}}
+		if (orientation_ == 'u') {
+			if ((getY()-porteeCC_ < adversaire_.getY()+adversaire_.getTaille())
+				&&(getY()+porteeCC_ > adversaire_.getY())
+				&&(getX() < adversaire_.getX()+adversaire_.getLarg())
+				&&(getX()+getLarg() > adversaire_.getX())) {adversaire_.decPvs(force_);} else {System.out.println("LOUPE");}}
+		if (orientation_ == 'd') {
+			if ((getY()+getTaille()+porteeCC_ < adversaire_.getY()+adversaire_.getTaille())
+				&&(getY()+getTaille()+porteeCC_ > adversaire_.getY())
+				&&(getX() < adversaire_.getX()+adversaire_.getLarg())
+				&&(getX()+getLarg() > adversaire_.getX())) {adversaire_.decPvs(force_);} else {System.out.println("LOUPE");}}
+		}
+	
 	
 	public void coup1() {
 		/*ce coup dépendra des coordonnées de l'adversaire peut être, auquel cas
@@ -230,7 +251,8 @@ public class Personnage {
 	}
 	
 	public void tic() {
-		if ((etat_!=0)&(etat_!=1)) {
+		//si on est à l'arrêt, en train de marcher ou mort on ne remet pas setEtat à 0
+		if ((etat_!=0)&(etat_!=1)&(etat_!=3)) {
 		if ((compteurTic_ >=40)) {
 		setEtat(0);
 		compteurTic_=0;
@@ -312,7 +334,18 @@ public class Personnage {
 		}
 		}
 		
+		//si le personnage est mort
+		if (etat_ == 3) { return "steve.jpeg";}
+		
 	
 		return "erreur";
 	}
+	
+	void decPvs(int degats) {
+		pvs_ -= degats;
+		//si ses pvs sont négatifs le personnage meurt
+		if (pvs_ <= 0) {etat_ = 3;}
+		System.out.println("AIE il me reste "+pvs_);
+	}
+	
 }

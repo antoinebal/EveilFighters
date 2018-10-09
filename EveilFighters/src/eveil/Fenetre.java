@@ -179,8 +179,8 @@ public class Fenetre {
 	}
 	
 	public static void main(String[] args) {
-		Personnage j1 = new Personnage(0, 0, 0, "inspecteur");
-		Personnage j2 = new Personnage(0, 0, 0, "inspecteur", j1);
+		Personnage j1 = new Personnage(10, 1, 10, "inspecteur");
+		Personnage j2 = new Personnage(10, 1, 10, "inspecteur", j1);
 		j1.setAdversaire(j2);
 		Fenetre fenetre = new Fenetre(j1, j2);
 		/*List<Personnage> l = new ArrayList<Personnage>();
