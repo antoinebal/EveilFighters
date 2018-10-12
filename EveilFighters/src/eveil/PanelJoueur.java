@@ -27,12 +27,14 @@ public class PanelJoueur extends JPanel{
 	
 	private ImageIcon ii1_;
 	private ImageIcon ii2_;
+	private ImageIcon backGround_;
 	
 	public PanelJoueur(Fenetre win, Personnage j1, Personnage j2) {
 		win_=win;
 		j1_=j1;
 		j2_=j2;
-		
+	
+		backGround_ = new ImageIcon("grass.png");
 		/*x1_ = j1_.getX();
 		y1_ = j1_.getY();
 		x2_ = j2_.getX();
@@ -43,8 +45,8 @@ public class PanelJoueur extends JPanel{
 	public void paintComponent(Graphics g) {
 	//Calque
 	//remplacer par map peut être, qui est un Objet instancié à l'initialisation (qui contient une liste d'obstacles ou d'items)
-	g.setColor(Color.GREEN);
-	g.fillRect(0, 0, this.getSize().width, this.getSize().height);
+	
+	g.drawImage(backGround_.getImage(), 0, 0, this.getSize().width, this.getSize().height, null);
 	
 	
 	/*x1_ = j1_.getX();
@@ -62,10 +64,15 @@ public class PanelJoueur extends JPanel{
 	j1_.setGrandeur(ii1_.getImage().getHeight(null), ii1_.getImage().getWidth(null));
 	j2_.setGrandeur(ii2_.getImage().getHeight(null), ii2_.getImage().getWidth(null));
 
-	
+	if (j1_.getY() < j2_.getY()) {
 	g.drawImage(ii1_.getImage(), j1_.getX(), j1_.getY(), j1_.getLarg(), j1_.getTaille(), null);
 	g.drawImage(ii2_.getImage(), j2_.getX(), j2_.getY(), j2_.getLarg(), j2_.getTaille(), null);
+	} else {
+	g.drawImage(ii2_.getImage(), j2_.getX(), j2_.getY(), j2_.getLarg(), j2_.getTaille(), null);
+	g.drawImage(ii1_.getImage(), j1_.getX(), j1_.getY(), j1_.getLarg(), j1_.getTaille(), null);
+	}
 	
+	System.out.println("J1 ETAT : "+j1_.getEtat()+" ORIENTATION : "+j1_.getOrient());
 	
 	//TEST : pour dessiner les hitbox
 	g.setColor(Color.RED);

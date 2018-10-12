@@ -50,8 +50,8 @@ public class Personnage {
 	protected int compteurTic_;
 	
 	/*en marche, en train de frapper etc.
-	0 = idle, 1 = walking, 2 = hitting, 3 = mort ... */
-	protected int etat_;
+	i = idle, w = walking, 0 = hitting, m = mort ... */
+	protected char etat_;
 	
 	//protected ImageIcon imageIcon_;
 	
@@ -62,7 +62,23 @@ public class Personnage {
 	protected int facteurGrandeur_=4;
 	
 	protected HitBox hitBox_;
+	
+	/* indique si le personnage est en train de faire une action.
+	 * Typiquement, il sert à ne pas prendre en compte certaines actions lorsque
+	 * le personnage est occupé.
+	Pour l'instant je ne m'en suis pas encore servi
+	 */
+	protected boolean occupe_;
 
+	/* valeur max de animWalk pour les animations
+	 * de marche
+	 */
+	protected int maxAnimWalk_ = 100;
+	protected int palierAnimWalk_ = maxAnimWalk_/4;
+	
+	/* valeur max de tic pour les animations de coup*/
+	protected int maxTic_ = 40;
+	protected int palierTic_ = maxTic_/4;
 	
 	//constructeur par défaut
 	public Personnage() {
@@ -85,10 +101,11 @@ public class Personnage {
 		animWalk_ = 0;
 		
 		compteurTic_ = 0;
-		etat_ = 0; //idle
+		etat_ = 'i'; //idle
 		
 		hitBox_ = new HitBox();
 
+		occupe_ = false;
 	}
 	
 	
@@ -111,12 +128,14 @@ public class Personnage {
 		
 		orientation_ = 'd';
 		
-		image_=nom_+"_down_1.png";
+		image_=nom_+"_d_w_0.png";
 		
 		compteurTic_ = 0;
-		etat_ = 0; //idle
+		etat_ = 'i'; //idle
 		
 		hitBox_ = new HitBox();
+		
+		occupe_ = false;
 	}
 	
 	//constructeur du j2
@@ -138,14 +157,16 @@ public class Personnage {
 		
 		orientation_ = 'd';
 		
-		image_=nom_+"_down_1.png";
+		image_=nom_+"_d_w_0.png";
 		
 		adversaire_ = adversaire;
 		
 		compteurTic_ = 0;
-		etat_ = 0; //idle
+		etat_ = 'i'; //idle
 		
 		hitBox_ = new HitBox();
+		
+		occupe_ = false;
 	}
 	
 	/*pour finaliser la constrution du j1*/
@@ -157,8 +178,8 @@ public class Personnage {
 	 */
 	public void setX(int x) { 
 		//On ne fait rien si on est en train de frapper ou autre
-		if (etat_ <= 1) {
-		etat_=1;
+		if ((etat_ == 'i')||(etat_ == 'w')) {
+		etat_='w';
 		/*si l'orientation n'est pas u et que l'on a monté,
 		 * on change l'orientation
 		 */
@@ -173,7 +194,7 @@ public class Personnage {
 			orientation_ = 'r';
 		}
 		
-		animWalk_ = (animWalk_+1) % 120;
+		animWalk_ = (animWalk_+1) % maxAnimWalk_;
 		x_=x;
 		
 		//on maj la hitbox
@@ -185,8 +206,8 @@ public class Personnage {
 	 */
 	public void setY(int y) { 
 		//On ne fait rien si on est en train de frapper ou autre
-		if (etat_ <= 1) {
-		etat_ = 1;
+		if ((etat_ == 'i')||(etat_ == 'w')) {
+		etat_ = 'w';
 		/*si l'orientation n'est pas u et que l'on a monté,
 		 * on change l'orientation
 		 */
@@ -201,16 +222,13 @@ public class Personnage {
 			orientation_ = 'd';
 		}
 		
-		animWalk_ = (animWalk_+1) % 120;
+		animWalk_ = (animWalk_+1) % maxAnimWalk_;
 		y_=y;
 		hitBox_.setHB(x_, y_, taille_, largeur_);
 		}
 		}
 	public void setPos(int x, int y) { x_=x; y_=y;}
-	
-	//dir = 'u' 'd' 'l' 'r'
-	public void setOrientation(char dir) { orientation_ = dir;}
-	
+	public void setOrientation(char dir) { orientation_ = dir;}	
 	public void setTaille(int taille) {taille_ = taille*facteurGrandeur_; hitBox_.setHB(x_, y_, taille_, largeur_);}
 	public void setLarg(int largeur) {largeur_ = largeur*facteurGrandeur_; hitBox_.setHB(x_, y_, taille_, largeur_);}
 	public void setGrandeur(int taille, int largeur) {
@@ -220,18 +238,18 @@ public class Personnage {
 	}
 	
 	public int handleAnimWalk() {
-		if (animWalk_ < 30 ) {return 0;}
-		if (animWalk_ < 60 ) {return 1;}
-		if (animWalk_ < 90 ) {return 0;}
-		if (animWalk_ < 120 ) {return 2;}
+		if (animWalk_ <  palierAnimWalk_) {return 0;}
+		if (animWalk_ < 2*palierAnimWalk_ ) {return 1;}
+		if (animWalk_ < 3*palierAnimWalk_ ) {return 0;}
+		if (animWalk_ < maxAnimWalk_ ) {return 2;}
 		return -1;
 	}
 	
 	public int handleTic() {
-		if (compteurTic_ < 10 ) {return 0;}
-		if (compteurTic_ < 20 ) {return 1;}
-		if (compteurTic_ < 30 ) {return 2;}
-		if (compteurTic_ < 40 ) {return 3;}
+		if (compteurTic_ < palierTic_) {return 0;}
+		if (compteurTic_ < 2*palierTic_) {return 1;}
+		if (compteurTic_ < 3*palierTic_) {return 2;}
+		if (compteurTic_ < maxTic_) {return 3;}
 		return -1;
 	}
 	
@@ -241,7 +259,9 @@ public class Personnage {
 		 */
 		//faire un grand if en fonction du nom
 		//appeler les fonctions recevoir coup si jamais l'autre joueur est touché
-		etat_ = 2;
+		if (etat_ != '0') {
+		etat_ = '0';
+		occupe_ = true;
 		System.out.println("Je donne un coup d'épée.");
 		if (orientation_ == 'l') {
 			if ((getX()-porteeCC_ < adversaire_.getX()+adversaire_.getLarg())
@@ -264,13 +284,13 @@ public class Personnage {
 				&&(getX() < adversaire_.getX()+adversaire_.getLarg())
 				&&(getX()+getLarg() > adversaire_.getX())) {adversaire_.decPvs(force_);} else {System.out.println("LOUPE");}}
 		}
-	
+	}
 	
 	public void coup1() {
 		/*ce coup dépendra des coordonnées de l'adversaire peut être, auquel cas
 		 * il faudrait que le perso est accès au joueur pour prendre ses cos
 		 */
-		etat_ = 2;
+		etat_ = '0';
 		System.out.println("Je lance une boule de feu.");
 	}
 	
@@ -278,15 +298,15 @@ public class Personnage {
 		/*ce coup dépendra des coordonnées de l'adversaire peut être, auquel cas
 		 * il faudrait que le perso est accès au joueur pour prendre ses cos
 		 */
-		etat_ = 2;
+		etat_ = '0';
 		System.out.println("J'appelle mes sbires.");
 	}
 	
 	public void tic() {
 		//si on est à l'arrêt, en train de marcher ou mort on ne remet pas setEtat à 0
-		if ((etat_!=0)&(etat_!=1)&(etat_!=3)) {
+		if ((etat_!='i')&(etat_!='w')&(etat_!='m')) {
 		if ((compteurTic_ >=40)) {
-		setEtat(0);
+		setEtat('i');
 		compteurTic_=0;
 		} else {
 		++compteurTic_;
@@ -294,97 +314,38 @@ public class Personnage {
 		}
 	}
 
-	public void setEtat(int etat) {
+	public void setEtat(char etat) {
 		etat_ = etat;
 	}
 	
 	public int getX() {return x_;}
 	public int getY() {return y_;}
 	public int getVit() {return vitessePerso_; }
-	
 	public int getNum() {return num_;}
-	
 	public int getTaille() {return taille_;}
 	public int getLarg() {return largeur_;}
-	
 	public String getName() {return nom_;	}
-	
-	public int getEtat() {return etat_;}
+	public char getEtat() {return etat_;}
 	public char getOrient() {return orientation_;}
 	public HitBox getHB() {return hitBox_;}
 	
 	public String getImage() {
 		//si le personnage est à l'arrêt
-		if (etat_ == 0) {
-		if (orientation_ == 'u') {
-			image_ = nom_+"_up_0.png";
-			
+		if (etat_ == 'm') {image_ ="steve.jpeg";}
+		else if (etat_ == 'i') {image_=nom_+"_"+Character.toString(orientation_)+"_w_0.png";}
+		else {
+			int NO=0;
+			if (etat_ == 'w') {NO = handleAnimWalk();}
+			if (etat_ == '0') {NO = handleTic();}
+			image_ = nom_+"_"+Character.toString(orientation_)+"_"+Character.toString(etat_)+"_"+Integer.toString(NO)+".png";
 		}
-		if (orientation_ == 'd') {
-			image_ = nom_+"_down_0.png";
-		}
-		if (orientation_ == 'l') {
-			image_ = nom_+"_left_0.png";
-		}
-		if (orientation_ == 'r') {
-			image_ = nom_+"_right_0.png";
-		}
-		}
-		
-		
-		//si le personnage est en train de marcher
-		if (etat_ == 1) {
-		if (orientation_ == 'u') {
-			image_ = nom_+"_up_"+Integer.toString(handleAnimWalk())+".png";
-		}
-		if (orientation_ == 'd') {
-			image_ = nom_+"_down_"+Integer.toString(handleAnimWalk())+".png";
-		}
-		if (orientation_ == 'l') {
-			image_ = nom_+"_left_"+Integer.toString(handleAnimWalk())+".png";
-		}
-		if (orientation_ == 'r') {
-			image_ = nom_+"_right_"+Integer.toString(handleAnimWalk())+".png";
-		}
-		}
-		//si les personnage est en train de frapper
-		//j'ai mis des up partout pour le TEST
-		if (etat_ == 2) {
-		if (orientation_ == 'u') {
-			image_ = nom_+"_up_C0_"+Integer.toString(handleTic())+".png";
-			//return "steve.jpeg";
-		}
-		if (orientation_ == 'd') {
-			image_ = nom_+"_down_C0_"+Integer.toString(handleTic())+".png";
-			//return "steve.jpeg";
-		}
-		if (orientation_ == 'l') {
-			image_ = nom_+"_left_C0_"+Integer.toString(handleTic())+".png";
-			//return "steve.jpeg";
-		}
-		if (orientation_ == 'r') {
-			image_ = nom_+"_right_C0_"+Integer.toString(handleTic())+".png";
-			//return "steve.jpeg";
-		}
-		
-		}
-		
-		//si le personnage est mort
-		if (etat_ == 3) { image_ = "steve.jpeg";}
-		
-	
-		/*imageIcon_.setDescription(image);
-		System.out.println(imageIcon_.getDescription());
-		largeur_ = imageIcon_.getImage().getWidth(null);
-		taille_ = imageIcon_.getImage().getHeight(null);*/
-		
 		return image_;
 	}
 	
 	void decPvs(int degats) {
 		pvs_ -= degats;
 		//si ses pvs sont négatifs le personnage meurt
-		if (pvs_ <= 0) {etat_ = 3;}
+		if (pvs_ <= 0) {etat_ = 'm';}
 		System.out.println("AIE il me reste "+pvs_);
 	}
 	

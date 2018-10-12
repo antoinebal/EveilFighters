@@ -24,19 +24,19 @@ public class HitBox {
 	}
 	
 	public HitBox(int x, int y, int taille, int largeur) {
-		hg_ = new Point(x, y+3*(taille/4));
-		hd_ = new Point(x+largeur, y+3*(taille/4));
+		hg_ = new Point(x, y+2*(taille/3));
+		hd_ = new Point(x+largeur, y+2*(taille/3));
 		bg_ = new Point(x, y+taille);
 		bd_ = new Point(x+largeur, y+taille);
-		System.out.println("hg : "+hg_+"hd : "+hd_+"bg : "+bg_+"bd : "+bd_);
+		//System.out.println("hg : "+hg_+"hd : "+hd_+"bg : "+bg_+"bd : "+bd_);
 	}
 	
 	public void setHB(int x, int y, int taille, int largeur) {
-		hg_.setLocation(x, y+3*(taille/4));
-		hd_.setLocation(x+largeur, y+3*(taille/4));
+		hg_.setLocation(x, y+2*(taille/3));
+		hd_.setLocation(x+largeur, y+2*(taille/3));
 		bg_.setLocation(x, y+taille);
 		bd_.setLocation(x+largeur, y+taille);
-		System.out.println("hg : "+hg_+"hd : "+hd_+"bg : "+bg_+"bd : "+bd_);
+		//System.out.println("hg : "+hg_+"hd : "+hd_+"bg : "+bg_+"bd : "+bd_);
 	}
 	
 	public Point getHG() { return hg_;}

@@ -96,7 +96,7 @@ public class Fenetre {
 			j.setY(0);
 			j.setOrientation('u');
 		    } else if (checkCollision('u', j, jFixe)) {
-		    j.setY((int) jFixe.getHB().getBG().getY()-3*(jFixe.getTaille()/4));
+		    j.setY((int) jFixe.getHB().getBG().getY()-2*(jFixe.getTaille()/3));
 		    j.setOrientation('u');
 		    } else {
 			j.setY(j.getY()-j.getVit());

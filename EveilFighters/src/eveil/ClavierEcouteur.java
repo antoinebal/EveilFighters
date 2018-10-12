@@ -66,20 +66,20 @@ public class ClavierEcouteur implements KeyListener {
 	@Override
 	public void keyReleased(KeyEvent arg0) {
 		/*si le joueur était en état walking on le met en IDLE*/
-		if (arg0.getKeyCode()==38) { up1_ = false; if (j1_.getEtat()==1) {j1_.setEtat(0);}} //arrows
-		if (arg0.getKeyCode()==40) { down1_ = false;if (j1_.getEtat()==1) {j1_.setEtat(0);}}
-		if (arg0.getKeyCode()==37) { left1_ = false;if (j1_.getEtat()==1) {j1_.setEtat(0);}}
-		if (arg0.getKeyCode()==39) { right1_ = false;if (j1_.getEtat()==1) {j1_.setEtat(0);}}
+		if (arg0.getKeyCode()==38) { up1_ = false; if (j1_.getEtat()=='w') {j1_.setEtat('i');}} //arrows
+		if (arg0.getKeyCode()==40) { down1_ = false; if (j1_.getEtat()=='w') {j1_.setEtat('i');}}
+		if (arg0.getKeyCode()==37) { left1_ = false; if (j1_.getEtat()=='w') {j1_.setEtat('i');}}
+		if (arg0.getKeyCode()==39) { right1_ = false; if (j1_.getEtat()=='w') {j1_.setEtat('i');}}
 		
 		if (arg0.getKeyCode()==96) { coup0_1_ = false;} //0
 		if (arg0.getKeyCode()==97) { coup1_1_ = false;} //1
 		if (arg0.getKeyCode()==98) { coup2_1_ = false;} //2
 		
 		/*si le joueur était en état walking on le met en IDLE*/
-		if (arg0.getKeyCode()==90) { up2_ = false;if (j2_.getEtat()==1) {j2_.setEtat(0);}} //z
-		if (arg0.getKeyCode()==83) { down2_ = false;if (j2_.getEtat()==1) {j2_.setEtat(0);}} //s
-		if (arg0.getKeyCode()==81) { left2_ = false;if (j2_.getEtat()==1) {j2_.setEtat(0);}} //q
-		if (arg0.getKeyCode()==68) { right2_ = false;if (j2_.getEtat()==1) {j2_.setEtat(0);}} //d
+		if (arg0.getKeyCode()==90) { up2_ = false; if (j2_.getEtat()=='w') {j2_.setEtat('i');}} //z
+		if (arg0.getKeyCode()==83) { down2_ = false; if (j2_.getEtat()=='w') {j2_.setEtat('i');}} //s
+		if (arg0.getKeyCode()==81) { left2_ = false; if (j2_.getEtat()=='w') {j2_.setEtat('i');}} //q
+		if (arg0.getKeyCode()==68) { right2_ = false; if (j2_.getEtat()=='w') {j2_.setEtat('i');}} //d
 		
 		if (arg0.getKeyCode()==32) { coup0_2_ = false;} //space
 		if (arg0.getKeyCode()==86) { coup1_1_ = false;} //v
