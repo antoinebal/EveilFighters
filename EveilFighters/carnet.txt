@@ -1,4 +1,7 @@
 Pb animation resolvable en faisant varier les attributs taille et largeur en fonction de l'image --> recuperer la taille de l'image et la pondérer
 
 Pb à corriger : on peut donner deux coups alors que l'animation n'est même pas finie
+ET si on lache le bouton de coup avant que l'animation ne se finisse, celle-ci s'avorte.
+
+Pb à corriger : lorsque qu'il y a une collision sur l'axe de y, le personnage du bas arriva à pousser le personnage du haut.
 

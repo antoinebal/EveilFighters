@@ -96,7 +96,7 @@ public class Fenetre {
 			j.setY(0);
 			j.setOrientation('u');
 		    } else if (checkCollision('u', j, jFixe)) {
-		    j.setY(jFixe.getY()+jFixe.getTaille());
+		    j.setY((int) jFixe.getHB().getBG().getY()-3*(jFixe.getTaille()/4));
 		    j.setOrientation('u');
 		    } else {
 			j.setY(j.getY()-j.getVit());
@@ -107,7 +107,7 @@ public class Fenetre {
 			j.setY(panel_.getHeight() -j.getTaille());
 			j.setOrientation('d');
 		    } else if (checkCollision('d', j, jFixe)) {
-		    j.setY(jFixe.getY()-j.getTaille());
+		    j.setY((int) (jFixe.getHB().getHG().getY()-j.getTaille()));
 		    j.setOrientation('d');
 		    } else {
 			j.setY(j.getY()+j.getVit());
@@ -118,7 +118,7 @@ public class Fenetre {
 			j.setX(0);
 			j.setOrientation('l');
 		    } else if (checkCollision('l',j, jFixe)) {
-		    j.setX(jFixe.getX()+jFixe.getLarg());
+		    j.setX((int) jFixe.getHB().getHD().getX());
 		    j.setOrientation('l');
 		    } else {
 			j.setX(j.getX()-j.getVit());
@@ -129,7 +129,7 @@ public class Fenetre {
 			j.setX(window_.getWidth()-j.getLarg());
 			j.setOrientation('r');
 		    } else if (checkCollision('r', j, jFixe)) {
-		    	j.setX(jFixe.getX()-j.getLarg());
+		    	j.setX((int) (jFixe.getHB().getHG().getX()-j.getLarg()));
 		    	j.setOrientation('r');
 		    } else {
 			j.setX(j.getX()+j.getVit());
@@ -145,25 +145,25 @@ public class Fenetre {
 	 * de rectifier la position des personnages*/
 	boolean checkCollision(char dir, Personnage jM, Personnage jF) {
 		if (dir == 'l') {
-			if ((jM.getX()-jM.getVit() < jF.getX()+jF.getLarg())
-				&&(jM.getX()-jM.getVit() > jF.getX())
-				&&(jM.getY() < jF.getY()+jF.getTaille())
-				&&(jM.getY()+jM.getTaille() > jF.getY())) {return true;} else {return false;}}
+			if ((jM.getHB().getHG().getX()-jM.getVit() < jF.getHB().getHD().getX())
+				&&(jM.getHB().getHG().getX()-jM.getVit() > jF.getHB().getHG().getX())
+				&&(jM.getHB().getHG().getY() < jF.getHB().getBG().getY())
+				&&(jM.getHB().getBG().getY() > jF.getHB().getHG().getY())) {return true;} else {return false;}}
 		if (dir == 'r') {
-			if ((jM.getX()+jM.getLarg()+jM.getVit() < jF.getX()+jF.getLarg())
-				&&(jM.getX()+jM.getLarg()+jM.getVit() > jF.getX())
-				&&(jM.getY() < jF.getY()+jF.getTaille())
-				&&(jM.getY()+jM.getTaille() > jF.getY())) {return true;} else {return false;}}
+			if ((jM.getHB().getHD().getX()+jM.getVit() < jF.getHB().getHD().getX())
+				&&(jM.getHB().getHD().getX()+jM.getVit() > jF.getHB().getHG().getX())
+				&&(jM.getHB().getHG().getY() < jF.getHB().getBG().getY())
+				&&(jM.getHB().getBG().getY() > jF.getHB().getHG().getY())) {return true;} else {return false;}}
 		if (dir == 'u') {
-			if ((jM.getY()-jM.getVit() < jF.getY()+jF.getTaille())
-				&&(jM.getY()+jM.getVit() > jF.getY())
-				&&(jM.getX() < jF.getX()+jF.getLarg())
-				&&(jM.getX()+jM.getLarg() > jF.getX())) {return true;} else {return false;}}
+			if ((jM.getHB().getHG().getY()-jM.getVit() < jF.getHB().getBG().getY())
+				&&(jM.getHB().getHG().getY()+jM.getVit() > jF.getHB().getHG().getY())
+				&&(jM.getHB().getHG().getX() < jF.getHB().getHD().getX())
+				&&(jM.getHB().getHD().getX() > jF.getHB().getHG().getX())) {return true;} else {return false;}}
 		if (dir == 'd') {
-			if ((jM.getY()+jM.getTaille()+jM.getVit() < jF.getY()+jF.getTaille())
-				&&(jM.getY()+jM.getTaille()+jM.getVit() > jF.getY())
-				&&(jM.getX() < jF.getX()+jF.getLarg())
-				&&(jM.getX()+jM.getLarg() > jF.getX())) {return true;} else {return false;}}
+			if ((jM.getHB().getBG().getY()+jM.getVit() < jF.getHB().getBG().getY())
+				&&(jM.getHB().getBG().getY()+jM.getVit() > jF.getHB().getHG().getY())
+				&&(jM.getHB().getHG().getX() < jF.getHB().getHD().getX())
+				&&(jM.getHB().getHD().getX() > jF.getHB().getHG().getX())) {return true;} else {return false;}}
 			
 	return false;
 	}

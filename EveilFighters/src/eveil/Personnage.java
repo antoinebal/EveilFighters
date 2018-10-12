@@ -60,6 +60,8 @@ public class Personnage {
 	 * la taille de son image dans ses largeurs et tailles
 	 */
 	protected int facteurGrandeur_=4;
+	
+	protected HitBox hitBox_;
 
 	
 	//constructeur par défaut
@@ -74,8 +76,8 @@ public class Personnage {
 		porteeCC_ = 0;
 		nom_ = "Drassius";
 		
-		taille_ = 40;
-		largeur_ = 35;
+		//taille_ = 40;
+		//largeur_ = 35;
 		
 		orientation_ = 'd';
 		
@@ -85,7 +87,7 @@ public class Personnage {
 		compteurTic_ = 0;
 		etat_ = 0; //idle
 		
-		//facteurGrandeur_ = 4;
+		hitBox_ = new HitBox();
 
 	}
 	
@@ -104,8 +106,8 @@ public class Personnage {
 		porteeCC_ = porteeCC;
 		nom_ = nom;
 		
-		taille_ = 40;
-		largeur_ = 40;
+		//taille_ = 40;
+		//largeur_ = 40;
 		
 		orientation_ = 'd';
 		
@@ -113,13 +115,15 @@ public class Personnage {
 		
 		compteurTic_ = 0;
 		etat_ = 0; //idle
+		
+		hitBox_ = new HitBox();
 	}
 	
 	//constructeur du j2
 	//dans le futur mettre un if en fonction du nom pour construire le perso
 	public Personnage(int pvs, int force, int porteeCC, String nom, Personnage adversaire) {
-		x_=0;
-		y_=0;
+		x_=120;
+		y_=120;
 		
 		vitessePerso_=3;
 		
@@ -129,8 +133,8 @@ public class Personnage {
 		porteeCC_ = porteeCC;
 		nom_ = nom;
 		
-		taille_ = 40;
-		largeur_ = 40;
+		//taille_ = 40;
+		//largeur_ = 40;
 		
 		orientation_ = 'd';
 		
@@ -140,6 +144,8 @@ public class Personnage {
 		
 		compteurTic_ = 0;
 		etat_ = 0; //idle
+		
+		hitBox_ = new HitBox();
 	}
 	
 	/*pour finaliser la constrution du j1*/
@@ -167,8 +173,11 @@ public class Personnage {
 			orientation_ = 'r';
 		}
 		
-		animWalk_ = (animWalk_+15) % 120;
+		animWalk_ = (animWalk_+1) % 120;
 		x_=x;
+		
+		//on maj la hitbox
+		hitBox_.setHB(x_, y_, taille_, largeur_);
 		}
 	}
 	/* je passe l'était à 1 (walking) pour montrer que le
@@ -194,6 +203,7 @@ public class Personnage {
 		
 		animWalk_ = (animWalk_+1) % 120;
 		y_=y;
+		hitBox_.setHB(x_, y_, taille_, largeur_);
 		}
 		}
 	public void setPos(int x, int y) { x_=x; y_=y;}
@@ -201,14 +211,19 @@ public class Personnage {
 	//dir = 'u' 'd' 'l' 'r'
 	public void setOrientation(char dir) { orientation_ = dir;}
 	
-	public void setTaille(int taille) {taille_ = taille*facteurGrandeur_;}
-	public void setLarg(int largeur) {largeur_ = largeur*facteurGrandeur_;}
+	public void setTaille(int taille) {taille_ = taille*facteurGrandeur_; hitBox_.setHB(x_, y_, taille_, largeur_);}
+	public void setLarg(int largeur) {largeur_ = largeur*facteurGrandeur_; hitBox_.setHB(x_, y_, taille_, largeur_);}
+	public void setGrandeur(int taille, int largeur) {
+		taille_ = taille*facteurGrandeur_;
+		largeur_ = largeur*facteurGrandeur_;
+		hitBox_.setHB(x_, y_, taille_, largeur_);
+	}
 	
 	public int handleAnimWalk() {
-		if (animWalk_ < 30 ) {return 1;}
-		if (animWalk_ < 60 ) {return 2;}
-		if (animWalk_ < 90 ) {return 1;}
-		if (animWalk_ < 120 ) {return 3;}
+		if (animWalk_ < 30 ) {return 0;}
+		if (animWalk_ < 60 ) {return 1;}
+		if (animWalk_ < 90 ) {return 0;}
+		if (animWalk_ < 120 ) {return 2;}
 		return -1;
 	}
 	
@@ -296,22 +311,23 @@ public class Personnage {
 	
 	public int getEtat() {return etat_;}
 	public char getOrient() {return orientation_;}
+	public HitBox getHB() {return hitBox_;}
 	
 	public String getImage() {
 		//si le personnage est à l'arrêt
 		if (etat_ == 0) {
 		if (orientation_ == 'u') {
-			image_ = nom_+"_up_1.png";
+			image_ = nom_+"_up_0.png";
 			
 		}
 		if (orientation_ == 'd') {
-			image_ = nom_+"_down_1.png";
+			image_ = nom_+"_down_0.png";
 		}
 		if (orientation_ == 'l') {
-			image_ = nom_+"_left_1.png";
+			image_ = nom_+"_left_0.png";
 		}
 		if (orientation_ == 'r') {
-			image_ = nom_+"_right_1.png";
+			image_ = nom_+"_right_0.png";
 		}
 		}
 		
@@ -350,6 +366,7 @@ public class Personnage {
 			image_ = nom_+"_right_C0_"+Integer.toString(handleTic())+".png";
 			//return "steve.jpeg";
 		}
+		
 		}
 		
 		//si le personnage est mort
