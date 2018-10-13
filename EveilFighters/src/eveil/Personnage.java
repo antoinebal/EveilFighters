@@ -85,6 +85,12 @@ public class Personnage {
 	protected int maxTic_ = 40;
 	protected int palierTic_ = maxTic_/4;
 	
+	/*attributs pour ajuster l'affichage des images (modifiés dans ajusterAffichage
+	 * et utilisés par le PanelJoueur
+	 */
+	protected int ajustX_;
+	protected int ajustY_;
+	
 	//constructeur par défaut
 	public Personnage() {		
 		vitessePerso_=2;
@@ -100,6 +106,8 @@ public class Personnage {
 		animWalk_ = 0;
 		compteurTic_ = 0;
 		etat_ = 'i'; //idle
+		ajustX_ = 0;
+		ajustY_ = 0;
 	}
 	
 	
@@ -119,6 +127,8 @@ public class Personnage {
 		setLarg(new ImageIcon(image_).getImage().getWidth(null));	
 		compteurTic_ = 0;
 		etat_ = 'i'; //idle
+		ajustX_ = 0;
+		ajustY_ = 0;
 	}
 	
 	//constructeur du j2
@@ -138,6 +148,8 @@ public class Personnage {
 		adversaire_ = adversaire;
 		compteurTic_ = 0;
 		etat_ = 'i'; //idle
+		ajustX_ = 0;
+		ajustY_ = 0;
 	}
 	
 	/*pour finaliser la constrution du j1*/
@@ -318,6 +330,8 @@ public class Personnage {
 	public HitBox getHB() {return hitBox_;}
 	public int getXImage() {return xImage_;}
 	public int getYImage() {return yImage_;}
+	public int getAjustX() {return ajustX_;}
+	public int getAjustY() {return ajustY_;}
 	
 	public String getImage() {
 		//si le personnage est à l'arrêt
@@ -329,10 +343,39 @@ public class Personnage {
 			if (etat_ == '0') {NO = handleTic();}
 			image_ = nom_+"_"+Character.toString(orientation_)+"_"+Character.toString(etat_)+"_"+Integer.toString(NO)+".png";
 		}
+		ajusterAffichage();
 		return image_;
 	}
 	
-	void decPvs(int degats) {
+	/* cette fonction ajuste l'affichage de chaque image, elle modifie des indicateurs
+	 * différentiels en fonction de x et de y, qui seront pris en compte dans l'affichage 
+	 */
+	public void ajusterAffichage() {
+		if (nom_ == "lucas") {
+		if ((orientation_ == 'l')&&(etat_ == '0')&&(handleTic()==0)) { ajustX_ = -5;}
+		else if ((orientation_ == 'l')&&(etat_ == '0')&&(handleTic()==1)) { ajustX_ = -5;}
+		else if ((orientation_ == 'l')&&(etat_ == '0')&&(handleTic()==2)) { ajustX_ = -40;}
+		else if ((orientation_ == 'l')&&(etat_ == '0')&&(handleTic()==3)) { ajustX_ = -50;}
+		
+		else if ((orientation_ == 'r')&&(etat_ == '0')&&(handleTic()==0)) { ajustX_ = -15;}
+		else if ((orientation_ == 'r')&&(etat_ == '0')&&(handleTic()==1)) { ajustX_ = -15;}
+		else if ((orientation_ == 'r')&&(etat_ == '0')&&(handleTic()==2)) { ajustX_ = 0;}
+		else if ((orientation_ == 'r')&&(etat_ == '0')&&(handleTic()==3)) { ajustX_ = 0;}
+		
+		else if ((orientation_ == 'u')&&(etat_ == '0')&&(handleTic()==0)) { ajustY_ = 5;}
+		else if ((orientation_ == 'u')&&(etat_ == '0')&&(handleTic()==1)) { ajustY_ = 5;}
+		else if ((orientation_ == 'u')&&(etat_ == '0')&&(handleTic()==2)) { ajustY_ = -10;}
+		else if ((orientation_ == 'u')&&(etat_ == '0')&&(handleTic()==3)) { ajustY_ = -20;}
+		
+		else if ((orientation_ == 'd')&&(etat_ == '0')&&(handleTic()==0)) { ajustY_ = -15;}
+		else if ((orientation_ == 'd')&&(etat_ == '0')&&(handleTic()==1)) { ajustY_ = -13;}
+		else if ((orientation_ == 'd')&&(etat_ == '0')&&(handleTic()==2)) { ajustY_ = 5;}
+		else if ((orientation_ == 'd')&&(etat_ == '0')&&(handleTic()==3)) { ajustY_ = 5;}
+		else { ajustX_ = 0; ajustY_=0;}
+		} 
+	}
+	
+	public void decPvs(int degats) {
 		pvs_ -= degats;
 		//si ses pvs sont négatifs le personnage meurt
 		if (pvs_ <= 0) {etat_ = 'm';}

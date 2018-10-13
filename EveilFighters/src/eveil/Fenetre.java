@@ -70,6 +70,8 @@ public class Fenetre {
 			majPosition(j2_, j1_);
 			gereCoups();
 			//System.out.println("Etat :"+j1_.getEtat()+" X : "+j1_.getX()+" Y : "+j1_.getY());
+			
+			/* TESTS HITBOX
 			System.out.println("HG : "+j2_.getHB().getHG());
 			System.out.println("HD : "+j2_.getHB().getHD());
 			System.out.println("BG : "+j2_.getHB().getBG());
@@ -82,7 +84,7 @@ public class Fenetre {
 			System.out.println("Taille de base calculée à droite : "+(j2_.getHB().getBD().getY()-j2_.getHB().getHD().getY()));
 			
 			System.out.println("Largeur de base calculée en haut : "+(j2_.getHB().getHD().getX()-j2_.getHB().getHG().getX()));
-			System.out.println("Largeur de base calculée en bas : "+(j2_.getHB().getBD().getX()-j2_.getHB().getBG().getX()));
+			System.out.println("Largeur de base calculée en bas : "+(j2_.getHB().getBD().getX()-j2_.getHB().getBG().getX())); */
 			
 			//majPosition(liste itemsDyn)
 			panel_.repaint();

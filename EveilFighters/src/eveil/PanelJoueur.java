@@ -65,11 +65,11 @@ public class PanelJoueur extends JPanel{
 	j2_.setGrandeur(ii2_.getImage().getHeight(null), ii2_.getImage().getWidth(null));
 
 	if (j1_.getY() < j2_.getY()) {
-	g.drawImage(ii1_.getImage(), j1_.getXImage(), j1_.getYImage(), j1_.getLarg(), j1_.getTaille(), null);
-	g.drawImage(ii2_.getImage(), j2_.getXImage(), j2_.getYImage(), j2_.getLarg(), j2_.getTaille(), null);
+	g.drawImage(ii1_.getImage(), j1_.getXImage()+j1_.getAjustX(), j1_.getYImage()+j1_.getAjustY(), j1_.getLarg(), j1_.getTaille(), null);
+	g.drawImage(ii2_.getImage(), j2_.getXImage()+j2_.getAjustX(), j2_.getYImage()+j2_.getAjustY(), j2_.getLarg(), j2_.getTaille(), null);
 	} else {
-	g.drawImage(ii2_.getImage(), j2_.getXImage(), j2_.getYImage(), j2_.getLarg(), j2_.getTaille(), null);
-	g.drawImage(ii1_.getImage(), j1_.getXImage(), j1_.getYImage(), j1_.getLarg(), j1_.getTaille(), null);
+	g.drawImage(ii2_.getImage(), j2_.getXImage()+j2_.getAjustX(), j2_.getYImage()+j2_.getAjustY(), j2_.getLarg(), j2_.getTaille(), null);
+	g.drawImage(ii1_.getImage(), j1_.getXImage()+j1_.getAjustX(), j1_.getYImage()+j1_.getAjustY(), j1_.getLarg(), j1_.getTaille(), null);
 	}
 	
 	//System.out.println("J1 ETAT : "+j1_.getEtat()+" ORIENTATION : "+j1_.getOrient());

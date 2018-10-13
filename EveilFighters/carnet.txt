@@ -1,9 +1,15 @@
-Pb animation resolvable en faisant varier les attributs taille et largeur en fonction de l'image --> recuperer la taille de l'image et la pondérer  -> DONE
+Done : Pb animation resolvable en faisant varier les attributs taille et largeur en fonction de l'image --> recuperer la taille de l'image et la pondérer  -> DONE
 
-Pb à corriger : on peut donner deux coups alors que l'animation n'est même pas finie
+Done : Pb à corriger : on peut donner deux coups alors que l'animation n'est même pas finie
 ET si on lache le bouton de coup avant que l'animation ne se finisse, celle-ci s'avorte.
 
-Pb à corriger : lorsque qu'il y a une collision sur l'axe de y, le personnage du bas arriva à pousser le personnage du haut.
+Done : Pb à corriger : lorsque qu'il y a une collision sur l'axe de y, le personnage du bas arriva à pousser le personnage du haut. --> ce pb est corrigé, il était apparemment dû au changement
+de dimension de la hitbox en fonction de l'image du personnage. Maintenant la hitbox est fixe.
 
 
 A chaque string d'image devrait être associé un diff qui ajuste l'image sur l'écran et un autre qui ajuste la hitbox
+
+
+Pb à corriger : changer la fonction coup0 pour prendre en compte la hitbox de l'adversaire.
+
+Amélioration : délocaliser les fonctions de collisions ou autre fonction qui regarde si un points appartient à la hitbox de l'adversaire dans la classe hitbox.
