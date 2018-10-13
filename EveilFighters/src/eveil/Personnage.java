@@ -1,7 +1,7 @@
 package eveil;
 
 import java.lang.String;
-//import javax.swing.ImageIcon;
+import javax.swing.ImageIcon;
 
 
 
@@ -18,11 +18,17 @@ public class Personnage {
 	//portée du coup au corps-à-corps
 	protected int porteeCC_;
 	
-	//position suivant x
+	//position du personnage suivant x
 	protected int x_;
 	
-	//position suivant y
+	//position du personnage suivant y
 	protected int y_;
+	
+	//position de l'image suivant x (pour l'affichage)
+	protected int xImage_;
+	
+	//position de l'image suivant y (pour l'affichage)
+	protected int yImage_;
 	
 	//vitesse de déplacement
 	protected int vitessePerso_;
@@ -53,7 +59,6 @@ public class Personnage {
 	i = idle, w = walking, 0 = hitting, m = mort ... */
 	protected char etat_;
 	
-	//protected ImageIcon imageIcon_;
 	
 	/* facteur appelé dans setLarg et setTaille, eux mêmes appelés
 	 * par le PanelJoueur pour dire au personnage de prendre en compte
@@ -81,97 +86,74 @@ public class Personnage {
 	protected int palierTic_ = maxTic_/4;
 	
 	//constructeur par défaut
-	public Personnage() {
-		x_=0;
-		y_=0;
-		
+	public Personnage() {		
 		vitessePerso_=2;
-		
 		pvs_ = 0;
 		force_ = 0;
 		porteeCC_ = 0;
 		nom_ = "Drassius";
-		
-		//taille_ = 40;
-		//largeur_ = 35;
-		
 		orientation_ = 'd';
-		
 		image_=nom_+"_down_1.png";
+		//premières instanciations des dimensions (utiles pour la hitbox)
+		setTaille(new ImageIcon(image_).getImage().getHeight(null));
+		setLarg(new ImageIcon(image_).getImage().getWidth(null));		
 		animWalk_ = 0;
-		
 		compteurTic_ = 0;
 		etat_ = 'i'; //idle
-		
-		hitBox_ = new HitBox();
-
-		occupe_ = false;
 	}
 	
 	
 	//constructeur du j1
 	//dans le futur mettre un if en fonction du nom pour construire le perso
 	public Personnage(int pvs, int force, int porteeCC, String nom) {
-		x_=0;
-		y_=0;
-		
 		vitessePerso_=3;
-		
 		num_ = 1;
 		pvs_ = pvs;
 		force_ = force;
 		porteeCC_ = porteeCC;
 		nom_ = nom;
-		
-		//taille_ = 40;
-		//largeur_ = 40;
-		
 		orientation_ = 'd';
-		
 		image_=nom_+"_d_w_0.png";
-		
+		//premières instanciations des dimensions (utiles pour la hitbox)
+		setTaille(new ImageIcon(image_).getImage().getHeight(null));
+		setLarg(new ImageIcon(image_).getImage().getWidth(null));	
 		compteurTic_ = 0;
 		etat_ = 'i'; //idle
-		
-		hitBox_ = new HitBox();
-		
-		occupe_ = false;
 	}
 	
 	//constructeur du j2
 	//dans le futur mettre un if en fonction du nom pour construire le perso
 	public Personnage(int pvs, int force, int porteeCC, String nom, Personnage adversaire) {
-		x_=120;
-		y_=120;
-		
 		vitessePerso_=3;
-		
 		num_ = 2;
 		pvs_ = pvs;
 		force_ = force;
 		porteeCC_ = porteeCC;
 		nom_ = nom;
-		
-		//taille_ = 40;
-		//largeur_ = 40;
-		
 		orientation_ = 'd';
-		
 		image_=nom_+"_d_w_0.png";
-		
+		//premières instanciations des dimensions (utiles pour la hitbox)
+		setTaille(new ImageIcon(image_).getImage().getHeight(null));
+		setLarg(new ImageIcon(image_).getImage().getWidth(null));	
 		adversaire_ = adversaire;
-		
 		compteurTic_ = 0;
 		etat_ = 'i'; //idle
-		
-		hitBox_ = new HitBox();
-		
-		occupe_ = false;
 	}
 	
 	/*pour finaliser la constrution du j1*/
 	public void setAdversaire(Personnage adversaire) {adversaire_ = adversaire;}
 	
+	/*initPos est appelé dans fenêtre juste après la construction des joueurs : 
+	 * on a leurs coordonnées pour la première fois : on en profite pour affecter
+	 * aux coordonnées de l'image leurs premières valeurs et pour set la HitBox
+	 */
+	public void initPos(int x, int y) { 
+		x_=x; 
+		y_=y;
+		xImage_ = x_; 
+		yImage_ = y_ - 2*(taille_/3); 
+		hitBox_ = new HitBox(x_, y_, taille_, largeur_);
+		}
 	
 	/* je passe l'était à 1 (walking) pour montrer que le
 	 * personnage bute contre le mur
@@ -198,7 +180,9 @@ public class Personnage {
 		x_=x;
 		
 		//on maj la hitbox
-		hitBox_.setHB(x_, y_, taille_, largeur_);
+		hitBox_.setHB(x_, y_);
+		
+		xImage_ = x_;
 		}
 	}
 	/* je passe l'était à 1 (walking) pour montrer que le
@@ -224,17 +208,21 @@ public class Personnage {
 		
 		animWalk_ = (animWalk_+1) % maxAnimWalk_;
 		y_=y;
-		hitBox_.setHB(x_, y_, taille_, largeur_);
+		hitBox_.setHB(x_, y_);
+		
+		yImage_ = y_ - 2*(taille_/3);
 		}
 		}
-	public void setPos(int x, int y) { x_=x; y_=y;}
+	
+
+	
 	public void setOrientation(char dir) { orientation_ = dir;}	
-	public void setTaille(int taille) {taille_ = taille*facteurGrandeur_; hitBox_.setHB(x_, y_, taille_, largeur_);}
-	public void setLarg(int largeur) {largeur_ = largeur*facteurGrandeur_; hitBox_.setHB(x_, y_, taille_, largeur_);}
+	public void setTaille(int taille) {taille_ = taille*facteurGrandeur_;}
+	public void setLarg(int largeur) {largeur_ = largeur*facteurGrandeur_;}
 	public void setGrandeur(int taille, int largeur) {
 		taille_ = taille*facteurGrandeur_;
 		largeur_ = largeur*facteurGrandeur_;
-		hitBox_.setHB(x_, y_, taille_, largeur_);
+		//hitBox_.setHB(x_, y_, taille_, largeur_);
 	}
 	
 	public int handleAnimWalk() {
@@ -328,6 +316,8 @@ public class Personnage {
 	public char getEtat() {return etat_;}
 	public char getOrient() {return orientation_;}
 	public HitBox getHB() {return hitBox_;}
+	public int getXImage() {return xImage_;}
+	public int getYImage() {return yImage_;}
 	
 	public String getImage() {
 		//si le personnage est à l'arrêt

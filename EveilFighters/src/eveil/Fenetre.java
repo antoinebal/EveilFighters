@@ -11,7 +11,6 @@ import java.util.Iterator;
 public class Fenetre {
 	private PanelJoueur panel_;
 
-
 	//joueur 1
 	private Personnage j1_;
 	
@@ -29,20 +28,17 @@ public class Fenetre {
 	public Fenetre(Personnage j1, Personnage j2) {
 	
 		//j1 et j2 init
-		j1_ = j1;
-		j2_ = j2;
-		j1_.setPos(0, 0);
-		j2_.setPos(500, 500);
+	j1_ = j1;
+	j2_ = j2;
+	j1_.initPos(50, 50);
+	j2_.initPos(500, 500);
 		
-		window_ = new JFrame("Choix personnage");
-		panel_ = new PanelJoueur(this, j1_, j2_);
-
+	window_ = new JFrame("Eveil Fighters");
+	panel_ = new PanelJoueur(this, j1_, j2_);
 	
 	mouseListener = new SourisEcouteur();
 	keyListener = new ClavierEcouteur(j1_, j2_);
-	
-
-	
+		
 	//Configuration de la fenêtre
 	window_.setSize(1000, 700);
 	window_.setVisible(true);
@@ -50,10 +46,8 @@ public class Fenetre {
 	window_.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	//la fenêtre pop au centre de l'écran
 	window_.setLocationRelativeTo(null);
-	
 	//on set panel du joueur à la window
 	window_.setContentPane(panel_);
-	
 	//config listeners
 	window_.addMouseListener(mouseListener);
 	window_.addKeyListener(keyListener);
@@ -75,8 +69,20 @@ public class Fenetre {
 			majPosition(j1_, j2_);
 			majPosition(j2_, j1_);
 			gereCoups();
-			//System.out.println(j1_.getEtat());
+			//System.out.println("Etat :"+j1_.getEtat()+" X : "+j1_.getX()+" Y : "+j1_.getY());
+			System.out.println("HG : "+j2_.getHB().getHG());
+			System.out.println("HD : "+j2_.getHB().getHD());
+			System.out.println("BG : "+j2_.getHB().getBG());
+			System.out.println("BD : "+j2_.getHB().getBD());
 			
+			System.out.println("Taille de base : "+j2_.getHB().getTBase());
+			System.out.println("Largeur de base : "+j2_.getHB().getLBase());
+			
+			System.out.println("Taille de base calculée à gauche : "+(j2_.getHB().getBG().getY()-j2_.getHB().getHG().getY()));
+			System.out.println("Taille de base calculée à droite : "+(j2_.getHB().getBD().getY()-j2_.getHB().getHD().getY()));
+			
+			System.out.println("Largeur de base calculée en haut : "+(j2_.getHB().getHD().getX()-j2_.getHB().getHG().getX()));
+			System.out.println("Largeur de base calculée en bas : "+(j2_.getHB().getBD().getX()-j2_.getHB().getBG().getX()));
 			
 			//majPosition(liste itemsDyn)
 			panel_.repaint();
@@ -96,18 +102,18 @@ public class Fenetre {
 			j.setY(0);
 			j.setOrientation('u');
 		    } else if (checkCollision('u', j, jFixe)) {
-		    j.setY((int) jFixe.getHB().getBG().getY()-2*(jFixe.getTaille()/3));
+		    j.setY((int) jFixe.getHB().getBG().getY());
 		    j.setOrientation('u');
 		    } else {
 			j.setY(j.getY()-j.getVit());
 		    }
 		}
 		else if (keyListener.getDown(j.getNum())) {
-		    if ((j.getY() + j.getVit())> panel_.getHeight()-j.getTaille()) {
-			j.setY(panel_.getHeight() -j.getTaille());
+		    if ((j.getY() + j.getVit())> panel_.getHeight()-j.getHB().getTBase()) {
+			j.setY(panel_.getHeight() -j.getHB().getTBase());
 			j.setOrientation('d');
 		    } else if (checkCollision('d', j, jFixe)) {
-		    j.setY((int) (jFixe.getHB().getHG().getY()-j.getTaille()));
+		    j.setY((int) (jFixe.getHB().getHG().getY()-j.getHB().getTBase()));
 		    j.setOrientation('d');
 		    } else {
 			j.setY(j.getY()+j.getVit());
@@ -125,11 +131,11 @@ public class Fenetre {
 		    }
 		}
 		else if (keyListener.getRight(j.getNum())) {
-		    if ((j.getX() + j.getVit())> window_.getWidth()-j.getLarg()) {
-			j.setX(window_.getWidth()-j.getLarg());
+		    if ((j.getX() + j.getVit())> window_.getWidth()-j.getHB().getLBase()) {
+			j.setX(window_.getWidth()-j.getHB().getLBase());
 			j.setOrientation('r');
 		    } else if (checkCollision('r', j, jFixe)) {
-		    	j.setX((int) (jFixe.getHB().getHG().getX()-j.getLarg()));
+		    	j.setX((int) (jFixe.getHB().getHG().getX()-j.getHB().getLBase()));
 		    	j.setOrientation('r');
 		    } else {
 			j.setX(j.getX()+j.getVit());
