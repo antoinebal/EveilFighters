@@ -20,6 +20,8 @@ public class HitBox {
 	private int tailleDeBase_;
 	private int largeurDeBase_;
 	
+	private Personnage j_;
+	
 	
 	public HitBox() {
 		hg_ = new Point (0, 0);
@@ -31,7 +33,7 @@ public class HitBox {
 		largeurDeBase_=0;
 	}
 	
-	public HitBox(int x, int y, int taille, int largeur) {
+	public HitBox(int x, int y, int taille, int largeur, Personnage j) {
 		tailleDeBase_=taille-2*(taille/3);
 		largeurDeBase_=largeur;
 		
@@ -40,6 +42,7 @@ public class HitBox {
 		bg_ = new Point(x, y+tailleDeBase_);
 		bd_ = new Point(x+largeurDeBase_, y+tailleDeBase_);
 		//System.out.println("hg : "+hg_+"hd : "+hd_+"bg : "+bg_+"bd : "+bd_);
+		j_ = j;
 	}
 	
 	public void setHB(int x, int y) {
@@ -58,5 +61,34 @@ public class HitBox {
 	public Point getBD() { return bd_;}
 	public int getTBase() { return tailleDeBase_;}
 	public int getLBase() { return largeurDeBase_;}
+	
+	/*renvoie vrai si le mouvement de cette hitbox par ce différentiel
+	 * provoquerait une collision avec hBF.
+	 * Diff peut être la vitesse de l'item ou la portée d'un coup
+	 */
+	public boolean checkCollision(int diff, HitBox hBF) {
+		if (j_.getOrient() == 'l') {
+			if (((getHG().getX()-diff) < hBF.getHD().getX())
+				&&((getHG().getX()-diff) > hBF.getHG().getX())
+				&&(getHG().getY() < hBF.getBG().getY())
+				&&(getBG().getY() > hBF.getHG().getY())) {return true;} else {return false;}}
+		if (j_.getOrient() == 'r') {
+			if (((getHD().getX()+diff) < hBF.getHD().getX())
+				&&((getHD().getX()+diff) > hBF.getHG().getX())
+				&&(getHG().getY() < hBF.getBG().getY())
+				&&(getBG().getY() > hBF.getHG().getY())) {return true;} else {return false;}}
+		if (j_.getOrient() == 'u') {
+			if (((getHG().getY()-diff) < hBF.getBG().getY())
+				&&((getHG().getY())-diff > hBF.getHG().getY())
+				&&(getHG().getX() < hBF.getHD().getX())
+				&&(getHD().getX() > hBF.getHG().getX())) {return true;} else {return false;}}
+		if (j_.getOrient() == 'd') {
+			if (((getBG().getY()+diff) < hBF.getBG().getY())
+				&&((getBG().getY()+diff) > hBF.getHG().getY())
+				&&(getHG().getX() < hBF.getHD().getX())
+				&&(getHD().getX() > hBF.getHG().getX())) {return true;} else {return false;}}
+			
+	return false;
+	}
 		
 }

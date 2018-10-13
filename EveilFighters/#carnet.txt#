@@ -15,3 +15,21 @@ Pb à corriger : changer la fonction coup0 pour prendre en compte la hitbox de l
 Amélioration : délocaliser les fonctions de collisions ou autre fonction qui regarde si un points appartient à la hitbox de l'adversaire dans la classe hitbox.
 
 Amélioration : mettre des valeurs pour corriger chaque image en attribut du personnage (ou de l'imagerie)
+
+
+1HG : java.awt.Point[x=494,y=532]
+1HD : java.awt.Point[x=562,y=532]
+1BG : java.awt.Point[x=494,y=564]
+1BD : java.awt.Point[x=562,y=564]
+2HG : java.awt.Point[x=500,y=500]
+2HD : java.awt.Point[x=568,y=500]
+2BG : java.awt.Point[x=500,y=532]
+2BD : java.awt.Point[x=568,y=532]
+1HG : java.awt.Point[x=494,y=532]
+1HD : java.awt.Point[x=562,y=532]
+1BG : java.awt.Point[x=494,y=564]
+1BD : java.awt.Point[x=562,y=564]
+2HG : java.awt.Point[x=500,y=500]
+2HD : java.awt.Point[x=568,y=500]
+2BG : java.awt.Point[x=500,y=532]
+2BD : java.awt.Point[x=568,y=532]

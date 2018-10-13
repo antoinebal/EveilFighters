@@ -71,20 +71,34 @@ public class Fenetre {
 			gereCoups();
 			//System.out.println("Etat :"+j1_.getEtat()+" X : "+j1_.getX()+" Y : "+j1_.getY());
 			
-			/* TESTS HITBOX
-			System.out.println("HG : "+j2_.getHB().getHG());
-			System.out.println("HD : "+j2_.getHB().getHD());
-			System.out.println("BG : "+j2_.getHB().getBG());
-			System.out.println("BD : "+j2_.getHB().getBD());
+			/* TESTS HITBOX*/
+			/*System.out.println("1HG : "+j1_.getHB().getHG());
+			System.out.println("1HD : "+j1_.getHB().getHD());
+			System.out.println("1BG : "+j1_.getHB().getBG());
+			System.out.println("1BD : "+j1_.getHB().getBD());*/
 			
-			System.out.println("Taille de base : "+j2_.getHB().getTBase());
-			System.out.println("Largeur de base : "+j2_.getHB().getLBase());
+			/*System.out.println("1Taille de base : "+j1_.getHB().getTBase());
+			System.out.println("1Largeur de base : "+j1_.getHB().getLBase());
 			
-			System.out.println("Taille de base calculée à gauche : "+(j2_.getHB().getBG().getY()-j2_.getHB().getHG().getY()));
-			System.out.println("Taille de base calculée à droite : "+(j2_.getHB().getBD().getY()-j2_.getHB().getHD().getY()));
+			System.out.println("1Taille de base calculée zà gauche : "+(j1_.getHB().getBG().getY()-j1_.getHB().getHG().getY()));
+			System.out.println("1Taille de base calculée à droite : "+(j1_.getHB().getBD().getY()-j1_.getHB().getHD().getY()));
 			
-			System.out.println("Largeur de base calculée en haut : "+(j2_.getHB().getHD().getX()-j2_.getHB().getHG().getX()));
-			System.out.println("Largeur de base calculée en bas : "+(j2_.getHB().getBD().getX()-j2_.getHB().getBG().getX())); */
+			System.out.println("1Largeur de base calculée en haut : "+(j1_.getHB().getHD().getX()-j1_.getHB().getHG().getX()));
+			System.out.println("1Largeur de base calculée en bas : "+(j1_.getHB().getBD().getX()-j1_.getHB().getBG().getX())); */
+			
+			/*System.out.println("2HG : "+j2_.getHB().getHG());
+			System.out.println("2HD : "+j2_.getHB().getHD());
+			System.out.println("2BG : "+j2_.getHB().getBG());
+			System.out.println("2BD : "+j2_.getHB().getBD());*/
+			
+			/*System.out.println("2Taille de base : "+j2_.getHB().getTBase());
+			System.out.println("2Largeur de base : "+j2_.getHB().getLBase());
+			
+			System.out.println("2Taille de base calculée zà gauche : "+(j2_.getHB().getBG().getY()-j2_.getHB().getHG().getY()));
+			System.out.println("2Taille de base calculée à droite : "+(j2_.getHB().getBD().getY()-j2_.getHB().getHD().getY()));
+			
+			System.out.println("2Largeur de base calculée en haut : "+(j2_.getHB().getHD().getX()-j2_.getHB().getHG().getX()));
+			System.out.println("2Largeur de base calculée en bas : "+(j2_.getHB().getBD().getX()-j2_.getHB().getBG().getX())); */
 			
 			//majPosition(liste itemsDyn)
 			panel_.repaint();
@@ -100,45 +114,41 @@ public class Fenetre {
 	 */
 	public void majPosition(Personnage j, Personnage jFixe) {
 		if (keyListener.getUp(j.getNum())) {
+			j.setOrientation('u');
 		    if ((j.getY() - j.getVit())< 0) {
 			j.setY(0);
-			j.setOrientation('u');
-		    } else if (checkCollision('u', j, jFixe)) {
+		    } else if (j.checkCollisionAdv()) {
 		    j.setY((int) jFixe.getHB().getBG().getY());
-		    j.setOrientation('u');
 		    } else {
 			j.setY(j.getY()-j.getVit());
 		    }
 		}
 		else if (keyListener.getDown(j.getNum())) {
+			j.setOrientation('d');
 		    if ((j.getY() + j.getVit())> panel_.getHeight()-j.getHB().getTBase()) {
 			j.setY(panel_.getHeight() -j.getHB().getTBase());
-			j.setOrientation('d');
-		    } else if (checkCollision('d', j, jFixe)) {
+		    } else if (j.checkCollisionAdv()) {
 		    j.setY((int) (jFixe.getHB().getHG().getY()-j.getHB().getTBase()));
-		    j.setOrientation('d');
 		    } else {
 			j.setY(j.getY()+j.getVit());
 		    }
 		}
 		else if (keyListener.getLeft(j.getNum())) {
+			j.setOrientation('l');
 		    if ((j.getX() - j.getVit())< 0) {
 			j.setX(0);
-			j.setOrientation('l');
-		    } else if (checkCollision('l',j, jFixe)) {
+		    } else if (j.checkCollisionAdv()) {
 		    j.setX((int) jFixe.getHB().getHD().getX());
-		    j.setOrientation('l');
 		    } else {
 			j.setX(j.getX()-j.getVit());
 		    }
 		}
 		else if (keyListener.getRight(j.getNum())) {
+			j.setOrientation('r');
 		    if ((j.getX() + j.getVit())> window_.getWidth()-j.getHB().getLBase()) {
 			j.setX(window_.getWidth()-j.getHB().getLBase());
-			j.setOrientation('r');
-		    } else if (checkCollision('r', j, jFixe)) {
+		    } else if (j.checkCollisionAdv()) {
 		    	j.setX((int) (jFixe.getHB().getHG().getX()-j.getHB().getLBase()));
-		    	j.setOrientation('r');
 		    } else {
 			j.setX(j.getX()+j.getVit());
 		    }
@@ -147,34 +157,6 @@ public class Fenetre {
 	
 	}
 	
-	/* params : dir pour la direction dans laquelle il faut checker les collisions
-	 * jM est le personnage mobile, jF le fixe
-	 * Renvoie vrai s'il y a collision : c'est à la fonction appelante
-	 * de rectifier la position des personnages*/
-	boolean checkCollision(char dir, Personnage jM, Personnage jF) {
-		if (dir == 'l') {
-			if ((jM.getHB().getHG().getX()-jM.getVit() < jF.getHB().getHD().getX())
-				&&(jM.getHB().getHG().getX()-jM.getVit() > jF.getHB().getHG().getX())
-				&&(jM.getHB().getHG().getY() < jF.getHB().getBG().getY())
-				&&(jM.getHB().getBG().getY() > jF.getHB().getHG().getY())) {return true;} else {return false;}}
-		if (dir == 'r') {
-			if ((jM.getHB().getHD().getX()+jM.getVit() < jF.getHB().getHD().getX())
-				&&(jM.getHB().getHD().getX()+jM.getVit() > jF.getHB().getHG().getX())
-				&&(jM.getHB().getHG().getY() < jF.getHB().getBG().getY())
-				&&(jM.getHB().getBG().getY() > jF.getHB().getHG().getY())) {return true;} else {return false;}}
-		if (dir == 'u') {
-			if ((jM.getHB().getHG().getY()-jM.getVit() < jF.getHB().getBG().getY())
-				&&(jM.getHB().getHG().getY()+jM.getVit() > jF.getHB().getHG().getY())
-				&&(jM.getHB().getHG().getX() < jF.getHB().getHD().getX())
-				&&(jM.getHB().getHD().getX() > jF.getHB().getHG().getX())) {return true;} else {return false;}}
-		if (dir == 'd') {
-			if ((jM.getHB().getBG().getY()+jM.getVit() < jF.getHB().getBG().getY())
-				&&(jM.getHB().getBG().getY()+jM.getVit() > jF.getHB().getHG().getY())
-				&&(jM.getHB().getHG().getX() < jF.getHB().getHD().getX())
-				&&(jM.getHB().getHD().getX() > jF.getHB().getHG().getX())) {return true;} else {return false;}}
-			
-	return false;
-	}
 	
 	/* écoute le clavierEcouteur et appelle les fonctions coupX des personnages
 	 * si jamais ils ont donné un coup

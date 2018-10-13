@@ -164,7 +164,7 @@ public class Personnage {
 		y_=y;
 		xImage_ = x_; 
 		yImage_ = y_ - 2*(taille_/3); 
-		hitBox_ = new HitBox(x_, y_, taille_, largeur_);
+		hitBox_ = new HitBox(x_, y_, taille_, largeur_, this);
 		}
 	
 	/* je passe l'était à 1 (walking) pour montrer que le
@@ -174,19 +174,6 @@ public class Personnage {
 		//On ne fait rien si on est en train de frapper ou autre
 		if ((etat_ == 'i')||(etat_ == 'w')) {
 		etat_='w';
-		/*si l'orientation n'est pas u et que l'on a monté,
-		 * on change l'orientation
-		 */
-		if ((orientation_ != 'l')&&(x < x_)) {
-			orientation_ = 'l';
-		}
-		
-		/*si l'orientation n'est pas d et que l'on a descendu,
-		 * on change l'orientation
-		 */
-		if ((orientation_ != 'r')&&(x > x_)) {
-			orientation_ = 'r';
-		}
 		
 		animWalk_ = (animWalk_+1) % maxAnimWalk_;
 		x_=x;
@@ -204,19 +191,6 @@ public class Personnage {
 		//On ne fait rien si on est en train de frapper ou autre
 		if ((etat_ == 'i')||(etat_ == 'w')) {
 		etat_ = 'w';
-		/*si l'orientation n'est pas u et que l'on a monté,
-		 * on change l'orientation
-		 */
-		if ((y < y_)) {
-			orientation_ = 'u';
-		}
-		
-		/*si l'orientation n'est pas d et que l'on a descendu,
-		 * on change l'orientation
-		 */
-		if ((y > y_)) {
-			orientation_ = 'd';
-		}
 		
 		animWalk_ = (animWalk_+1) % maxAnimWalk_;
 		y_=y;
@@ -381,5 +355,7 @@ public class Personnage {
 		if (pvs_ <= 0) {etat_ = 'm';}
 		System.out.println("AIE il me reste "+pvs_);
 	}
+	
+	public boolean checkCollisionAdv() {return getHB().checkCollision(getVit(), adversaire_.getHB());}
 	
 }
