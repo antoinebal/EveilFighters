@@ -112,6 +112,7 @@ public class Fenetre {
 	/* met à jour la position du joueur en arg en fonction des infos
 	 * du key listener
 	 */
+	/* distinguer les cas joueurs et autre item dynamique */
 	public void majPosition(Personnage j, Personnage jFixe) {
 		if (keyListener.getUp(j.getNum())) {
 			j.setOrientation('u');
@@ -172,18 +173,33 @@ public class Fenetre {
 	}
 	
 	public static void main(String[] args) {
-		Personnage j1 = new Personnage(10, 1, 10, "lucas");
-		Personnage j2 = new Personnage(10, 1, 10, "lucas", j1);
+		Personnage j1 = new Lucas();
+		Personnage j2 = new Lucas(j1);
 		j1.setAdversaire(j2);
 		
 		
 		
 		Fenetre fenetre = new Fenetre(j1, j2);
 		
-		/*List<Personnage> l = new ArrayList<Personnage>();
+		//TEST ARRAYLIST : c'est ce qu'il faut utiliser
+		/*Personnage j3 = new Personnage(10, 1, 10, "drassius", j1);
+		Personnage j4 = new Personnage(10, 1, 10, "mazak", j1);
+		Personnage j5 = new Personnage(10, 1, 10, "maure", j1);
+		Personnage j6 = new Personnage(10, 1, 10, "derol", j1);
+		
+		List<Personnage> l = new ArrayList<Personnage>();
 		l.add(j1);
 		l.add(j2);
-		System.out.println(l.get(0).getName());*/
+		l.add(j3);
+		l.add(j4);
+		l.add(j5);
+		l.add(j6);
+		System.out.println(l.get(2).getName());
+		l.remove(j3);
+		System.out.println(l.get(2).getName());
+		int taille = l.size();
+		for (int NO = 0 ; NO < taille ; NO++) { System.out.println(l.get(NO).getName());}*/
+		//System.out.println(l.get(0).getName());
 		
 		
 	}

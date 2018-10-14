@@ -3,23 +3,38 @@ package eveil;
 /* cette classe rassemble les objets qui bougeront sur la carte
  * donc les boules de feu, les gobelins, les goules
  */
-public class ItemDyn {
-	private String image_;
+public abstract class ItemDyn extends Item {
 	
-	private String name_;
+	//la classe fille instancie tous les attributs à sa guise
+	protected int vitesse_;
+	protected int animWalk_;
+	protected char orientation_;
+	protected int compteurTic_;
+	protected int maxAnimWalk_;
+	protected int palierAnimWalk_;
+	protected int maxTic_ ;
+	protected int palierTic_;
+
+	public ItemDyn() {
+		super();
+	}
 	
-	private int vitesse_;
+	public void initPos(int x, int y) {
+		x_=x; 
+		y_=y;
+		xImage_ = x_; 
+		yImage_ = y_ - 2*(taille_/3); 
+		hitBox_ = new HitBox(x_, y_, taille_, largeur_, this);
+	}
 	
-	private int x_;
-	
-	private int y_;
-	
-	private int orientation_;
-	
-	//pirorité pour affichage au premier plan
-	private int priorite2D;
-	
-	private int animMove_;
-	
+	public abstract void setX(int x);
+	public abstract void setY(int y);
+	public void setOrientation(char dir){ orientation_ = dir;}
+	public abstract int handleAnimWalk();
+	public abstract int handleTic();
+	public abstract void tic();
+	public int getVit() {return vitesse_; }
+	public char getOrient()	{return orientation_;}
+	//public abstract boolean checkCollision(Item i);
 	
 }

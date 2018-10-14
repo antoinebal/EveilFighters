@@ -20,7 +20,7 @@ public class HitBox {
 	private int tailleDeBase_;
 	private int largeurDeBase_;
 	
-	private Personnage j_;
+	private ItemDyn j_;
 	
 	
 	public HitBox() {
@@ -33,7 +33,9 @@ public class HitBox {
 		largeurDeBase_=0;
 	}
 	
-	public HitBox(int x, int y, int taille, int largeur, Personnage j) {
+	
+	//constructeur pour item dynamique
+	public HitBox(int x, int y, int taille, int largeur, ItemDyn j) {
 		tailleDeBase_=taille-2*(taille/3);
 		largeurDeBase_=largeur;
 		
@@ -43,6 +45,19 @@ public class HitBox {
 		bd_ = new Point(x+largeurDeBase_, y+tailleDeBase_);
 		//System.out.println("hg : "+hg_+"hd : "+hd_+"bg : "+bg_+"bd : "+bd_);
 		j_ = j;
+	}
+	
+	//constructeur pour item fixe
+	public HitBox(int x, int y, int taille, int largeur) {
+		tailleDeBase_=taille-2*(taille/3);
+		largeurDeBase_=largeur;
+		
+		hg_ = new Point(x, y);
+		hd_ = new Point(x+largeurDeBase_, y);
+		bg_ = new Point(x, y+tailleDeBase_);
+		bd_ = new Point(x+largeurDeBase_, y+tailleDeBase_);
+		//System.out.println("hg : "+hg_+"hd : "+hd_+"bg : "+bg_+"bd : "+bd_);
+		
 	}
 	
 	public void setHB(int x, int y) {
@@ -65,6 +80,7 @@ public class HitBox {
 	/*renvoie vrai si le mouvement de cette hitbox par ce différentiel
 	 * provoquerait une collision avec hBF.
 	 * Diff peut être la vitesse de l'item ou la portée d'un coup
+	 * Cette fonction ne doit être appelée uniquement si l'item est dynamique
 	 */
 	public boolean checkCollision(int diff, HitBox hBF) {
 		if (j_.getOrient() == 'l') {
