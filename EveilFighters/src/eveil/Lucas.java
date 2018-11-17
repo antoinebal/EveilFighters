@@ -3,7 +3,7 @@ package eveil;
 public class Lucas extends Personnage {
 
 	public Lucas() {
-		super(10, 1, 10, "lucas");
+		super(10, 1, 10, "red");
 	}
 	
 	public Lucas(Personnage adversaire) {
@@ -35,27 +35,7 @@ public class Lucas extends Personnage {
 		if (etat_ != '0') {
 		etat_ = '0';
 		System.out.println("Je donne un coup d'épée.");
-		if (orientation_ == 'l') {
-			if ((getX()-porteeCC_ < adversaire_.getX()+adversaire_.getLarg())
-				&&(getX()-porteeCC_ > adversaire_.getX())
-				&&(getY() < adversaire_.getY()+adversaire_.getTaille())
-				&&(getY()+getTaille() > adversaire_.getY())) {adversaire_.decPvs(force_);} else {System.out.println("LOUPE");}}
-		if (orientation_ == 'r') {
-			if ((getX()+getLarg()+porteeCC_ < adversaire_.getX()+adversaire_.getLarg())
-				&&(getX()+getLarg()+porteeCC_ > adversaire_.getX())
-				&&(getY() < adversaire_.getY()+getTaille())
-				&&(getY()+getTaille() > adversaire_.getY())) {adversaire_.decPvs(force_);} else {System.out.println("LOUPE");}}
-		if (orientation_ == 'u') {
-			if ((getY()-porteeCC_ < adversaire_.getY()+adversaire_.getTaille())
-				&&(getY()+porteeCC_ > adversaire_.getY())
-				&&(getX() < adversaire_.getX()+adversaire_.getLarg())
-				&&(getX()+getLarg() > adversaire_.getX())) {adversaire_.decPvs(force_);} else {System.out.println("LOUPE");}}
-		if (orientation_ == 'd') {
-			if ((getY()+getTaille()+porteeCC_ < adversaire_.getY()+adversaire_.getTaille())
-				&&(getY()+getTaille()+porteeCC_ > adversaire_.getY())
-				&&(getX() < adversaire_.getX()+adversaire_.getLarg())
-				&&(getX()+getLarg() > adversaire_.getX())) {adversaire_.decPvs(force_);} else {System.out.println("LOUPE");}}
-		}
+		if (getHB().checkCollision(getVit(), adversaire_.getHB())) {adversaire_.decPvs(force_);} else {System.out.println("LOUPE");}}
 	}
 	
 	public void coup1() {

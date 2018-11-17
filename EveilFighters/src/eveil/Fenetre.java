@@ -27,7 +27,7 @@ public class Fenetre {
 	
 	public Fenetre(Personnage j1, Personnage j2) {
 	
-		//j1 et j2 init
+	//j1 et j2 init
 	j1_ = j1;
 	j2_ = j2;
 	j1_.initPos(50, 50);

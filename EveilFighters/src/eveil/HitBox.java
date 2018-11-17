@@ -61,8 +61,6 @@ public class HitBox {
 	}
 	
 	public void setHB(int x, int y) {
-		
-		
 		hg_ = new Point(x, y);
 		hd_ = new Point(x+largeurDeBase_, y);
 		bg_ = new Point(x, y+tailleDeBase_);
@@ -80,7 +78,7 @@ public class HitBox {
 	/*renvoie vrai si le mouvement de cette hitbox par ce différentiel
 	 * provoquerait une collision avec hBF.
 	 * Diff peut être la vitesse de l'item ou la portée d'un coup
-	 * Cette fonction ne doit être appelée uniquement si l'item est dynamique
+	 * Cette fonction ne doit être appelée que si l'item est dynamique
 	 */
 	public boolean checkCollision(int diff, HitBox hBF) {
 		if (j_.getOrient() == 'l') {
@@ -106,5 +104,6 @@ public class HitBox {
 			
 	return false;
 	}
+	
 		
 }

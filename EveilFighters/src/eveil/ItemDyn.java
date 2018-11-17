@@ -27,14 +27,15 @@ public abstract class ItemDyn extends Item {
 		hitBox_ = new HitBox(x_, y_, taille_, largeur_, this);
 	}
 	
-	public abstract void setX(int x);
-	public abstract void setY(int y);
 	public void setOrientation(char dir){ orientation_ = dir;}
-	public abstract int handleAnimWalk();
-	public abstract int handleTic();
-	public abstract void tic();
 	public int getVit() {return vitesse_; }
 	public char getOrient()	{return orientation_;}
 	//public abstract boolean checkCollision(Item i);
+	
+	public abstract int handleAnimWalk();
+	public abstract int handleTic();
+	public abstract void tic();
+	public abstract void setX(int x);
+	public abstract void setY(int y);
 	
 }

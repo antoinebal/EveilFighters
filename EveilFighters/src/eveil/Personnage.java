@@ -69,7 +69,7 @@ public abstract class Personnage extends ItemDyn{
 		
 		animWalk_ = 0;
 		compteurTic_ = 0;
-		maxAnimWalk_ = 100;
+		maxAnimWalk_ = 40;
 		palierAnimWalk_ = maxAnimWalk_/4;
 		maxTic_ = 40;
 		palierTic_ = maxTic_/4;
@@ -97,7 +97,7 @@ public abstract class Personnage extends ItemDyn{
 		
 		animWalk_ = 0;
 		compteurTic_ = 0;
-		maxAnimWalk_ = 100;
+		maxAnimWalk_ = 40;
 		palierAnimWalk_ = maxAnimWalk_/4;
 		maxTic_ = 40;
 		palierTic_ = maxTic_/4;
@@ -142,18 +142,7 @@ public abstract class Personnage extends ItemDyn{
 		}
 		}
 	
-	public abstract int handleAnimWalk();
-	
-	public abstract int handleTic();
-	
-	public abstract void coup0();
-	
-	public abstract void coup1();
-	
-	public abstract void coup2();
-	
-	public abstract void tic();
-	
+
 	
 
 	public void setEtat(char etat) {
@@ -180,10 +169,7 @@ public abstract class Personnage extends ItemDyn{
 		return image_;
 	}
 	
-	/* cette fonction ajuste l'affichage de chaque image, elle modifie des indicateurs
-	 * différentiels en fonction de x et de y, qui seront pris en compte dans l'affichage 
-	 */
-	public abstract void ajusterAffichage();
+	
 	
 	public void decPvs(int degats) {
 		pvs_ -= degats;
@@ -195,4 +181,11 @@ public abstract class Personnage extends ItemDyn{
 	/* renvoie vrai s'il va y avoir une collision avec l'adversaire */
 	public boolean checkCollisionAdv() {return getHB().checkCollision(getVit(), adversaire_.getHB());}
 	
+	/* cette fonction ajuste l'affichage de chaque image, elle modifie des indicateurs
+	 * différentiels en fonction de x et de y, qui seront pris en compte dans l'affichage 
+	 */
+	public abstract void ajusterAffichage();
+	public abstract void coup0();
+	public abstract void coup1();
+	public abstract void coup2();		
 }
