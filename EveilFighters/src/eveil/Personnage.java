@@ -39,7 +39,7 @@ public abstract class Personnage extends ItemDyn{
 		porteeCC_ = 0;
 		nom_ = "Drassius";
 		orientation_ = 'd';
-		image_=nom_+"_down_1.png";
+		image_="data/"+nom_+"_down_1.png";
 		//premières instanciations des dimensions (utiles pour la hitbox)
 		setTaille(new ImageIcon(image_).getImage().getHeight(null));
 		setLarg(new ImageIcon(image_).getImage().getWidth(null));		
@@ -54,14 +54,14 @@ public abstract class Personnage extends ItemDyn{
 	public Personnage(int pvs, int force, int porteeCC, String nom) {
 		super();
 		
-		vitesse_=3;
+
 		num_ = 1;
 		pvs_ = pvs;
 		force_ = force;
 		porteeCC_ = porteeCC;
 		nom_ = nom;
 		orientation_ = 'd';
-		image_=nom_+"_d_w_0.png";
+		image_="data/"+nom_+"_d_w_0.png";
 		//premières instanciations des dimensions (utiles pour la hitbox)
 		setTaille(new ImageIcon(image_).getImage().getHeight(null));
 		setLarg(new ImageIcon(image_).getImage().getWidth(null));	
@@ -73,7 +73,7 @@ public abstract class Personnage extends ItemDyn{
 		palierAnimWalk_ = maxAnimWalk_/4;
 		maxTic_ = 40;
 		palierTic_ = maxTic_/4;
-		vitesse_=2;
+		vitesse_=5;
 	}
 	
 	//constructeur du j2
@@ -81,14 +81,14 @@ public abstract class Personnage extends ItemDyn{
 	public Personnage(int pvs, int force, int porteeCC, String nom, Personnage adversaire) {
 		super();
 		
-		vitesse_=3;
+
 		num_ = 2;
 		pvs_ = pvs;
 		force_ = force;
 		porteeCC_ = porteeCC;
 		nom_ = nom;
 		orientation_ = 'd';
-		image_=nom_+"_d_w_0.png";
+		image_="data/"+nom_+"_d_w_0.png";
 		//premières instanciations des dimensions (utiles pour la hitbox)
 		setTaille(new ImageIcon(image_).getImage().getHeight(null));
 		setLarg(new ImageIcon(image_).getImage().getWidth(null));	
@@ -101,7 +101,7 @@ public abstract class Personnage extends ItemDyn{
 		palierAnimWalk_ = maxAnimWalk_/4;
 		maxTic_ = 40;
 		palierTic_ = maxTic_/4;
-		vitesse_=2;
+		vitesse_=5;
 	}
 	
 	/*pour finaliser la constrution du j1*/
@@ -157,13 +157,13 @@ public abstract class Personnage extends ItemDyn{
 	
 	public String getImage() {
 		//si le personnage est à l'arrêt
-		if (etat_ == 'm') {image_ ="steve.jpeg";}
-		else if (etat_ == 'i') {image_=nom_+"_"+Character.toString(orientation_)+"_w_0.png";}
+		if (etat_ == 'm') {image_ ="data/steve.jpeg";}
+		else if (etat_ == 'i') {image_="data/"+nom_+"_"+Character.toString(orientation_)+"_w_0.png";}
 		else {
 			int NO=0;
 			if (etat_ == 'w') {NO = handleAnimWalk();}
 			if (etat_ == '0') {NO = handleTic();}
-			image_ = nom_+"_"+Character.toString(orientation_)+"_"+Character.toString(etat_)+"_"+Integer.toString(NO)+".png";
+			image_ = "data/"+nom_+"_"+Character.toString(orientation_)+"_"+Character.toString(etat_)+"_"+Integer.toString(NO)+".png";
 		}
 		ajusterAffichage();
 		return image_;

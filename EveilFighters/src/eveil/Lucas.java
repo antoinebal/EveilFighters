@@ -10,6 +10,8 @@ public class Lucas extends Personnage {
 		super(10, 1, 10, "lucas", adversaire);
 	}
 	
+	public Lucas(int y) {y_=y;}
+	
 	public int handleAnimWalk() {
 		if (animWalk_ <  palierAnimWalk_) {return 0;}
 		if (animWalk_ < 2*palierAnimWalk_ ) {return 1;}
@@ -28,7 +30,7 @@ public class Lucas extends Personnage {
 	
 	public void coup0() {
 		/*ce coup dépendra des coordonnées de l'adversaire peut être, auquel cas
-		 * il faudrait que le perso est accès au joueur pour prendre ses cos
+		 * il faudrait que le perso aie accès au joueur pour prendre ses cos
 		 */
 		//faire un grand if en fonction du nom
 		//appeler les fonctions recevoir coup si jamais l'autre joueur est touché

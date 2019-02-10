@@ -1,45 +1,40 @@
 package eveil;
 
 import java.awt.Color;
-import java.awt.Font;
+
 import java.awt.Graphics;
 
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
-public class PanelJoueur extends JPanel{
-	private Fenetre win_;
+import utils.BinaryHeap;
+
+public class Panel extends JPanel{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	private Controller controller_;
 	
 	//joueur 1
 	private Personnage j1_;
 	
 	//joueur 2
 	private Personnage j2_;
-
-	
-	//co du j1
-	//private int x1_;
-	//private int y1_;
-	
-	//co du j2
-	//private int x2_;
-	//private int y2_;
 	
 	private ImageIcon ii1_;
 	private ImageIcon ii2_;
 	private ImageIcon backGround_;
 	
 	
-	public PanelJoueur(Fenetre win, Personnage j1, Personnage j2) {
-		win_=win;
+	public Panel(Controller controller, Personnage j1, Personnage j2) {
+		controller_=controller;
+		
 		j1_=j1;
 		j2_=j2;
 	
-		backGround_ = new ImageIcon("grass.png");
-		/*x1_ = j1_.getX();
-		y1_ = j1_.getY();
-		x2_ = j2_.getX();
-		y2_ = j2_.getY();*/
+		backGround_ = new ImageIcon("data/"+controller.getMap().getBackground());
 		
 		/*
 		testArbre = new Item("arbre");
@@ -78,13 +73,32 @@ public class PanelJoueur extends JPanel{
 		g.drawImage(ii2_.getImage(), j2_.getXImage()+j2_.getAjustX(), j2_.getYImage()+j2_.getAjustY(), j2_.getLarg(), j2_.getTaille(), null);
 		g.drawImage(ii1_.getImage(), j1_.getXImage()+j1_.getAjustX(), j1_.getYImage()+j1_.getAjustY(), j1_.getLarg(), j1_.getTaille(), null);
 		}
+		
+		
 	}
 	
-	/* tics d'horloge pour l'animation */
-	public void horlogeAnim() {
-		j1_.tic();
-		j2_.tic();
+	public void afficheItems(Graphics g) {
+		BinaryHeap heap = new BinaryHeap(controller_.getMap().nombreItems());
+		
+		//on remplit le tas
+		for (int i=0 ; i < controller_.getMap().nombreItems() ; i++) {
+			heap.insert(controller_.getMap().getItemInd(i));
+		}
+		
+		//on parcourt le tas
+		while (!heap.isEmpty()) {
+			Item item = heap.deleteMin();
+			ImageIcon ii = new ImageIcon(item.getImage());
+			
+			//TODO : OPTIM, peut être le faire que pour les joueurs
+			item.setGrandeur(ii.getImage().getHeight(null), ii.getImage().getWidth(null));
+			
+			//on affiche l'image
+			g.drawImage(ii.getImage(), item.getXImage()+item.getAjustX(), item.getYImage()+item.getAjustY(), item.getLarg(), item.getTaille(), null);
+		}
 	}
+	
+	
 	
 	public void paintComponent(Graphics g) {
 	//Calque
@@ -97,15 +111,18 @@ public class PanelJoueur extends JPanel{
 	x2_ = j2_.getX();
 	y2_ = j2_.getY();*/
 	
-	horlogeAnim();
 	
-	ii1_ = new ImageIcon(j1_.getImage());
-	ii2_ = new ImageIcon(j2_.getImage());
+	//ii1_ = new ImageIcon(j1_.getImage());
+	//ii2_ = new ImageIcon(j2_.getImage());
+	
+	
+	
+	
 	
 	
 	//g.drawImage(new ImageIcon(testArbre.getImage()).getImage(), testArbre.getXImage()+testArbre.getAjustX(), testArbre.getYImage()+testArbre.getAjustY(), testArbre.getLarg(), testArbre.getTaille(), null);
 	//System.out.println("J1 ETAT : "+j1_.getEtat()+" ORIENTATION : "+j1_.getOrient());
-	affichePersos(g);
+	afficheItems(g);
 	dessineHB(g);
 	
 	//test arbre

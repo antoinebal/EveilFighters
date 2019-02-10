@@ -42,7 +42,6 @@ public class ClavierEcouteur implements KeyListener {
 		j2_ = j2;
 	}
 	
-	@Override
 	public void keyPressed(KeyEvent arg0) {
 		if (arg0.getKeyCode()==38) { up1_ = true;} //arrows
 		if (arg0.getKeyCode()==40) { down1_ = true;} 
@@ -63,7 +62,6 @@ public class ClavierEcouteur implements KeyListener {
 		if (arg0.getKeyCode()==78) { coup2_1_ = true;} //n
 	}
 
-	@Override
 	public void keyReleased(KeyEvent arg0) {
 		/*si le joueur était en état walking on le met en IDLE*/
 		if (arg0.getKeyCode()==38) { up1_ = false; if (j1_.getEtat()=='w') {j1_.setEtat('i');}} //arrows
@@ -87,7 +85,6 @@ public class ClavierEcouteur implements KeyListener {
 		
 	}
 
-	@Override
 	public void keyTyped(KeyEvent arg0) {
 		// TODO Auto-generated method stub
 		
