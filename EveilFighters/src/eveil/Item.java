@@ -53,8 +53,10 @@ public class Item {
 	public int getYImage() {return yImage_;}
 	public int getAjustX() {return ajustX_;}
 	public int getAjustY() {return ajustY_;}
-	public String getImage() {return nom_+".png";}
+	public String getImage() {return "data/"+nom_+".png";}
 	public void ajusterAffichage() {ajustX_ = 0 ; ajustY_ = 0;}
+	
+	public String toString() {return nom_+" : "+y_;}
 	
 	public void initPos(int x, int y) {
 		x_=x; 

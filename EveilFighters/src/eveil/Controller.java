@@ -1,15 +1,14 @@
 package eveil;
 
-import javax.swing.ImageIcon;
+
+import java.util.ArrayList;
 import javax.swing.JFrame;
 
-import java.awt.Image;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Iterator;
 
-public class Fenetre {
-	private PanelJoueur panel_;
+
+
+public class Controller {
+	private Panel panel_;
 
 	//joueur 1
 	private Personnage j1_;
@@ -22,19 +21,26 @@ public class Fenetre {
 	
 	private JFrame window_;
 	
+	private Map map_;
+	
 	//private list Item;
 
 	
-	public Fenetre(Personnage j1, Personnage j2) {
+	public Controller(Personnage j1, Personnage j2) {
 	
 	//j1 et j2 init
 	j1_ = j1;
 	j2_ = j2;
 	j1_.initPos(50, 50);
 	j2_.initPos(500, 500);
+	
+	//on cr�e la liste et ajoute les joueurs
+	map_ = new Map("grass.png");
+	map_.addItem(j1_);
+	map_.addItem(j2_);
 		
 	window_ = new JFrame("Eveil Fighters");
-	panel_ = new PanelJoueur(this, j1_, j2_);
+	panel_ = new Panel(this, j1_, j2_);
 	
 	mouseListener = new SourisEcouteur();
 	keyListener = new ClavierEcouteur(j1_, j2_);
@@ -52,7 +58,6 @@ public class Fenetre {
 	window_.addMouseListener(mouseListener);
 	window_.addKeyListener(keyListener);
 	
-	play();
 	}
 	
 	public void play() {
@@ -68,44 +73,12 @@ public class Fenetre {
 			//notif partie jeu (ou dans le keyListener)
 			majPosition(j1_, j2_);
 			majPosition(j2_, j1_);
+			horlogeAnim();
 			gereCoups();
-			//System.out.println("Etat :"+j1_.getEtat()+" X : "+j1_.getX()+" Y : "+j1_.getY());
-			
-			/* TESTS HITBOX*/
-			/*System.out.println("1HG : "+j1_.getHB().getHG());
-			System.out.println("1HD : "+j1_.getHB().getHD());
-			System.out.println("1BG : "+j1_.getHB().getBG());
-			System.out.println("1BD : "+j1_.getHB().getBD());*/
-			
-			/*System.out.println("1Taille de base : "+j1_.getHB().getTBase());
-			System.out.println("1Largeur de base : "+j1_.getHB().getLBase());
-			
-			System.out.println("1Taille de base calculée zà gauche : "+(j1_.getHB().getBG().getY()-j1_.getHB().getHG().getY()));
-			System.out.println("1Taille de base calculée à droite : "+(j1_.getHB().getBD().getY()-j1_.getHB().getHD().getY()));
-			
-			System.out.println("1Largeur de base calculée en haut : "+(j1_.getHB().getHD().getX()-j1_.getHB().getHG().getX()));
-			System.out.println("1Largeur de base calculée en bas : "+(j1_.getHB().getBD().getX()-j1_.getHB().getBG().getX())); */
-			
-			/*System.out.println("2HG : "+j2_.getHB().getHG());
-			System.out.println("2HD : "+j2_.getHB().getHD());
-			System.out.println("2BG : "+j2_.getHB().getBG());
-			System.out.println("2BD : "+j2_.getHB().getBD());*/
-			
-			/*System.out.println("2Taille de base : "+j2_.getHB().getTBase());
-			System.out.println("2Largeur de base : "+j2_.getHB().getLBase());
-			
-			System.out.println("2Taille de base calculée zà gauche : "+(j2_.getHB().getBG().getY()-j2_.getHB().getHG().getY()));
-			System.out.println("2Taille de base calculée à droite : "+(j2_.getHB().getBD().getY()-j2_.getHB().getHD().getY()));
-			
-			System.out.println("2Largeur de base calculée en haut : "+(j2_.getHB().getHD().getX()-j2_.getHB().getHG().getX()));
-			System.out.println("2Largeur de base calculée en bas : "+(j2_.getHB().getBD().getX()-j2_.getHB().getBG().getX())); */
-			
+	
 			//majPosition(liste itemsDyn)
 			panel_.repaint();
-			}
-			
-		
-			
+			}		
 		}
 		
 	
@@ -154,8 +127,6 @@ public class Fenetre {
 			j.setX(j.getX()+j.getVit());
 		    }
 		}
-		//MAJ des positions des items
-	
 	}
 	
 	
@@ -172,35 +143,27 @@ public class Fenetre {
 		if (keyListener.getC2(j2_.getNum())) { j2_.coup0();}
 	}
 	
+	/* tics d'horloge pour l'animation */
+	public void horlogeAnim() {
+		j1_.tic();
+		j2_.tic();
+	}
+	
+	//appel�e depuis le Panel
+	public Map getMap() {return map_;}
+	
 	public static void main(String[] args) {
 		Personnage j1 = new Lucas();
 		Personnage j2 = new Lucas(j1);
-		j1.setAdversaire(j2);
+		j1.setAdversaire(j2);	
 		
+		Controller controller = new Controller(j1, j2);
 		
+		Item iArbre = new Item("arbre");
+		iArbre.initPos(60, 90);
 		
-		Fenetre fenetre = new Fenetre(j1, j2);
-		
-		//TEST ARRAYLIST : c'est ce qu'il faut utiliser
-		/*Personnage j3 = new Personnage(10, 1, 10, "drassius", j1);
-		Personnage j4 = new Personnage(10, 1, 10, "mazak", j1);
-		Personnage j5 = new Personnage(10, 1, 10, "maure", j1);
-		Personnage j6 = new Personnage(10, 1, 10, "derol", j1);
-		
-		List<Personnage> l = new ArrayList<Personnage>();
-		l.add(j1);
-		l.add(j2);
-		l.add(j3);
-		l.add(j4);
-		l.add(j5);
-		l.add(j6);
-		System.out.println(l.get(2).getName());
-		l.remove(j3);
-		System.out.println(l.get(2).getName());
-		int taille = l.size();
-		for (int NO = 0 ; NO < taille ; NO++) { System.out.println(l.get(NO).getName());}*/
-		//System.out.println(l.get(0).getName());
-		
-		
+		controller.getMap().addItem(iArbre);
+		controller.play();
+
 	}
 }
