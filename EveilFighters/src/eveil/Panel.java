@@ -105,15 +105,23 @@ public class Panel extends JPanel{
 		//on parcourt le tas
 		while (!heap_.isEmpty()) {
 			Item item = heap_.deleteMin();
-			ImageIcon ii = new ImageIcon(item.getImage());
 			
+			//VERIF COLLISION SI ITEM DYN
+			if (item.getClass().getSuperclass().getSuperclass().getName().equals("eveil.ItemDyn")) {
+				controller_.majPositionItemDyn((ItemDyn)item);
+			}
+			
+			
+			//AFFICHAGE DE L'ITEM
+			ImageIcon ii = new ImageIcon(item.getImage());
 			//TODO : OPTIM, peut �tre le faire que pour les joueurs
 			item.setGrandeur(ii.getImage().getHeight(null), ii.getImage().getWidth(null));
-			
 			//on affiche l'image
 			g.drawImage(ii.getImage(), item.getXImage()+item.getAjustX(), item.getYImage()+item.getAjustY(), item.getLarg(), item.getTaille(), null);
 		}
 	}
+	
+	public BinaryHeap getHeap() {return heap_;}
 	
 	
 	
@@ -122,32 +130,8 @@ public class Panel extends JPanel{
 	//remplacer par map peut être, qui est un Objet instancié à l'initialisation (qui contient une liste d'obstacles ou d'items)
 	g.drawImage(backGround_.getImage(), 0, 0, this.getSize().width, this.getSize().height, null);
 	
-	
-	/*x1_ = j1_.getX();
-	y1_ = j1_.getY();	
-	x2_ = j2_.getX();
-	y2_ = j2_.getY();*/
-	
-	
-	//ii1_ = new ImageIcon(j1_.getImage());
-	//ii2_ = new ImageIcon(j2_.getImage());
-	
-	
-	
-	
-	
-	
-	//g.drawImage(new ImageIcon(testArbre.getImage()).getImage(), testArbre.getXImage()+testArbre.getAjustX(), testArbre.getYImage()+testArbre.getAjustY(), testArbre.getLarg(), testArbre.getTaille(), null);
-	//System.out.println("J1 ETAT : "+j1_.getEtat()+" ORIENTATION : "+j1_.getOrient());
 	afficheItems(g);
 	dessineHBItems(g);
-	
-	//test arbre
-	/*
-	g.drawLine((int)testArbre.getHB().getHG().getX(), (int)testArbre.getHB().getHG().getY(), (int)testArbre.getHB().getHD().getX(), (int)testArbre.getHB().getHD().getY());
-	g.drawLine((int)testArbre.getHB().getBG().getX(), (int)testArbre.getHB().getBG().getY(), (int)testArbre.getHB().getBD().getX(), (int)testArbre.getHB().getBD().getY());
-	g.drawLine((int)testArbre.getHB().getHG().getX(), (int)testArbre.getHB().getHG().getY(), (int)testArbre.getHB().getBG().getX(), (int)testArbre.getHB().getBG().getY());
-	g.drawLine((int)testArbre.getHB().getHD().getX(), (int)testArbre.getHB().getHD().getY(), (int)testArbre.getHB().getBD().getX(), (int)testArbre.getHB().getBD().getY());*/
 	}
 	
 	

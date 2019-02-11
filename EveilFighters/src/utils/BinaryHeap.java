@@ -23,7 +23,6 @@ public class BinaryHeap
 {
 
     /** The number of children each node has **/
-
     private static final int d = 2;
     private int heapSize;
     private Item[] heap;
@@ -31,63 +30,39 @@ public class BinaryHeap
  
 
     /** Constructor **/    
-
     public BinaryHeap(int capacity)
-
     {
-
         heapSize = 0;
-
         heap = new Item[capacity + 1];
-
         //Arrays.fill(heap, -1);
-
     }
     
     public boolean lower(Item i1, Item i2) {return i1.getY()<i2.getY();}
-
- 
-
     /** Function to check if heap is empty **/
-
     public boolean isEmpty( )
-
     {
-
         return heapSize == 0;
-
     }
 
- 
 
     /** Check if heap is full **/
-
     public boolean isFull( )
-
     {
-
         return heapSize == heap.length;
-
     }
 
  
 
     /** Clear heap */
-
     public void makeEmpty( )
-
     {
-
         heapSize = 0;
-
     }
 
  
 
     /** Function to  get index parent of i **/
-
     private int parent(int i) 
-
     {
 
         return (i - 1)/d;
@@ -286,7 +261,10 @@ public class BinaryHeap
 
         System.out.println();
 
-    }     
+    }
+    
+    public int getSize() {return heapSize;}
+    public Item getInd(int i) {return heap[i];}
     
     public static void main(String[] args) {
 		BinaryHeap heap = new BinaryHeap(47);
@@ -296,10 +274,14 @@ public class BinaryHeap
 		
 		heap.printHeap();
 		
-		System.out.println(heap.findMin());
-		System.out.println(heap.findMin());
-		heap.deleteMin();
-		System.out.println(heap.findMin());
+		//System.out.println(heap.findMin());
+		//System.out.println(heap.findMin());
+		for (int i=0 ; i <20 ; i++) {heap.deleteMin();}
+		//System.out.println(heap.findMin());
+		
+		for (int i=0 ; i < heap.getSize() ; i++) {
+			System.out.println(heap.getInd(i));
+		}
 
 	}
 

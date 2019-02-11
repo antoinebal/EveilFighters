@@ -47,19 +47,21 @@ public abstract class ItemDyn extends Item {
 	
 	public static void main(String[] args) {
 		Personnage j1 = new Lucas();
-		Personnage j2 = new Lucas(j1);
+
 		
 		j1.initPos(60, 90);
 		
 		
 		Item iArbre = new Item("arbre");
-		iArbre.initPos(60, 90);
+		iArbre.initPos(500, 500);
 		
 		if (j1.checkCollisionAvec(iArbre)) {
 			System.out.println("BOOM");
 		} else {
 			System.out.println("OLE");
 		}
+		
+		System.out.println(j1.getClass().getSuperclass().getSuperclass().getName());
 
 	}
 	

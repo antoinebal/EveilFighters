@@ -130,6 +130,19 @@ public class Controller {
 	}
 	
 	
+	public void majPositionItemDyn(ItemDyn id) {
+		//on verif si collision avec chaque item restant dans le tas
+		for (int i=0 ; i < panel_.getHeap().getSize() ; i++) {
+			//si il y a une collision avec l'élément courant
+			if (id.checkCollisionAvec(panel_.getHeap().getInd(i))) {
+				id.collisionAvec(panel_.getHeap().getInd(i));
+				panel_.getHeap().getInd(i).collisionAvec(id);
+			}
+		}
+		
+	}
+	
+	
 	/* écoute le clavierEcouteur et appelle les fonctions coupX des personnages
 	 * si jamais ils ont donné un coup
 	 */

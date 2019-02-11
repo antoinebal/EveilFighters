@@ -68,6 +68,10 @@ public class Item {
 	
 	public String toString() {return nom_+" : "+y_;}
 	
+	public void collisionAvec(Item i) {
+		System.out.println(nom_+ " se cogne avec "+i.getName());
+	}
+	
 	public void initPos(int x, int y) {
 		x_=x; 
 		y_=y;
