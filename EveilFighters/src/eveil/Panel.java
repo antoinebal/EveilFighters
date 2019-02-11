@@ -27,6 +27,8 @@ public class Panel extends JPanel{
 	private ImageIcon ii2_;
 	private ImageIcon backGround_;
 	
+	private BinaryHeap heap_;
+	
 	
 	public Panel(Controller controller, Personnage j1, Personnage j2) {
 		controller_=controller;
@@ -43,7 +45,7 @@ public class Panel extends JPanel{
 	}
 	
 	
-	//fonction de TEST
+	//fonction de TEST : dessine la HB des joueurs uniquement
 	public void dessineHB(Graphics g) {
 		//TEST : pour dessiner les hitbox
 		g.setColor(Color.RED);
@@ -58,6 +60,21 @@ public class Panel extends JPanel{
 		g.drawLine((int)j2_.getHB().getBG().getX(), (int)j2_.getHB().getBG().getY(), (int)j2_.getHB().getBD().getX(), (int)j2_.getHB().getBD().getY());
 		g.drawLine((int)j2_.getHB().getHG().getX(), (int)j2_.getHB().getHG().getY(), (int)j2_.getHB().getBG().getX(), (int)j2_.getHB().getBG().getY());
 		g.drawLine((int)j2_.getHB().getHD().getX(), (int)j2_.getHB().getHD().getY(), (int)j2_.getHB().getBD().getX(), (int)j2_.getHB().getBD().getY());
+		
+	}
+	
+	//fonction de TEST : dessine la HB de tous les items
+	public void dessineHBItems(Graphics g) {
+		//TEST : pour dessiner les hitbox
+		g.setColor(Color.RED);
+		
+		for (int i=0 ; i < controller_.getMap().nombreItems() ; i++) {
+			Item item = controller_.getMap().getItemInd(i);
+			g.drawLine((int)item.getHB().getHG().getX(), (int)item.getHB().getHG().getY(), (int)item.getHB().getHD().getX(), (int)item.getHB().getHD().getY());
+			g.drawLine((int)item.getHB().getBG().getX(), (int)item.getHB().getBG().getY(), (int)item.getHB().getBD().getX(), (int)item.getHB().getBD().getY());
+			g.drawLine((int)item.getHB().getHG().getX(), (int)item.getHB().getHG().getY(), (int)item.getHB().getBG().getX(), (int)item.getHB().getBG().getY());
+			g.drawLine((int)item.getHB().getHD().getX(), (int)item.getHB().getHD().getY(), (int)item.getHB().getBD().getX(), (int)item.getHB().getBD().getY());		
+		}
 		
 	}
 	
@@ -78,19 +95,19 @@ public class Panel extends JPanel{
 	}
 	
 	public void afficheItems(Graphics g) {
-		BinaryHeap heap = new BinaryHeap(controller_.getMap().nombreItems());
+		heap_ = new BinaryHeap(controller_.getMap().nombreItems());
 		
 		//on remplit le tas
 		for (int i=0 ; i < controller_.getMap().nombreItems() ; i++) {
-			heap.insert(controller_.getMap().getItemInd(i));
+			heap_.insert(controller_.getMap().getItemInd(i));
 		}
 		
 		//on parcourt le tas
-		while (!heap.isEmpty()) {
-			Item item = heap.deleteMin();
+		while (!heap_.isEmpty()) {
+			Item item = heap_.deleteMin();
 			ImageIcon ii = new ImageIcon(item.getImage());
 			
-			//TODO : OPTIM, peut être le faire que pour les joueurs
+			//TODO : OPTIM, peut ï¿½tre le faire que pour les joueurs
 			item.setGrandeur(ii.getImage().getHeight(null), ii.getImage().getWidth(null));
 			
 			//on affiche l'image
@@ -123,7 +140,7 @@ public class Panel extends JPanel{
 	//g.drawImage(new ImageIcon(testArbre.getImage()).getImage(), testArbre.getXImage()+testArbre.getAjustX(), testArbre.getYImage()+testArbre.getAjustY(), testArbre.getLarg(), testArbre.getTaille(), null);
 	//System.out.println("J1 ETAT : "+j1_.getEtat()+" ORIENTATION : "+j1_.getOrient());
 	afficheItems(g);
-	dessineHB(g);
+	dessineHBItems(g);
 	
 	//test arbre
 	/*

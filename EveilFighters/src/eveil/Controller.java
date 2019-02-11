@@ -34,7 +34,7 @@ public class Controller {
 	j1_.initPos(50, 50);
 	j2_.initPos(500, 500);
 	
-	//on crée la liste et ajoute les joueurs
+	//on crï¿½e la liste et ajoute les joueurs
 	map_ = new Map("grass.png");
 	map_.addItem(j1_);
 	map_.addItem(j2_);
@@ -149,7 +149,7 @@ public class Controller {
 		j2_.tic();
 	}
 	
-	//appelée depuis le Panel
+	//appelï¿½e depuis le Panel
 	public Map getMap() {return map_;}
 	
 	public static void main(String[] args) {

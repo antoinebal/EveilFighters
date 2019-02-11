@@ -1,5 +1,7 @@
 package eveil;
 
+import javax.swing.ImageIcon;
+
 public class Item {
 	protected int x_;	
 	protected int y_;
@@ -9,28 +11,36 @@ public class Item {
 	protected int largeur_;
 	protected String nom_;
 	protected String image_;
-	protected int facteurGrandeur_;
+	protected int facteurGrandeur_=3;
 	protected HitBox hitBox_;
 	protected int ajustX_;
 	protected int ajustY_;
 	
 	public Item() {
-		taille_ = 0;
-		largeur_ = 0;
-		facteurGrandeur_ = 3;
 		ajustX_ = 0;
 		ajustY_ = 0;
 	}
 	
+	//constructeur pour tout item
 	public Item(String nom) {
-		taille_ = 0;
-		largeur_ = 0;
-		facteurGrandeur_ = 1;
 		ajustX_ = 0;
 		ajustY_ = 0;
 		
 		nom_ = nom;
+		
+		image_="data/"+nom_+".png";
+		
+		//premières instanciations des dimensions (utiles pour la hitbox)
+		//OPTIM : faure cela que pour les items fixes car perso le refait
+		setTaille(new ImageIcon(image_).getImage().getHeight(null));
+		setLarg(new ImageIcon(image_).getImage().getWidth(null));
+		
+		System.out.println("TAILLE "+nom_+" : taille : "+taille_+"largeur : "+largeur_);
 	}
+	
+	
+	
+	
 
 	/* fonction à définir dans toute classe fille de Item qui est
 	 * non abstraite (ex : arbre) et dans ItemDyn. Dans les deux cas il faut appeler un constructeur de HitBox différent

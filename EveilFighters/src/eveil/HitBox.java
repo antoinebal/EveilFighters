@@ -43,7 +43,7 @@ public class HitBox {
 		hd_ = new Point(x+largeurDeBase_, y);
 		bg_ = new Point(x, y+tailleDeBase_);
 		bd_ = new Point(x+largeurDeBase_, y+tailleDeBase_);
-		//System.out.println("hg : "+hg_+"hd : "+hd_+"bg : "+bg_+"bd : "+bd_);
+		System.out.println("hg : "+hg_+"hd : "+hd_+"bg : "+bg_+"bd : "+bd_);
 		j_ = j;
 	}
 	
@@ -56,7 +56,7 @@ public class HitBox {
 		hd_ = new Point(x+largeurDeBase_, y);
 		bg_ = new Point(x, y+tailleDeBase_);
 		bd_ = new Point(x+largeurDeBase_, y+tailleDeBase_);
-		//System.out.println("hg : "+hg_+"hd : "+hd_+"bg : "+bg_+"bd : "+bd_);
+		System.out.println("hg : "+hg_+"hd : "+hd_+"bg : "+bg_+"bd : "+bd_);
 		
 	}
 	

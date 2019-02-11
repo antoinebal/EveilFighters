@@ -39,10 +39,7 @@ public abstract class Personnage extends ItemDyn{
 		porteeCC_ = 0;
 		nom_ = "Drassius";
 		orientation_ = 'd';
-		image_="data/"+nom_+"_down_1.png";
-		//premières instanciations des dimensions (utiles pour la hitbox)
-		setTaille(new ImageIcon(image_).getImage().getHeight(null));
-		setLarg(new ImageIcon(image_).getImage().getWidth(null));		
+			
 		animWalk_ = 0;
 		compteurTic_ = 0;
 		etat_ = 'i'; //idle
@@ -52,19 +49,16 @@ public abstract class Personnage extends ItemDyn{
 	//constructeur du j1
 	//dans le futur mettre un if en fonction du nom pour construire le perso
 	public Personnage(int pvs, int force, int porteeCC, String nom) {
-		super();
+		super(nom);
 		
 
 		num_ = 1;
 		pvs_ = pvs;
 		force_ = force;
 		porteeCC_ = porteeCC;
-		nom_ = nom;
 		orientation_ = 'd';
-		image_="data/"+nom_+"_d_w_0.png";
-		//premières instanciations des dimensions (utiles pour la hitbox)
-		setTaille(new ImageIcon(image_).getImage().getHeight(null));
-		setLarg(new ImageIcon(image_).getImage().getWidth(null));	
+		
+			
 		etat_ = 'i'; //idle
 		
 		animWalk_ = 0;
@@ -74,24 +68,26 @@ public abstract class Personnage extends ItemDyn{
 		maxTic_ = 40;
 		palierTic_ = maxTic_/4;
 		vitesse_=5;
+		
+		image_="data/"+nom_+"_d_w_0.png";
+		
+		//premières instanciations des dimensions (utiles pour la hitbox)
+		setTaille(new ImageIcon(image_).getImage().getHeight(null));
+		setLarg(new ImageIcon(image_).getImage().getWidth(null));
 	}
 	
 	//constructeur du j2
 	//dans le futur mettre un if en fonction du nom pour construire le perso
 	public Personnage(int pvs, int force, int porteeCC, String nom, Personnage adversaire) {
-		super();
+		super(nom);
 		
 
 		num_ = 2;
 		pvs_ = pvs;
 		force_ = force;
 		porteeCC_ = porteeCC;
-		nom_ = nom;
 		orientation_ = 'd';
 		image_="data/"+nom_+"_d_w_0.png";
-		//premières instanciations des dimensions (utiles pour la hitbox)
-		setTaille(new ImageIcon(image_).getImage().getHeight(null));
-		setLarg(new ImageIcon(image_).getImage().getWidth(null));	
 		etat_ = 'i'; //idle
 		adversaire_ = adversaire;
 		
@@ -102,6 +98,12 @@ public abstract class Personnage extends ItemDyn{
 		maxTic_ = 40;
 		palierTic_ = maxTic_/4;
 		vitesse_=5;
+		
+		image_="data/"+nom_+"_d_w_0.png";
+		
+		//premières instanciations des dimensions (utiles pour la hitbox)
+		setTaille(new ImageIcon(image_).getImage().getHeight(null));
+		setLarg(new ImageIcon(image_).getImage().getWidth(null));
 	}
 	
 	/*pour finaliser la constrution du j1*/
