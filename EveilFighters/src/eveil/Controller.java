@@ -1,13 +1,15 @@
 package eveil;
 
 
-import java.util.ArrayList;
+
 import javax.swing.JFrame;
 
 
 
 
 public class Controller {
+	private int FREQUENCY = 20;
+	
 	private Panel panel_;
 
 	//joueur 1
@@ -47,7 +49,7 @@ public class Controller {
 		
 	//Configuration de la fenêtre
 	window_.setSize(1000, 700);
-	window_.setVisible(true);
+	
 	//quand la frame se ferme le programme se termine
 	window_.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	//la fenêtre pop au centre de l'écran
@@ -58,13 +60,15 @@ public class Controller {
 	window_.addMouseListener(mouseListener);
 	window_.addKeyListener(keyListener);
 	
+	window_.setVisible(true);
+	
 	}
 	
 	public void play() {
 		while (true) {
 			
 			try {
-				Thread.sleep(10);
+				Thread.sleep(FREQUENCY);
 			} catch (InterruptedException e) {
 				
 				System.out.println("Problème dans le sleep");
@@ -168,7 +172,8 @@ public class Controller {
 	public static void main(String[] args) {
 		Personnage j1 = new Lucas();
 		Personnage j2 = new Lucas(j1);
-		j1.setAdversaire(j2);	
+		j1.setAdversaire(j2);
+		
 		
 		Controller controller = new Controller(j1, j2);
 		

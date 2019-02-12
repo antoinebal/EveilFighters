@@ -107,8 +107,10 @@ public class Panel extends JPanel{
 			Item item = heap_.deleteMin();
 			
 			//VERIF COLLISION SI ITEM DYN
-			if (item.getClass().getSuperclass().getSuperclass().getName().equals("eveil.ItemDyn")) {
-				controller_.majPositionItemDyn((ItemDyn)item);
+			if (item.getClass().getSuperclass().getSuperclass()!=null) {
+				if (item.getClass().getSuperclass().getSuperclass().getSimpleName().equals("ItemDyn")) {
+					controller_.majPositionItemDyn((ItemDyn)item);
+				}
 			}
 			
 			
