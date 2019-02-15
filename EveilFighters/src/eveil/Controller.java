@@ -78,10 +78,22 @@ public class Controller {
 	    //notif partie jeu (ou dans le keyListener)
 	    //majPosition(j1_, j2_);
 	    //majPosition(j2_, j1_);
+	    
+	  //on màj la position des items dynamiques
+	  	for (int i=0 ; i < getMap().nombreItems() ; i++) {
+	  		Item item = getMap().getItemInd(i);
+	  		if (item.getClass().getSuperclass().getSuperclass()!=null) {
+				if (item.getClass().getSuperclass().getSuperclass().getSimpleName().equals("ItemDyn")) {
+					majPositionItemDyn((ItemDyn) item);
+				}
+	  		}
+	  	}
+	    
+	    
 	    horlogeAnim();
 	    gereCoups();
 	
-	    //majPosition(liste itemsDyn)
+	   // majPosition(liste itemsDyn)
 	    panel_.repaint();
 	}		
     }
@@ -161,15 +173,18 @@ public class Controller {
     /* cette fonction regarde si l'item dynamique courant
      * cogne un ou plusieurs items restant dans le tas
      */
+    //OPTIM : NE PEUT ËTRE CHERCHER QU'A PARTIR D'UN CERTAIN INDEX
     public HitBox factorCollision(ItemDyn iDyn) {
 	//on verif si collision avec chaque item restant dans le tas
 	HitBox hbCollision=null;
-	for (int i=0 ; i < panel_.getHeap().getSize() ; i++) {
+	for (int i=0 ; i < getMap().nombreItems() ; i++) {
 	    //si il y a une collision avec l'élément courant
-	    if (iDyn.checkCollisionAvec(panel_.getHeap().getInd(i))) {
-		iDyn.collisionAvec(panel_.getHeap().getInd(i));
-		panel_.getHeap().getInd(i).collisionAvec(iDyn);
-		hbCollision=panel_.getHeap().getInd(i).getHB();
+		Item item = map_.getItemInd(i);
+		//si l'objet est différent et si il y a collision, on renvoie une hitbox
+	    if ((!iDyn.equals(item))&&(iDyn.checkCollisionAvec(item))) {
+		iDyn.collisionAvec(item);
+		item.collisionAvec(iDyn);
+		hbCollision=item.getHB();
 	    }
 	}
 	return hbCollision;
@@ -215,7 +230,7 @@ public class Controller {
 		    iDyn.setX(iDyn.getX()-iDyn.getVit());
 		}
 	    }
-	    else if (keyListener.getRight(iDyn.getNum())) {
+	    else if (action=='r') {
 		iDyn.setOrientation('r');
 		if ((iDyn.getX() + iDyn.getVit())> window_.getWidth()-iDyn.getHB().getLBase()) {
 		    iDyn.setX(window_.getWidth()-iDyn.getHB().getLBase());
@@ -255,7 +270,6 @@ public class Controller {
 	Personnage j1 = new Lucas();
 	Personnage j2 = new Lucas(j1);
 	j1.setAdversaire(j2);
-		
 		
 	Controller controller = new Controller(j1, j2);
 		

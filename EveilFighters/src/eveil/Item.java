@@ -16,6 +16,7 @@ public class Item {
 	protected int ajustX_;
 	protected int ajustY_;
 	
+	
 	public Item() {
 		ajustX_ = 0;
 		ajustY_ = 0;
@@ -79,4 +80,6 @@ public class Item {
 		yImage_ = y_ - 2*(taille_/3); 
 		hitBox_ = new HitBox(x_, y_, taille_, largeur_);
 	}
+	
+	public boolean equals(Item item) {return nom_.equals(item.getName());}
 }
