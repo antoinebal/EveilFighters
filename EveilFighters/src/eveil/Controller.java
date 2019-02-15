@@ -8,27 +8,28 @@ import javax.swing.JFrame;
 
 
 public class Controller {
-	private int FREQUENCY = 20;
+    //***PARAMETRES***
+    private int FREQUENCY = 20;
 	
-	private Panel panel_;
+    private Panel panel_;
 
-	//joueur 1
-	private Personnage j1_;
+    //joueur 1
+    private Personnage j1_;
 	
-	//joueur 2
-	private Personnage j2_;
+    //joueur 2
+    private Personnage j2_;
 	
-	private SourisEcouteur mouseListener;
-	private ClavierEcouteur keyListener;
+    private SourisEcouteur mouseListener;
+    private ClavierEcouteur keyListener;
 	
-	private JFrame window_;
+    private JFrame window_;
 	
-	private Map map_;
+    private Map map_;
 	
-	//private list Item;
+    //private list Item;
 
 	
-	public Controller(Personnage j1, Personnage j2) {
+    public Controller(Personnage j1, Personnage j2) {
 	
 	//j1 et j2 init
 	j1_ = j1;
@@ -62,126 +63,207 @@ public class Controller {
 	
 	window_.setVisible(true);
 	
-	}
+    }
 	
-	public void play() {
-		while (true) {
+    public void play() {
+	while (true) {
 			
-			try {
-				Thread.sleep(FREQUENCY);
-			} catch (InterruptedException e) {
+	    try {
+		Thread.sleep(FREQUENCY);
+	    } catch (InterruptedException e) {
 				
-				System.out.println("Problème dans le sleep");
-			}
-			//checker collision
-			//notif partie jeu (ou dans le keyListener)
-			majPosition(j1_, j2_);
-			majPosition(j2_, j1_);
-			horlogeAnim();
-			gereCoups();
+		System.out.println("Problème dans le sleep");
+	    }
+	    //checker collision
+	    //notif partie jeu (ou dans le keyListener)
+	    //majPosition(j1_, j2_);
+	    //majPosition(j2_, j1_);
+	    horlogeAnim();
+	    gereCoups();
 	
-			//majPosition(liste itemsDyn)
-			panel_.repaint();
-			}		
-		}
+	    //majPosition(liste itemsDyn)
+	    panel_.repaint();
+	}		
+    }
 		
 	
-	/* met à jour la position du joueur en arg en fonction des infos
-	 * du key listener
-	 */
-	/* distinguer les cas joueurs et autre item dynamique */
-	public void majPosition(Personnage j, Personnage jFixe) {
-		if (keyListener.getUp(j.getNum())) {
-			j.setOrientation('u');
-		    if ((j.getY() - j.getVit())< 0) {
-			j.setY(0);
-		    } else if (j.checkCollisionAdv()) {
-		    j.setY((int) jFixe.getHB().getBG().getY());
-		    } else {
-			j.setY(j.getY()-j.getVit());
-		    }
-		}
-		else if (keyListener.getDown(j.getNum())) {
-			j.setOrientation('d');
-		    if ((j.getY() + j.getVit())> panel_.getHeight()-j.getHB().getTBase()) {
-			j.setY(panel_.getHeight() -j.getHB().getTBase());
-		    } else if (j.checkCollisionAdv()) {
-		    j.setY((int) (jFixe.getHB().getHG().getY()-j.getHB().getTBase()));
-		    } else {
-			j.setY(j.getY()+j.getVit());
-		    }
-		}
-		else if (keyListener.getLeft(j.getNum())) {
-			j.setOrientation('l');
-		    if ((j.getX() - j.getVit())< 0) {
-			j.setX(0);
-		    } else if (j.checkCollisionAdv()) {
-		    j.setX((int) jFixe.getHB().getHD().getX());
-		    } else {
-			j.setX(j.getX()-j.getVit());
-		    }
-		}
-		else if (keyListener.getRight(j.getNum())) {
-			j.setOrientation('r');
-		    if ((j.getX() + j.getVit())> window_.getWidth()-j.getHB().getLBase()) {
-			j.setX(window_.getWidth()-j.getHB().getLBase());
-		    } else if (j.checkCollisionAdv()) {
-		    	j.setX((int) (jFixe.getHB().getHG().getX()-j.getHB().getLBase()));
-		    } else {
-			j.setX(j.getX()+j.getVit());
-		    }
-		}
+    /* met à jour la position du joueur en arg en fonction des infos
+     * du key listener
+     */
+    /* distinguer les cas joueurs et autre item dynamique */
+    public void majPosition(Personnage j, Personnage jFixe) {
+	if (keyListener.getUp(j.getNum())) {
+	    j.setOrientation('u');
+	    if ((j.getY() - j.getVit())< 0) {
+		j.setY(0);
+	    } else if (j.checkCollisionAdv()) {
+		j.setY((int) jFixe.getHB().getBG().getY());
+	    } else {
+		j.setY(j.getY()-j.getVit());
+	    }
 	}
+	else if (keyListener.getDown(j.getNum())) {
+	    j.setOrientation('d');
+	    if ((j.getY() + j.getVit())> panel_.getHeight()-j.getHB().getTBase()) {
+		j.setY(panel_.getHeight() -j.getHB().getTBase());
+	    } else if (j.checkCollisionAdv()) {
+		j.setY((int) (jFixe.getHB().getHG().getY()-j.getHB().getTBase()));
+	    } else {
+		j.setY(j.getY()+j.getVit());
+	    }
+	}
+	else if (keyListener.getLeft(j.getNum())) {
+	    j.setOrientation('l');
+	    if ((j.getX() - j.getVit())< 0) {
+		j.setX(0);
+	    } else if (j.checkCollisionAdv()) {
+		j.setX((int) jFixe.getHB().getHD().getX());
+	    } else {
+		j.setX(j.getX()-j.getVit());
+	    }
+	}
+	else if (keyListener.getRight(j.getNum())) {
+	    j.setOrientation('r');
+	    if ((j.getX() + j.getVit())> window_.getWidth()-j.getHB().getLBase()) {
+		j.setX(window_.getWidth()-j.getHB().getLBase());
+	    } else if (j.checkCollisionAdv()) {
+		j.setX((int) (jFixe.getHB().getHG().getX()-j.getHB().getLBase()));
+	    } else {
+		j.setX(j.getX()+j.getVit());
+	    }
+	}
+    }
+	
+    public char getAction(ItemDyn iDyn) {
+	//si idyn est un personnage on regarde le key listener
+	if (iDyn.getClass().getSuperclass().getSimpleName().equals("Personnage")) {
+	    if (keyListener.getUp(iDyn.getNum())) {
+		return 'u';
+	    }
+	    else if (keyListener.getDown(iDyn.getNum())) {
+		return 'd';
+	    }
+	    else if (keyListener.getLeft(iDyn.getNum())) {
+		return 'l';
+	    }
+	    else if (keyListener.getRight(iDyn.getNum())) {
+		return 'r';
+	    } else {
+		//aucun bouton de direction n'a été pressé pour ce joueur
+		return '0';
+	    }
+	} else {
+	    return iDyn.getAction();
+	}
+    }
 	
 	
-	public void majPositionItemDyn(ItemDyn id) {
-		//on verif si collision avec chaque item restant dans le tas
-		for (int i=0 ; i < panel_.getHeap().getSize() ; i++) {
-			//si il y a une collision avec l'élément courant
-			if (id.checkCollisionAvec(panel_.getHeap().getInd(i))) {
-				id.collisionAvec(panel_.getHeap().getInd(i));
-				panel_.getHeap().getInd(i).collisionAvec(id);
-			}
+    /* cette fonction regarde si l'item dynamique courant
+     * cogne un ou plusieurs items restant dans le tas
+     */
+    public HitBox factorCollision(ItemDyn iDyn) {
+	//on verif si collision avec chaque item restant dans le tas
+	HitBox hbCollision=null;
+	for (int i=0 ; i < panel_.getHeap().getSize() ; i++) {
+	    //si il y a une collision avec l'élément courant
+	    if (iDyn.checkCollisionAvec(panel_.getHeap().getInd(i))) {
+		iDyn.collisionAvec(panel_.getHeap().getInd(i));
+		panel_.getHeap().getInd(i).collisionAvec(iDyn);
+		hbCollision=panel_.getHeap().getInd(i).getHB();
+	    }
+	}
+	return hbCollision;
+    }
+	
+	
+	
+    //A FINIR? IL Y A UN PBBBBBBBBBB
+    //distinguer les joueurs des items dyn?
+    public void majPositionItemDyn(ItemDyn iDyn) {
+		
+	char action = getAction(iDyn);
+		
+	if (action!='0') {
+	    HitBox hbPercutee = factorCollision(iDyn);
+	    if (action=='u') {
+		iDyn.setOrientation('u');
+		if ((iDyn.getY() - iDyn.getVit())< 0) {
+		    iDyn.setY(0);
+		} else if (hbPercutee!=null) {
+		    iDyn.setY((int) hbPercutee.getBG().getY());
+		} else {
+		    iDyn.setY(iDyn.getY()-iDyn.getVit());
 		}
-		
+	    }
+	    else if (action=='d') {
+		iDyn.setOrientation('d');
+		if ((iDyn.getY() + iDyn.getVit())> panel_.getHeight()-iDyn.getHB().getTBase()) {
+		    iDyn.setY(panel_.getHeight() -iDyn.getHB().getTBase());
+		} else if (hbPercutee!=null) {
+		    iDyn.setY((int) (hbPercutee.getHG().getY()-iDyn.getHB().getTBase()));
+		} else {
+		    iDyn.setY(iDyn.getY()+iDyn.getVit());
+		}
+	    }
+	    else if (action=='l') {
+		iDyn.setOrientation('l');
+		if ((iDyn.getX() - iDyn.getVit())< 0) {
+		    iDyn.setX(0);
+		} else if (hbPercutee!=null) {
+		    iDyn.setX((int) hbPercutee.getHD().getX());
+		} else {
+		    iDyn.setX(iDyn.getX()-iDyn.getVit());
+		}
+	    }
+	    else if (keyListener.getRight(iDyn.getNum())) {
+		iDyn.setOrientation('r');
+		if ((iDyn.getX() + iDyn.getVit())> window_.getWidth()-iDyn.getHB().getLBase()) {
+		    iDyn.setX(window_.getWidth()-iDyn.getHB().getLBase());
+		} else if (hbPercutee!=null) {
+		    iDyn.setX((int) (hbPercutee.getHG().getX()-iDyn.getHB().getLBase()));
+		} else {
+		    iDyn.setX(iDyn.getX()+iDyn.getVit());
+		}
+	    }
 	}
+    }
 	
 	
-	/* écoute le clavierEcouteur et appelle les fonctions coupX des personnages
-	 * si jamais ils ont donné un coup
-	 */
-	public void gereCoups() {
-		if (keyListener.getC0(j1_.getNum())) { j1_.coup0();}
-		if (keyListener.getC1(j1_.getNum())) { j1_.coup1();}
-		if (keyListener.getC2(j1_.getNum())) { j1_.coup2();}
+    /* écoute le clavierEcouteur et appelle les fonctions coupX des personnages
+     * si jamais ils ont donné un coup
+     */
+    public void gereCoups() {
+	if (keyListener.getC0(j1_.getNum())) { j1_.coup0();}
+	if (keyListener.getC1(j1_.getNum())) { j1_.coup1();}
+	if (keyListener.getC2(j1_.getNum())) { j1_.coup2();}
 		
-		if (keyListener.getC0(j2_.getNum())) { j2_.coup0();}
-		if (keyListener.getC1(j2_.getNum())) { j2_.coup1();}
-		if (keyListener.getC2(j2_.getNum())) { j2_.coup0();}
-	}
+	if (keyListener.getC0(j2_.getNum())) { j2_.coup0();}
+	if (keyListener.getC1(j2_.getNum())) { j2_.coup1();}
+	if (keyListener.getC2(j2_.getNum())) { j2_.coup0();}
+    }
 	
-	/* tics d'horloge pour l'animation */
-	public void horlogeAnim() {
-		j1_.tic();
-		j2_.tic();
-	}
+    /* tics d'horloge pour l'animation */
+    public void horlogeAnim() {
+	j1_.tic();
+	j2_.tic();
+    }
 	
-	//appel�e depuis le Panel
-	public Map getMap() {return map_;}
+    //appel�e depuis le Panel
+    public Map getMap() {return map_;}
 	
-	public static void main(String[] args) {
-		Personnage j1 = new Lucas();
-		Personnage j2 = new Lucas(j1);
-		j1.setAdversaire(j2);
+    public static void main(String[] args) {
+	Personnage j1 = new Lucas();
+	Personnage j2 = new Lucas(j1);
+	j1.setAdversaire(j2);
 		
 		
-		Controller controller = new Controller(j1, j2);
+	Controller controller = new Controller(j1, j2);
 		
-		Item iArbre = new Item("arbre");
-		iArbre.initPos(60, 90);
+	Item iArbre = new Item("arbre");
+	iArbre.initPos(60, 90);
 		
-		controller.getMap().addItem(iArbre);
-		controller.play();
+	controller.getMap().addItem(iArbre);
+	controller.play();
 
-	}
+    }
 }

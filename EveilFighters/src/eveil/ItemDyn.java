@@ -42,6 +42,12 @@ public abstract class ItemDyn extends Item {
 	public abstract void setX(int x);
 	public abstract void setY(int y);
 	
+	/* cette fonction doit être implémentée par tous les
+	 * items dynamiques non autonomes (i.e. qu ne sont pas des personnages)
+	 */
+	public char getAction() {return '0';}
+	public abstract int getNum();
+	
 	/* renvoie vrai s'il va y avoir une collision avec l'item en argument */
 	public boolean checkCollisionAvec(Item item) {return getHB().checkCollision(getVit(), item.getHB());}
 	
