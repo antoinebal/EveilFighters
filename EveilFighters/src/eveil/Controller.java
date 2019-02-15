@@ -76,7 +76,7 @@ public class Controller {
 	    }
 	    //checker collision
 	    //notif partie jeu (ou dans le keyListener)
-	    //majPosition(j1_, j2_);
+	   // majPosition(j1_, j2_);
 	    //majPosition(j2_, j1_);
 	    
 	  //on màj la position des items dynamiques
@@ -104,7 +104,8 @@ public class Controller {
      */
     /* distinguer les cas joueurs et autre item dynamique */
     public void majPosition(Personnage j, Personnage jFixe) {
-	if (keyListener.getUp(j.getNum())) {
+    char action = getAction(j);
+	if (action=='u') {
 	    j.setOrientation('u');
 	    if ((j.getY() - j.getVit())< 0) {
 		j.setY(0);
@@ -114,7 +115,7 @@ public class Controller {
 		j.setY(j.getY()-j.getVit());
 	    }
 	}
-	else if (keyListener.getDown(j.getNum())) {
+	else if (action=='d') {
 	    j.setOrientation('d');
 	    if ((j.getY() + j.getVit())> panel_.getHeight()-j.getHB().getTBase()) {
 		j.setY(panel_.getHeight() -j.getHB().getTBase());
@@ -124,7 +125,7 @@ public class Controller {
 		j.setY(j.getY()+j.getVit());
 	    }
 	}
-	else if (keyListener.getLeft(j.getNum())) {
+	else if (action=='l') {
 	    j.setOrientation('l');
 	    if ((j.getX() - j.getVit())< 0) {
 		j.setX(0);
@@ -134,7 +135,7 @@ public class Controller {
 		j.setX(j.getX()-j.getVit());
 	    }
 	}
-	else if (keyListener.getRight(j.getNum())) {
+	else if (action=='r') {
 	    j.setOrientation('r');
 	    if ((j.getX() + j.getVit())> window_.getWidth()-j.getHB().getLBase()) {
 		j.setX(window_.getWidth()-j.getHB().getLBase());
