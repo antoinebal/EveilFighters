@@ -158,7 +158,7 @@ public abstract class Personnage extends ItemDyn{
 				image_ = "data/"+nom_+"_"+Character.toString(etat_)+"_"+Integer.toString(NO)+".png";
 				System.out.println(image_);
 				}
-			image_ = "data/"+nom_+"_"+Character.toString(orientation_)+"_"+Character.toString(etat_)+"_"+Integer.toString(NO)+".png";
+			//image_ = "data/"+nom_+"_"+Character.toString(orientation_)+"_"+Character.toString(etat_)+"_"+Integer.toString(NO)+".png";
 		}
 		ajusterAffichage();
 		return image_;
