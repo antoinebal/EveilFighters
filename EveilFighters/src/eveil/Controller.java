@@ -2,6 +2,8 @@ package eveil;
 
 
 
+import java.util.Random;
+
 import javax.swing.JFrame;
 
 
@@ -271,6 +273,18 @@ public class Controller {
 	if (keyListener.getC1(j2_.getNum())) { j2_.coup1();}
 	if (keyListener.getC2(j2_.getNum())) { j2_.coup0();}
     }
+    
+    
+    public void foret() {
+    	Random rand = new Random();
+    	for (int i =0 ; i < 20 ; i++) {
+    		Item arbre = new Item("arbre");
+    		int x = rand.nextInt(panel_.getHeight());
+    		int y = rand.nextInt(window_.getWidth());
+    		arbre.initPos(x, y);
+    		map_.addItem(arbre);
+    	}
+    }
 	
     /* tics d'horloge pour l'animation */
     public void horlogeAnim() {
@@ -293,12 +307,14 @@ public class Controller {
 	controller.getMap().addItem(iArbre);
 	
 	Item iMaz = new Item("mazak");
-	iMaz.initPos(-1, 200);
+	iMaz.initPos(400, 100);
 	controller.getMap().addItem(iMaz);
 	
 	Item iEr = new Item("eran");
 	iEr.initPos(100, 200);
 	controller.getMap().addItem(iEr);
+	
+	controller.foret();
 		
 	
 	controller.play();

@@ -28,10 +28,6 @@ public abstract class Personnage extends ItemDyn{
 	public Personnage() {	
 		super();
 		
-		maxAnimWalk_ = 100;
-		palierAnimWalk_ = maxAnimWalk_/4;
-		maxTic_ = 40;
-		palierTic_ = maxTic_/4;
 		vitesse_=2;
 		
 		pvs_ = 0;
@@ -39,9 +35,7 @@ public abstract class Personnage extends ItemDyn{
 		porteeCC_ = 0;
 		nom_ = "Drassius";
 		orientation_ = 'd';
-			
-		animWalk_ = 0;
-		compteurTic_ = 0;
+	
 		etat_ = 'i'; //idle
 	}
 	
@@ -51,22 +45,16 @@ public abstract class Personnage extends ItemDyn{
 	public Personnage(int pvs, int force, int porteeCC, String nom) {
 		super(nom);
 		
-
 		num_ = 1;
 		pvs_ = pvs;
 		force_ = force;
 		porteeCC_ = porteeCC;
 		orientation_ = 'd';
-		
-			
+					
 		etat_ = 'i'; //idle
 		
 		animWalk_ = 0;
-		compteurTic_ = 0;
-		maxAnimWalk_ = 40;
-		palierAnimWalk_ = maxAnimWalk_/4;
-		maxTic_ = 40;
-		palierTic_ = maxTic_/4;
+	
 		vitesse_=5;
 		
 		image_="data/"+nom_+"_d_w_0.png";
@@ -81,7 +69,6 @@ public abstract class Personnage extends ItemDyn{
 	public Personnage(int pvs, int force, int porteeCC, String nom, Personnage adversaire) {
 		super(nom);
 		
-
 		num_ = 2;
 		pvs_ = pvs;
 		force_ = force;
@@ -91,12 +78,6 @@ public abstract class Personnage extends ItemDyn{
 		etat_ = 'i'; //idle
 		adversaire_ = adversaire;
 		
-		animWalk_ = 0;
-		compteurTic_ = 0;
-		maxAnimWalk_ = 40;
-		palierAnimWalk_ = maxAnimWalk_/4;
-		maxTic_ = 40;
-		palierTic_ = maxTic_/4;
 		vitesse_=5;
 		
 		image_="data/"+nom_+"_d_w_0.png";
@@ -163,8 +144,20 @@ public abstract class Personnage extends ItemDyn{
 		else if (etat_ == 'i') {image_="data/"+nom_+"_"+Character.toString(orientation_)+"_w_0.png";}
 		else {
 			int NO=0;
-			if (etat_ == 'w') {NO = handleAnimWalk();}
-			if (etat_ == '0') {NO = handleTic();}
+			if (etat_ == 'w') {
+				NO = handleAnimWalk();
+				image_ = "data/"+nom_+"_"+Character.toString(orientation_)+"_"+Character.toString(etat_)+"_"+Integer.toString(NO)+".png";
+				}
+			if (etat_ == '0') {
+				NO = handleTic();
+				image_ = "data/"+nom_+"_"+Character.toString(orientation_)+"_"+Character.toString(etat_)+"_"+Integer.toString(NO)+".png";
+				System.out.println(image_);
+				}
+			if (etat_ == '1') {
+				NO = handleTic();
+				image_ = "data/"+nom_+"_"+Character.toString(etat_)+"_"+Integer.toString(NO)+".png";
+				System.out.println(image_);
+				}
 			image_ = "data/"+nom_+"_"+Character.toString(orientation_)+"_"+Character.toString(etat_)+"_"+Integer.toString(NO)+".png";
 		}
 		ajusterAffichage();

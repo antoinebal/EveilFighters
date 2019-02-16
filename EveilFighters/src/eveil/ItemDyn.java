@@ -7,13 +7,16 @@ public abstract class ItemDyn extends Item {
 	
 	//la classe fille instancie tous les attributs à sa guise
 	protected int vitesse_;
-	protected int animWalk_;
+	
 	protected char orientation_;
-	protected int compteurTic_;
-	protected int maxAnimWalk_;
-	protected int palierAnimWalk_;
-	protected int maxTic_ ;
-	protected int palierTic_;
+	
+	protected int animWalk_=0;
+	protected int maxAnimWalk_=20;
+	protected int palierAnimWalk_=maxAnimWalk_/4;
+	
+	protected int compteurTic_=0;
+	protected int maxTic_ = 10;
+	protected int palierTic_=maxTic_/4;
 
 	public ItemDyn() {
 		super();

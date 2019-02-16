@@ -58,8 +58,8 @@ public class ClavierEcouteur implements KeyListener {
 		if (arg0.getKeyCode()==68) { right2_ = true;} //d
 		
 		if (arg0.getKeyCode()==32) { coup0_2_ = true;} //space
-		if (arg0.getKeyCode()==86) { coup1_1_ = true;} //v
-		if (arg0.getKeyCode()==78) { coup2_1_ = true;} //n
+		if (arg0.getKeyCode()==86) { coup1_2_ = true;} //v
+		if (arg0.getKeyCode()==78) { coup2_2_ = true;} //n
 	}
 
 	public void keyReleased(KeyEvent arg0) {
@@ -80,8 +80,8 @@ public class ClavierEcouteur implements KeyListener {
 		if (arg0.getKeyCode()==68) { right2_ = false; if (j2_.getEtat()=='w') {j2_.setEtat('i');}} //d
 		
 		if (arg0.getKeyCode()==32) { coup0_2_ = false;} //space
-		if (arg0.getKeyCode()==86) { coup1_1_ = false;} //v
-		if (arg0.getKeyCode()==78) { coup2_1_ = false;} //n
+		if (arg0.getKeyCode()==86) { coup1_2_ = false;} //v
+		if (arg0.getKeyCode()==78) { coup2_2_ = false;} //n
 		
 	}
 

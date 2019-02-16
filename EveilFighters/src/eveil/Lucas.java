@@ -4,10 +4,12 @@ public class Lucas extends Personnage {
 
 	public Lucas() {
 		super(10, 1, 10, "red");
+		vitesse_=10;
 	}
 	
 	public Lucas(Personnage adversaire) {
 		super(10, 1, 10, "lucas", adversaire);
+		vitesse_=10;
 	}
 	
 	public Lucas(int y) {y_=y;}
@@ -25,7 +27,7 @@ public class Lucas extends Personnage {
 		if (compteurTic_ < 2*palierTic_) {return 1;}
 		if (compteurTic_ < 3*palierTic_) {return 2;}
 		if (compteurTic_ < maxTic_) {return 3;}
-		return -1;
+		return 3;
 	}
 	
 	public void coup0() {
@@ -36,7 +38,7 @@ public class Lucas extends Personnage {
 		//appeler les fonctions recevoir coup si jamais l'autre joueur est touché
 		if (etat_ != '0') {
 		etat_ = '0';
-		System.out.println("Je donne un coup d'épée.");
+		System.out.println("Je donne un coup d'epee.");
 		if (getHB().checkCollision(getVit(), adversaire_.getHB())) {adversaire_.decPvs(force_);} else {System.out.println("LOUPE");}}
 	}
 	
@@ -44,7 +46,7 @@ public class Lucas extends Personnage {
 		/*ce coup dépendra des coordonnées de l'adversaire peut être, auquel cas
 		 * il faudrait que le perso est accès au joueur pour prendre ses cos
 		 */
-		etat_ = '0';
+		etat_ = '1';
 		System.out.println("Je lance une boule de feu.");
 	}
 	
@@ -59,7 +61,7 @@ public class Lucas extends Personnage {
 	public void tic() {
 		//si on est à l'arrêt, en train de marcher ou mort on ne remet pas setEtat à 0
 		if ((etat_!='i')&(etat_!='w')&(etat_!='m')) {
-		if ((compteurTic_ >=40)) {
+		if ((compteurTic_ >=maxTic_)) {
 		setEtat('i');
 		compteurTic_=0;
 		} else {
