@@ -1,6 +1,8 @@
 package eveil;
 
 import java.lang.String;
+import java.util.Timer;
+
 import javax.swing.ImageIcon;
 
 
@@ -23,6 +25,13 @@ public abstract class Personnage extends ItemDyn{
 	protected char etat_;
 	
 	protected Personnage adversaire_;
+	
+	/* vrai si le perso vient de se prendre un coup : 
+	 * il ne peut pas s'en prendre un autre
+	 * il faudrait faire une variable comme �a
+	 * pour les collisions et une pour les coups
+	 */
+	protected boolean inRecovery_=false;
 
 	//constructeur par défaut
 	public Personnage() {	
@@ -132,6 +141,11 @@ public abstract class Personnage extends ItemDyn{
 		etat_ = etat;
 	}
 	
+	
+	public void setRecovery(boolean b) {
+		inRecovery_=b;
+	}
+	
 
 	
 	public int getNum() {return num_;}
@@ -175,6 +189,13 @@ public abstract class Personnage extends ItemDyn{
 	
 	/* renvoie vrai s'il va y avoir une collision avec l'adversaire */
 	public boolean checkCollisionAdv() {return getHB().checkCollision(getVit(), adversaire_.getHB());}
+	
+	public void collisionAvec(Item i) {
+		if (!inRecovery_) {
+			System.out.println(nom_+ " se cogne avec "+i.getName());
+			(new Timer()).scheduleAtFixedRate(new RecoveryTT(this), 0, 500);
+		}
+	}
 	
 	/* cette fonction ajuste l'affichage de chaque image, elle modifie des indicateurs
 	 * différentiels en fonction de x et de y, qui seront pris en compte dans l'affichage 
