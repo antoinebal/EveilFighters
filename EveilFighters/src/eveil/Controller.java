@@ -150,21 +150,25 @@ public class Controller {
     public char getAction(ItemDyn iDyn) {
 	//si idyn est un personnage on regarde le key listener
 	if (iDyn.getClass().getSuperclass().getSimpleName().equals("Personnage")) {
-	    if (keyListener.getUp(iDyn.getNum())) {
-		return 'u';
+	    char orient;
+		if (keyListener.getUp(iDyn.getNum())) {
+		orient='u';
 	    }
 	    else if (keyListener.getDown(iDyn.getNum())) {
-		return 'd';
+	    iDyn.setOrientation('d');
+	    orient='d';
 	    }
 	    else if (keyListener.getLeft(iDyn.getNum())) {
-		return 'l';
+	    orient='l';
 	    }
 	    else if (keyListener.getRight(iDyn.getNum())) {
-		return 'r';
+	    orient='r';
 	    } else {
 		//aucun bouton de direction n'a été pressé pour ce joueur
-		return '0';
+	    return '0';
 	    }
+		iDyn.setOrientation(orient);
+		return orient;
 	} else {
 	    return iDyn.getAction();
 	}
