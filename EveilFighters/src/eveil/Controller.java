@@ -38,7 +38,7 @@ public class Controller {
 	j2_.initPos(500, 500);
 	
 	//on cr�e la liste et ajoute les joueurs
-	map_ = new Map("grass.png");
+	map_ = new Map(this, "grass.png");
 	map_.addItem(j1_);
 	map_.addItem(j2_);
 		
@@ -194,6 +194,16 @@ public class Controller {
 	}
 	return hbCollision;
     }
+    
+    public int BORD_HAUT=0;  
+    public int BORD_BAS(Item i) {
+    	return panel_.getHeight()-i.getHB().getTBase();
+    }   
+    public int BORD_GAUCHE=0;    
+    public int BORD_DROIT(Item i) {
+    	return window_.getWidth()-i.getHB().getLBase();
+    }
+    
 	
 	
 	
@@ -207,7 +217,7 @@ public class Controller {
 	    HitBox hbPercutee = factorCollision(iDyn);
 	    if (action=='u') {
 		iDyn.setOrientation('u');
-		if ((iDyn.getY() - iDyn.getVit())< 0) {
+		if ((iDyn.getY() - iDyn.getVit())< BORD_HAUT) {
 		    iDyn.setY(0);
 		} else if (hbPercutee!=null) {
 		    iDyn.setY((int) hbPercutee.getBG().getY());
@@ -217,7 +227,7 @@ public class Controller {
 	    }
 	    else if (action=='d') {
 		iDyn.setOrientation('d');
-		if ((iDyn.getY() + iDyn.getVit())> panel_.getHeight()-iDyn.getHB().getTBase()) {
+		if ((iDyn.getY() + iDyn.getVit())> BORD_BAS(iDyn)) {
 		    iDyn.setY(panel_.getHeight() -iDyn.getHB().getTBase());
 		} else if (hbPercutee!=null) {
 		    iDyn.setY((int) (hbPercutee.getHG().getY()-iDyn.getHB().getTBase()));
@@ -227,7 +237,7 @@ public class Controller {
 	    }
 	    else if (action=='l') {
 		iDyn.setOrientation('l');
-		if ((iDyn.getX() - iDyn.getVit())< 0) {
+		if ((iDyn.getX() - iDyn.getVit())< BORD_GAUCHE) {
 		    iDyn.setX(0);
 		} else if (hbPercutee!=null) {
 		    iDyn.setX((int) hbPercutee.getHD().getX());
@@ -237,7 +247,7 @@ public class Controller {
 	    }
 	    else if (action=='r') {
 		iDyn.setOrientation('r');
-		if ((iDyn.getX() + iDyn.getVit())> window_.getWidth()-iDyn.getHB().getLBase()) {
+		if ((iDyn.getX() + iDyn.getVit())> BORD_DROIT(iDyn)) {
 		    iDyn.setX(window_.getWidth()-iDyn.getHB().getLBase());
 		} else if (hbPercutee!=null) {
 		    iDyn.setX((int) (hbPercutee.getHG().getX()-iDyn.getHB().getLBase()));
@@ -280,8 +290,17 @@ public class Controller {
 		
 	Item iArbre = new Item("arbre");
 	iArbre.initPos(60, 90);
-		
 	controller.getMap().addItem(iArbre);
+	
+	Item iMaz = new Item("mazak");
+	iMaz.initPos(-1, 200);
+	controller.getMap().addItem(iMaz);
+	
+	Item iEr = new Item("eran");
+	iEr.initPos(100, 200);
+	controller.getMap().addItem(iEr);
+		
+	
 	controller.play();
 
     }

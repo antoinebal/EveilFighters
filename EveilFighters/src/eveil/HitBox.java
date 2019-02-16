@@ -105,5 +105,30 @@ public class HitBox {
 	return false;
 	}
 	
+	//appelée par map : retourne true si les 2 hitbox se superposent
+	public boolean estSuperposeeAvec(HitBox hBF) {
+		if (((getHG().getX()) < hBF.getHD().getX())
+				&&((getHG().getX()) > hBF.getHG().getX())
+				&&(getHG().getY() < hBF.getBG().getY())
+				&&(getBG().getY() > hBF.getHG().getY())) {return true;}
+		
+		if (((getHD().getX()) < hBF.getHD().getX())
+				&&((getHD().getX()) > hBF.getHG().getX())
+				&&(getHG().getY() < hBF.getBG().getY())
+				&&(getBG().getY() > hBF.getHG().getY())) {return true;}
+		
+		if (((getHG().getY()) < hBF.getBG().getY())
+				&&((getHG().getY()) > hBF.getHG().getY())
+				&&(getHG().getX() < hBF.getHD().getX())
+				&&(getHD().getX() > hBF.getHG().getX())) {return true;}
+		
+		if (((getBG().getY()) < hBF.getBG().getY())
+				&&((getBG().getY()) > hBF.getHG().getY())
+				&&(getHG().getX() < hBF.getHD().getX())
+				&&(getHD().getX() > hBF.getHG().getX())) {return true;}
+		
+		return false;
+	}
+	
 		
 }
