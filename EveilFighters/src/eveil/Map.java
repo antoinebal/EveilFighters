@@ -15,7 +15,7 @@ public class Map {
 	
 	public void addItem(Item i) {
 		String nomClasse = i.getClass().getSimpleName();
-		if (nomClasse.equals("Item")||nomClasse.equals("ItemDyn")) {
+		if (nomClasse.equals("Item")||nomClasse.equals("Projectile")) {
 			if (positionValide(i)) {
 				lItems_.add(i);
 			} else {
@@ -23,6 +23,7 @@ public class Map {
 			} 
 		}else {
 			lItems_.add(i);
+			System.out.println(i.getName()+"  ajouté à la map.");
 		}
 	}
 	
@@ -60,4 +61,11 @@ public class Map {
 		
 		return bon;
 	}
+	
+	
+	public void supprimeItem (Item i) {
+		lItems_.remove(i);
+	}
+	
+	
 }

@@ -3,7 +3,7 @@ package eveil;
 public class Lucas extends Personnage {
 
 	public Lucas() {
-		super(10, 1, 10, "red");
+		super(10, 1, 10, "mazak");
 		vitesse_=10;
 	}
 	
@@ -48,6 +48,11 @@ public class Lucas extends Personnage {
 		 */
 		etat_ = '1';
 		System.out.println("Je lance une boule de feu.");
+		
+		Projectile bdf = new Projectile("bdf", orientation_, controller_);
+		bdf.initPos(500, 500);
+		
+		controller_.creeItem(bdf);
 	}
 	
 	public void coup2() {

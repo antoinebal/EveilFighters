@@ -85,7 +85,7 @@ public class Controller {
 	  	for (int i=0 ; i < getMap().nombreItems() ; i++) {
 	  		Item item = getMap().getItemInd(i);
 	  		if (item.getClass().getSuperclass().getSuperclass()!=null) {
-				if (item.getClass().getSuperclass().getSuperclass().getSimpleName().equals("ItemDyn")) {
+				if ((item.getClass().getSuperclass().getSuperclass().getSimpleName().equals("ItemDyn"))||(item.getClass().getSuperclass().getSimpleName().equals("ItemDyn"))) {
 					majPositionItemDyn((ItemDyn) item);
 				}
 	  		}
@@ -214,6 +214,8 @@ public class Controller {
     public void majPositionItemDyn(ItemDyn iDyn) {
 		
 	char action = getAction(iDyn);
+	
+	
 		
 	if (action!='0') {
 	    HitBox hbPercutee = factorCollision(iDyn);
@@ -294,6 +296,15 @@ public class Controller {
 	
     //appel�e depuis le Panel
     public Map getMap() {return map_;}
+    
+    
+    public void creeItem(Item i) {
+    	map_.addItem(i);
+    }
+    
+    public void detruitItem(Item i) {
+    	map_.supprimeItem(i);
+    }
 	
     public static void main(String[] args) {
 	Personnage j1 = new Lucas();
@@ -301,6 +312,9 @@ public class Controller {
 	j1.setAdversaire(j2);
 		
 	Controller controller = new Controller(j1, j2);
+	
+	j1.setController(controller);
+	j2.setController(controller);
 		
 	Item iArbre = new Item("arbre");
 	iArbre.initPos(60, 90);
@@ -314,7 +328,7 @@ public class Controller {
 	iEr.initPos(100, 200);
 	controller.getMap().addItem(iEr);
 	
-	controller.foret();
+	//controller.foret();
 		
 	
 	controller.play();

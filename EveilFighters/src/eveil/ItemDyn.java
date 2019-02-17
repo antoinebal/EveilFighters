@@ -17,13 +17,24 @@ public abstract class ItemDyn extends Item {
 	protected int compteurTic_=0;
 	protected int maxTic_ = 10;
 	protected int palierTic_=maxTic_/4;
+	
+	protected Controller controller_;
 
 	public ItemDyn() {
 		super();
 	}
 	
+	public ItemDyn(String nom, Controller controller) {
+		super(nom);
+		controller_=controller;
+	}
+	
 	public ItemDyn(String nom) {
 		super(nom);
+	}
+	
+	public void setController(Controller controller) {
+		controller_=controller;
 	}
 	
 	public void initPos(int x, int y) {
@@ -42,8 +53,22 @@ public abstract class ItemDyn extends Item {
 	public abstract int handleAnimWalk();
 	public abstract int handleTic();
 	public abstract void tic();
-	public abstract void setX(int x);
-	public abstract void setY(int y);
+	public void setX(int x) {
+		x_=x;
+		
+		hitBox_.setHB(x_, y_);
+		
+		xImage_ = x_;
+	}
+	public void setY(int y) {
+		
+		y_=y;
+		
+		
+		hitBox_.setHB(x_, y_);
+		
+		yImage_ = y_ - 2*(taille_/3);
+	}
 	
 	/* cette fonction doit être implémentée par tous les
 	 * items dynamiques non autonomes (i.e. qu ne sont pas des personnages)
@@ -53,7 +78,7 @@ public abstract class ItemDyn extends Item {
 	
 	/* renvoie vrai s'il va y avoir une collision avec l'item en argument */
 	public boolean checkCollisionAvec(Item item) {return getHB().checkCollision(getVit(), item.getHB());}
-	
+	/*
 	public static void main(String[] args) {
 		Personnage j1 = new Lucas();
 
@@ -72,6 +97,6 @@ public abstract class ItemDyn extends Item {
 		
 		System.out.println(j1.getClass().getSuperclass().getSuperclass().getName());
 
-	}
+	}*/
 	
 }

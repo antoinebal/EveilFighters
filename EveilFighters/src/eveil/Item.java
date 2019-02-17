@@ -16,6 +16,10 @@ public class Item {
 	protected int ajustX_;
 	protected int ajustY_;
 	
+	protected int id_;
+	
+	static int COUNT=0;
+	
 	
 	public Item() {
 		ajustX_ = 0;
@@ -37,6 +41,9 @@ public class Item {
 		setLarg(new ImageIcon(image_).getImage().getWidth(null));
 		
 		System.out.println("TAILLE "+nom_+" : taille : "+taille_+"largeur : "+largeur_);
+		
+		id_=COUNT;
+		COUNT++;
 	}
 	
 	
@@ -65,6 +72,7 @@ public class Item {
 	public int getAjustX() {return ajustX_;}
 	public int getAjustY() {return ajustY_;}
 	public String getImage() {return "data/"+nom_+".png";}
+	public int getID() {return id_;}
 	public void ajusterAffichage() {ajustX_ = 0 ; ajustY_ = 0;}
 	
 	public String toString() {return nom_+" : "+y_;}
@@ -81,5 +89,5 @@ public class Item {
 		hitBox_ = new HitBox(x_, y_, taille_, largeur_);
 	}
 	
-	public boolean equals(Item item) {return nom_.equals(item.getName());}
+	public boolean equals(Item item) {return id_==item.getID();}
 }
