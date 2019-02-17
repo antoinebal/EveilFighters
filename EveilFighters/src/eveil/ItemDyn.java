@@ -78,6 +78,10 @@ public abstract class ItemDyn extends Item {
 	
 	/* renvoie vrai s'il va y avoir une collision avec l'item en argument */
 	public boolean checkCollisionAvec(Item item) {return getHB().checkCollision(getVit(), item.getHB());}
+	
+	public void collisionBord() {
+		//System.out.println(nom_+" se cogne contre le bord");
+	}
 	/*
 	public static void main(String[] args) {
 		Personnage j1 = new Lucas();

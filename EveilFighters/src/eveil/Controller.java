@@ -223,6 +223,7 @@ public class Controller {
 		iDyn.setOrientation('u');
 		if ((iDyn.getY() - iDyn.getVit())< BORD_HAUT) {
 		    iDyn.setY(0);
+		    iDyn.collisionBord();
 		} else if (hbPercutee!=null) {
 		    iDyn.setY((int) hbPercutee.getBG().getY());
 		} else {
@@ -233,6 +234,7 @@ public class Controller {
 		iDyn.setOrientation('d');
 		if ((iDyn.getY() + iDyn.getVit())> BORD_BAS(iDyn)) {
 		    iDyn.setY(panel_.getHeight() -iDyn.getHB().getTBase());
+		    iDyn.collisionBord();
 		} else if (hbPercutee!=null) {
 		    iDyn.setY((int) (hbPercutee.getHG().getY()-iDyn.getHB().getTBase()));
 		} else {
@@ -243,6 +245,7 @@ public class Controller {
 		iDyn.setOrientation('l');
 		if ((iDyn.getX() - iDyn.getVit())< BORD_GAUCHE) {
 		    iDyn.setX(0);
+		    iDyn.collisionBord();
 		} else if (hbPercutee!=null) {
 		    iDyn.setX((int) hbPercutee.getHD().getX());
 		} else {
@@ -253,6 +256,7 @@ public class Controller {
 		iDyn.setOrientation('r');
 		if ((iDyn.getX() + iDyn.getVit())> BORD_DROIT(iDyn)) {
 		    iDyn.setX(window_.getWidth()-iDyn.getHB().getLBase());
+		    iDyn.collisionBord();
 		} else if (hbPercutee!=null) {
 		    iDyn.setX((int) (hbPercutee.getHG().getX()-iDyn.getHB().getLBase()));
 		} else {
@@ -328,7 +332,7 @@ public class Controller {
 	iEr.initPos(100, 200);
 	controller.getMap().addItem(iEr);
 	
-	//controller.foret();
+	controller.foret();
 		
 	
 	controller.play();

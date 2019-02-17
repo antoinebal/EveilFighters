@@ -3,7 +3,7 @@ package eveil;
 public class Lucas extends Personnage {
 
 	public Lucas() {
-		super(10, 1, 10, "mazak");
+		super(10, 1, 10, "red");
 		vitesse_=10;
 	}
 	
@@ -50,7 +50,26 @@ public class Lucas extends Personnage {
 		System.out.println("Je lance une boule de feu.");
 		
 		Projectile bdf = new Projectile("bdf", orientation_, controller_);
-		bdf.initPos(500, 500);
+		
+		int xBdf=0;
+		int yBdf=0;
+		int tailleBdf = bdf.getTaille() - (2*bdf.getTaille())/3;
+		int largBdf = bdf.getLarg();
+		if (orientation_=='u') {
+			xBdf=(int)hitBox_.getHG().getX();
+			yBdf=(int)hitBox_.getHG().getY()-tailleBdf-1;
+		} else if (orientation_=='d') {
+			xBdf=(int)hitBox_.getBG().getX();
+			yBdf=(int)hitBox_.getBG().getY()+1;
+		} else if (orientation_=='l') {
+			xBdf=(int)hitBox_.getHG().getX()-largBdf-1;
+			yBdf=(int)hitBox_.getHG().getY();
+		} else if (orientation_=='r') {
+			xBdf=(int)hitBox_.getHD().getX()+1;
+			yBdf=(int)hitBox_.getHD().getY();
+		}
+		
+		bdf.initPos(xBdf, yBdf);
 		
 		controller_.creeItem(bdf);
 	}

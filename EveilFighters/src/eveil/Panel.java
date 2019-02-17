@@ -133,7 +133,7 @@ public class Panel extends JPanel{
 	g.drawImage(backGround_.getImage(), 0, 0, this.getSize().width, this.getSize().height, null);
 	
 	afficheItems(g);
-	dessineHBItems(g);
+	//dessineHBItems(g);
 	}
 	
 	

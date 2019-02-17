@@ -47,5 +47,9 @@ public class Projectile extends ItemDyn{
 		System.out.println(nom_+" dans le mille");
 		controller_.detruitItem(this);
 	}
+	
+	public void collisionBord() {
+		controller_.detruitItem(this);
+	}
 
 }
