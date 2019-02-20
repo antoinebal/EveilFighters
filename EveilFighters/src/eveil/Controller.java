@@ -201,9 +201,15 @@ public class Controller {
     public int BORD_BAS(Item i) {
     	return panel_.getHeight()-i.getHB().getTBase();
     }   
+    public int BORD_BAS() {
+    	return panel_.getHeight();
+    } 
     public int BORD_GAUCHE=0;    
     public int BORD_DROIT(Item i) {
     	return window_.getWidth()-i.getHB().getLBase();
+    }
+    public int BORD_DROIT() {
+    	return window_.getWidth();
     }
     
 	
@@ -277,7 +283,7 @@ public class Controller {
 		
 	if (keyListener.getC0(j2_.getNum())) { j2_.coup0();}
 	if (keyListener.getC1(j2_.getNum())) { j2_.coup1();}
-	if (keyListener.getC2(j2_.getNum())) { j2_.coup0();}
+	if (keyListener.getC2(j2_.getNum())) { j2_.coup2();}
     }
     
     
@@ -294,8 +300,19 @@ public class Controller {
 	
     /* tics d'horloge pour l'animation */
     public void horlogeAnim() {
-	j1_.tic();
-	j2_.tic();
+	
+    	for (int i=0 ; i < map_.nombreItems() ; i++) {
+    		Item item = map_.getItemInd(i);
+    		
+    		String classI = item.getClass().getSuperclass().getSimpleName();
+    		if ((classI.equals("ItemDyn"))||(classI.equals("Personnage"))) {
+    			((ItemDyn) item).tic();
+    		}
+    				
+    	}
+    	
+	
+	
     }
 	
     //appel�e depuis le Panel
@@ -332,7 +349,7 @@ public class Controller {
 	iEr.initPos(100, 200);
 	controller.getMap().addItem(iEr);
 	
-	controller.foret();
+	//controller.foret();
 		
 	
 	controller.play();

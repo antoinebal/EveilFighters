@@ -1,6 +1,8 @@
 package eveil;
 
 public class Lucas extends Personnage {
+	
+	public int NOMBRE_GOBS = 6;
 
 	public Lucas() {
 		super(10, 1, 10, "red");
@@ -78,8 +80,19 @@ public class Lucas extends Personnage {
 		/*ce coup dépendra des coordonnées de l'adversaire peut être, auquel cas
 		 * il faudrait que le perso est accès au joueur pour prendre ses cos
 		 */
-		etat_ = '0';
+		etat_ = '1';
 		System.out.println("J'appelle mes sbires.");
+		
+		int tailleMap = controller_.BORD_BAS()-controller_.BORD_HAUT;
+		int ecart = tailleMap/NOMBRE_GOBS;
+		
+		for (int i = 0 ; i < NOMBRE_GOBS ; i++) {
+			Mob gob = new Mob("red", 'r', controller_);
+			gob.initPos(controller_.BORD_GAUCHE+1, controller_.BORD_HAUT+i*ecart+1);
+			
+			controller_.creeItem(gob);
+		}
+		
 	}
 	
 	public void tic() {
