@@ -1,10 +1,18 @@
 package eveil;
 
+import javax.swing.ImageIcon;
+
 public class Mob extends ItemDyn {
 	public Mob (String nom, char orientation, Controller controller) {
 		super(nom, controller);
 		orientation_=orientation;
 		vitesse_=5;
+		
+		image_="data/"+nom_+"_d_w_0.png";
+		
+		//premières instanciations des dimensions (utiles pour la hitbox)
+		setTaille(new ImageIcon(image_).getImage().getHeight(null));
+		setLarg(new ImageIcon(image_).getImage().getWidth(null));
 		
 	}
 
@@ -13,7 +21,7 @@ public class Mob extends ItemDyn {
 		if (animWalk_ < 2*palierAnimWalk_ ) {return 1;}
 		if (animWalk_ < 3*palierAnimWalk_ ) {return 0;}
 		if (animWalk_ < maxAnimWalk_ ) {return 2;}
-		return -1;
+		return 0;
 	}
 
 	@Override
@@ -27,7 +35,7 @@ public class Mob extends ItemDyn {
 
 	@Override
 	public void tic() {
-		System.out.println("GOB : AW "+animWalk_);
+		//System.out.println("GOB : AW "+animWalk_);
 		if ((animWalk_ >=maxAnimWalk_)) {
 			animWalk_=0;
 		} else {

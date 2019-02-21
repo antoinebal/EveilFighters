@@ -11,7 +11,7 @@ import javax.swing.JFrame;
 
 public class Controller {
     //***PARAMETRES***
-    private int FREQUENCY = 20;
+    private int FREQUENCY = 30;
 	
     private Panel panel_;
 
