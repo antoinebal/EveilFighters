@@ -21,12 +21,13 @@ public class Controller {
     //joueur 2
     private Personnage j2_;
 	
-    private SourisEcouteur mouseListener;
+    //private SourisEcouteur mouseListener;
     private ClavierEcouteur keyListener;
 	
     private JFrame window_;
 	
     private Map map_;
+    private int popBase_=0;
 	
     //private list Item;
 
@@ -47,7 +48,7 @@ public class Controller {
 	window_ = new JFrame("Eveil Fighters");
 	panel_ = new Panel(this, j1_, j2_);
 	
-	mouseListener = new SourisEcouteur();
+	//mouseListener = new SourisEcouteur();
 	keyListener = new ClavierEcouteur(j1_, j2_);
 		
 	//Configuration de la fenêtre
@@ -60,10 +61,12 @@ public class Controller {
 	//on set panel du joueur à la window
 	window_.setContentPane(panel_);
 	//config listeners
-	window_.addMouseListener(mouseListener);
+	//window_.addMouseListener(mouseListener);
 	window_.addKeyListener(keyListener);
 	
 	window_.setVisible(true);
+	
+	
 	
     }
 	
@@ -76,11 +79,10 @@ public class Controller {
 				
 		System.out.println("Problème dans le sleep");
 	    }
-	    //checker collision
-	    //notif partie jeu (ou dans le keyListener)
-	   // majPosition(j1_, j2_);
-	    //majPosition(j2_, j1_);
 	    
+	    
+	   if (changement())
+		   
 	  //on màj la position des items dynamiques
 	  	for (int i=0 ; i < getMap().nombreItems() ; i++) {
 	  		Item item = getMap().getItemInd(i);
@@ -89,15 +91,34 @@ public class Controller {
 					majPositionItemDyn((ItemDyn) item);
 				}
 	  		}
-	  	}
-	    
-	    
+	  	}    
 	    horlogeAnim();
 	    gereCoups();
-	
+	    
 	   // majPosition(liste itemsDyn)
 	    panel_.repaint();
 	}		
+    }
+    
+    public boolean changement() {
+    	if (map_.nombreItems()!=popBase_) {
+    		return true;
+    	} else 
+    	
+    	if ((keyListener.seeCO1())||(keyListener.seeCO2())
+    			||(keyListener.seeC11())||(keyListener.seeC12())
+    			||(keyListener.seeC21())||(keyListener.seeC22())
+    			||(keyListener.getUp(1))||(keyListener.getUp(2))
+    			||(keyListener.getDown(1))||(keyListener.getDown(2))
+    			||(keyListener.getLeft(1))||(keyListener.getLeft(2))
+    			||(keyListener.getRight(1))||(keyListener.getRight(2))) {
+    		return true;
+    	} else {
+    		return false;
+    	}
+    	
+    	
+    	
     }
 		
 	
@@ -213,7 +234,7 @@ public class Controller {
     }
     
 	
-	
+    
 	
     //A FINIR? IL Y A UN PBBBBBBBBBB
     //distinguer les joueurs des items dyn?
@@ -315,6 +336,10 @@ public class Controller {
 	
     }
 	
+    public void setPopBase() {
+    	popBase_=map_.nombreItems();
+    }
+    
     //appel�e depuis le Panel
     public Map getMap() {return map_;}
     
@@ -349,9 +374,9 @@ public class Controller {
 	iEr.initPos(100, 200);
 	controller.getMap().addItem(iEr);
 	
-	//controller.foret();
-		
+	controller.setPopBase();
 	
+	//controller.foret();
 	controller.play();
 
     }

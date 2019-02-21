@@ -116,6 +116,15 @@ public class ClavierEcouteur implements KeyListener {
 	}
 	}
 	
+	public boolean seeCO1() {return coup0_1_;}
+	public boolean seeCO2() {return coup0_2_;}
+	public boolean seeC11() {return coup1_1_;}
+	public boolean seeC12() {return coup1_2_;}
+	public boolean seeC21() {return coup2_1_;}
+	public boolean seeC22() {return coup2_2_;}
+	
+	
+	
 	public boolean getC1(int p) {
 	if (p==1) {
 		if (coup1_1_) {
