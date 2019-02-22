@@ -28,7 +28,7 @@ public abstract class Personnage extends ItemDyn{
 	
 	/* vrai si le perso vient de se prendre un coup : 
 	 * il ne peut pas s'en prendre un autre
-	 * il faudrait faire une variable comme �a
+	 * il faudrait faire une variable comme �a
 	 * pour les collisions et une pour les coups
 	 */
 	protected boolean inRecovery_=false;
@@ -154,7 +154,7 @@ public abstract class Personnage extends ItemDyn{
 	
 	public String getImage() {
 		//si le personnage est à l'arrêt
-		if (etat_ == 'm') {image_ ="data/steve.jpeg";}
+		if (etat_ == 'm') {image_ ="data/kirby.png";}
 		else if (etat_ == 'i') {image_="data/"+nom_+"_"+Character.toString(orientation_)+"_w_0.png";}
 		else {
 			int NO=0;

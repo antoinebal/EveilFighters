@@ -45,6 +45,10 @@ public class Projectile extends ItemDyn{
 	
 	public void collisionAvec(Item i) {
 		System.out.println(nom_+" dans le mille");
+		
+		if (i.getClass().getSuperclass().getSimpleName().equals("Personnage")) {
+			((Personnage) i).decPvs(2);
+		}
 		controller_.detruitItem(this);
 	}
 	

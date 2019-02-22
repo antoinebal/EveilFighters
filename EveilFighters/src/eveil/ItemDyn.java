@@ -82,6 +82,11 @@ public abstract class ItemDyn extends Item {
 	public void collisionBord() {
 		//System.out.println(nom_+" se cogne contre le bord");
 	}
+	
+	//quand duree de vie finie ou mort
+	public void destruction() {
+		controller_.detruitItem(this);
+	}
 	/*
 	public static void main(String[] args) {
 		Personnage j1 = new Lucas();

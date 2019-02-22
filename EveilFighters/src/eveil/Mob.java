@@ -1,8 +1,13 @@
 package eveil;
 
+import java.util.Timer;
+
 import javax.swing.ImageIcon;
 
 public class Mob extends ItemDyn {
+	
+	int DUREE_DE_VIE=10;
+	
 	public Mob (String nom, char orientation, Controller controller) {
 		super(nom, controller);
 		orientation_=orientation;
@@ -13,6 +18,8 @@ public class Mob extends ItemDyn {
 		//premières instanciations des dimensions (utiles pour la hitbox)
 		setTaille(new ImageIcon(image_).getImage().getHeight(null));
 		setLarg(new ImageIcon(image_).getImage().getWidth(null));
+		
+		(new Timer()).scheduleAtFixedRate(new LifeLineTT(this, DUREE_DE_VIE), 0, 1000);
 		
 	}
 
@@ -60,7 +67,12 @@ public class Mob extends ItemDyn {
 	
 	public void collisionAvec(Item i) {
 		System.out.println(nom_+" se cogne contre");
-		controller_.detruitItem(this);
+		
+		if (i.getClass().getSuperclass().getSimpleName().equals("Personnage")) {
+			((Personnage) i).decPvs(3);
+		}
+		
+		//controller_.detruitItem(this);
 	}
 	
 	public void collisionBord() {

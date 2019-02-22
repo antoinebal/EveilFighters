@@ -362,21 +362,21 @@ public class Controller {
 	j1.setController(controller);
 	j2.setController(controller);
 		
-	Item iArbre = new Item("arbre");
+	/*Item iArbre = new Item("arbre");
 	iArbre.initPos(60, 90);
-	controller.getMap().addItem(iArbre);
+	controller.getMap().addItem(iArbre);*/
 	
-	Item iMaz = new Item("mazak");
+	/*Item iMaz = new Item("mazak");
 	iMaz.initPos(400, 100);
-	controller.getMap().addItem(iMaz);
+	controller.getMap().addItem(iMaz);*/
 	
 	Item iEr = new Item("eran");
-	iEr.initPos(100, 200);
+	iEr.initPos(400, 400);
 	controller.getMap().addItem(iEr);
 	
 	controller.setPopBase();
 	
-	//controller.foret();
+	controller.foret();
 	controller.play();
 
     }
