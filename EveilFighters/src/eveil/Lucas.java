@@ -41,7 +41,12 @@ public class Lucas extends Personnage {
 		if (etat_ != '0') {
 		etat_ = '0';
 		System.out.println("Je donne un coup d'epee.");
-		if (getHB().checkCollision(getVit(), adversaire_.getHB())) {adversaire_.decPvs(force_);} else {System.out.println("LOUPE");}}
+		if (getHB().checkCollision(getVit(), adversaire_.getHB())) {
+			adversaire_.decPvs(force_);
+			} else {
+				System.out.println("LOUPE");
+				}
+		}
 	}
 	
 	public void coup1() {
